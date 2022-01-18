@@ -10,8 +10,15 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveTrain.TeleopDrive;
+import frc.robot.commands.Feeder.FeederTurn;
+import frc.robot.commands.Intake.IntakeTurn;
+import frc.robot.commands.Shooter.ShooterTurn;
 import frc.robot.commands.Vision.VisionSendMode;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.FeederSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
 /**
@@ -27,6 +34,10 @@ public class RobotContainer {
 
   private final DriveSubsystem m_drive = new DriveSubsystem();
   private final VisionSubsystem m_vision = new VisionSubsystem();
+  private final FeederSubsystem m_feeder = new FeederSubsystem();
+  private final ShooterSubsystem m_shooter = new ShooterSubsystem();
+  private final IntakeSubsystem m_intake = new IntakeSubsystem();
+  private final ClimbSubsystem m_climb = new ClimbSubsystem();
 
   private final JoystickButton stickButton1 = new JoystickButton(stick, Constants.OI.button1);
   private final JoystickButton stickButton2 = new JoystickButton(stick, Constants.OI.button1);
@@ -63,6 +74,15 @@ public class RobotContainer {
   private void configureButtonBindings() {
     stickButton1.whileActiveContinuous(new VisionSendMode(m_vision, true));
     stickButton1.whenInactive(new VisionSendMode(m_vision, false));
+    // stickButton2.whileHeld(new ShooterTurn(m_shooter, 1));
+
+    // stickButton3.whenPressed(new FeederTurn(m_feeder, 1));
+    // stickButton3.whenReleased(new FeederTurn(m_feeder, 0));
+
+    // stickButton4.whenPressed(new FeederTurn(m_feeder, -1));
+    // stickButton4.whenReleased(new FeederTurn(m_feeder, 0));
+
+    // stickButton5.whileHeld(new IntakeTurn(m_intake, 1));
 
 
   }
