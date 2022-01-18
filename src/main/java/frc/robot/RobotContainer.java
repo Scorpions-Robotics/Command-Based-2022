@@ -25,9 +25,8 @@ public class RobotContainer {
 
   public final Joystick stick = new Joystick(Constants.OI.stickId);
 
-  private final DriveSubsystem mDriveSubsystem = new DriveSubsystem();
-
-  private final VisionSubsystem mVisionSubsystem = new VisionSubsystem();
+  private final DriveSubsystem m_drive = new DriveSubsystem();
+  private final VisionSubsystem m_vision = new VisionSubsystem();
 
   private final JoystickButton stickButton1 = new JoystickButton(stick, Constants.OI.button1);
   private final JoystickButton stickButton2 = new JoystickButton(stick, Constants.OI.button1);
@@ -44,8 +43,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    mDriveSubsystem.setDefaultCommand(new TeleopDrive(
-      mDriveSubsystem,
+    m_drive.setDefaultCommand(new TeleopDrive(
+      m_drive,
       () -> stick.getRawAxis(1),
       () -> stick.getRawAxis(0),
       stick.getThrottle()
@@ -62,8 +61,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    stickButton1.whileActiveContinuous(new VisionSendMode(mVisionSubsystem, true));
-    stickButton1.whenInactive(new VisionSendMode(mVisionSubsystem, false));
+    stickButton1.whileActiveContinuous(new VisionSendMode(m_vision, true));
+    stickButton1.whenInactive(new VisionSendMode(m_vision, false));
 
 
   }
