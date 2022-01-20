@@ -25,8 +25,6 @@ public class TakeAim extends PIDCommand {
         });
 
     addRequirements(m_drive, m_vision);
-
-    this.m_vision = m_vision;
   }
 
   @Override
