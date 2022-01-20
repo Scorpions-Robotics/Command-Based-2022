@@ -1,6 +1,4 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+
 
 package frc.robot.subsystems;
 
@@ -24,7 +22,7 @@ public class VisionSubsystem extends SubsystemBase {
   NetworkTableEntry bEntry = table.getEntry("B");
   NetworkTableEntry rEntry = table.getEntry("R");
 
-  /** Creates a new VisionSubsystem. */
+
   public VisionSubsystem() {
     inst.startClient("10.76.72.10");
   }
