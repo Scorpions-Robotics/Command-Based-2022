@@ -19,6 +19,6 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   public void stopClimb(){
-    climbMotor.set(Constants.Variables.kZero);
+    climbMotor.set(Constants.VARIABLES.kZero);
   }
 }

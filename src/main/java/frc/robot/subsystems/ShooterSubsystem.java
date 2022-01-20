@@ -23,6 +23,6 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void stopShooter() {
-    shooterRightMotor.set(Constants.Variables.kZero);
+    shooterRightMotor.set(Constants.VARIABLES.kZero);
   }
 }

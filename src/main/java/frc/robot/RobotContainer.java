@@ -21,7 +21,8 @@ import frc.robot.subsystems.VisionSubsystem;
 
 public class RobotContainer {
 
-  public final Joystick stick = new Joystick(Constants.OI.stickId);
+  public static final Joystick stick = new Joystick(Constants.OI.stickId);
+  public static final Joystick panel = new Joystick(Constants.OI.panelId);
 
   private final DriveSubsystem m_drive = new DriveSubsystem();
   private final VisionSubsystem m_vision = new VisionSubsystem();

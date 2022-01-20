@@ -2,8 +2,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-
 public final class Constants {
     public class OI{
         public static final int stickId = 0;
@@ -42,7 +40,14 @@ public final class Constants {
         public static final int intakeMotorID = 9;
     }
     public class PNEUMATICS{}
-    public class Variables{
+    public class ENCODERS{
+        public static final int leftDriveEncoderChannelA = 0;
+        public static final int leftDriveEncoderChannelB = 1;
+        
+        public static final int rightDriveEncoderChannelA = 2;
+        public static final int rightDriveEncoderChannelB = 3;
+    }
+    public class VARIABLES{
         public static final int kZero = 0;
     }
 }

@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class TeleopDrive extends CommandBase {
-  private DoubleSupplier xSpeed;
-  private DoubleSupplier zRotation;
-  private double throttle;
+  DoubleSupplier xSpeed;
+  DoubleSupplier zRotation;
+  double throttle;
 
-  private DriveSubsystem m_drive;
+  DriveSubsystem m_drive;
 
   public TeleopDrive(DriveSubsystem m_drive, DoubleSupplier xSpeed, DoubleSupplier zRotation, double throttle) {
     this.xSpeed = xSpeed;

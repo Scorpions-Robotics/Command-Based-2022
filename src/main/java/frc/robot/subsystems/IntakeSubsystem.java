@@ -20,6 +20,6 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void stopIntake(){
-    intakeMotor.set(Constants.Variables.kZero);
+    intakeMotor.set(Constants.VARIABLES.kZero);
   }
 }

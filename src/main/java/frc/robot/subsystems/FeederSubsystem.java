@@ -20,6 +20,6 @@ public class FeederSubsystem extends SubsystemBase {
   }
 
   public void stopFeeder(){
-    feederMotor.set(Constants.Variables.kZero);
+    feederMotor.set(Constants.VARIABLES.kZero);
   }
 }
