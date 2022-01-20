@@ -12,7 +12,6 @@ public class TakeAim extends PIDCommand {
   DriveSubsystem m_drive;
   VisionSubsystem m_vision;
 
-  /** Creates a new TakeAim. */
   public TakeAim(DriveSubsystem m_drive, VisionSubsystem m_vision) {
     super(
         new PIDController(Constants.PID.kP, Constants.PID.kI, Constants.PID.kD),
