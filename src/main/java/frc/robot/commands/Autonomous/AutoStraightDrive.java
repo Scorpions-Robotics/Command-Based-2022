@@ -6,25 +6,22 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.VisionSubsystem;
 
-public class TakeAim extends PIDCommand {
-  DriveSubsystem m_drive;
-  VisionSubsystem m_vision;
 
-  public TakeAim(DriveSubsystem m_drive, VisionSubsystem m_vision) {
+public class AutoStraightDrive extends PIDCommand {
+
+
+  public AutoStraightDrive(DriveSubsystem m_drive, double meters) {
     super(
         new PIDController(Constants.PID.kP, Constants.PID.kI, Constants.PID.kD),
-        () -> Double.valueOf(m_vision.getR()),
-        () -> 0,
+        () -> m_drive.getStraightDriveDistance(),
+        () -> meters,
         output -> {
-          if(Math.abs(Double.valueOf(m_vision.getR()))>10){
-            m_drive.arcadeDrive(0, output);
-          }
+          m_drive.arcadeDrive(output, 0);
         });
-
-    addRequirements(m_drive, m_vision);
+        m_drive.resetEncoders();
   }
+
 
   @Override
   public boolean isFinished() {

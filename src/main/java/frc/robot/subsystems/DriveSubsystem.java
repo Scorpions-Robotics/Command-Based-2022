@@ -42,6 +42,10 @@ public class DriveSubsystem extends SubsystemBase {
     return rightDriveEncoder.getDistance();
   }
 
+  public double getStraightDriveDistance(){
+    return (getLeftEncoderDistance()+getRightEncoderDistance())/2;
+  }
+
   public void resetEncoders(){
     leftDriveEncoder.reset();
     rightDriveEncoder.reset();
