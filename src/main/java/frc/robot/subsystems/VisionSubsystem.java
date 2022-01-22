@@ -22,37 +22,88 @@ public class VisionSubsystem extends SubsystemBase {
   NetworkTableEntry bEntry = table.getEntry("B");
   NetworkTableEntry rEntry = table.getEntry("R");
 
+  double x;
+  double y;
+  double w;
+  double h;
+  double d;
+  double b;
+  double r;
+  
+
 
   public VisionSubsystem() {
     inst.startClient("10.76.72.10");
   }
 
-  public String getX(){
-    return xEntry.getString("");
+  public double getX(){
+    try{
+      x = Double.valueOf(xEntry.getString(""));
+    }
+    catch(Exception e){
+      x = 0.0;
+    }
+    return x;
   }
 
-  public String getY(){
-    return yEntry.getString("");
+  public double getY(){
+    try{
+      y = Double.valueOf(yEntry.getString(""));
+    }
+    catch(Exception e){
+      y = 0.0;
+    }
+    return y;
   }
 
-  public String getW(){
-    return wEntry.getString("");
+  public double getW(){
+    try{
+      w = Double.valueOf(wEntry.getString(""));
+    }
+    catch(Exception e){
+      w = 0.0;
+    }
+    return w;
   }
 
-  public String getH(){
-    return hEntry.getString("");
+  public double getH(){
+    try{
+      h = Double.valueOf(hEntry.getString(""));
+    }
+    catch(Exception e){
+      h = 0.0;
+    }
+    return h;
   }
 
-  public String getD(){
-    return dEntry.getString("");
+  public double getD(){
+    try{
+      d = Double.valueOf(dEntry.getString(""));
+    }
+    catch(Exception e){
+      d = 0.0;
+    }
+    return d;
   }
 
-  public String getB(){
-    return bEntry.getString("");
+  public double getB(){
+    try{
+      b = Double.valueOf(bEntry.getString(""));
+    }
+    catch(Exception e){
+      b = 0.0;
+    }
+    return b;
   }
 
-  public String getR(){
-    return rEntry.getString("");
+  public double getR(){
+    try{
+      r = Double.valueOf(rEntry.getString(""));
+    }
+    catch(Exception e){
+      r = 0.0;
+    }
+    return r;
   }
 
   public String getPeriod(){
@@ -90,13 +141,13 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   public void show_datas(){
-    SmartDashboard.putString("X", getX());
-    SmartDashboard.putString("Y", getY());
-    SmartDashboard.putString("W", getW());
-    SmartDashboard.putString("H", getH());
-    SmartDashboard.putString("D", getD());
-    SmartDashboard.putString("B", getB());
-    SmartDashboard.putString("R", getR());
+    SmartDashboard.putNumber("X", getX());
+    SmartDashboard.putNumber("Y", getY());
+    SmartDashboard.putNumber("W", getW());
+    SmartDashboard.putNumber("H", getH());
+    SmartDashboard.putNumber("D", getD());
+    SmartDashboard.putNumber("B", getB());
+    SmartDashboard.putNumber("R", getR());
   }
 
   @Override

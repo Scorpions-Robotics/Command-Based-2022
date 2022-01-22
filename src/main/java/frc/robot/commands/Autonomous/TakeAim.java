@@ -15,10 +15,10 @@ public class TakeAim extends PIDCommand {
   public TakeAim(DriveSubsystem m_drive, VisionSubsystem m_vision) {
     super(
         new PIDController(Constants.PID.kP, Constants.PID.kI, Constants.PID.kD),
-        () -> Double.valueOf(m_vision.getR()),
+        () -> m_vision.getR(),
         () -> 0,
         output -> {
-          if(Math.abs(Double.valueOf(m_vision.getR()))>10){
+          if(Math.abs(m_vision.getR())>10){
             m_drive.arcadeDrive(0, output);
           }
         });
