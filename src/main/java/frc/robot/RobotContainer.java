@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.Autonomous.Autonomous2Balls;
+import frc.robot.commands.Autonomous.Autonomous3Balls;
+import frc.robot.commands.Autonomous.Autonomous5Balls;
 import frc.robot.commands.DriveTrain.TeleopDrive;
 import frc.robot.commands.Feeder.FeederTurn;
 import frc.robot.commands.Intake.IntakeTurn;
@@ -74,7 +77,18 @@ public class RobotContainer {
   }
 
 
-  public Command getAutonomousCommand() {
+  public Command getAutonomousCommand(boolean goToTerminal, int position, int ball_count) {
+    if(goToTerminal){
+      return new Autonomous5Balls(position);
+    }
+    else{
+      if(ball_count == 2){
+        return new Autonomous2Balls(position);
+      }
+      else if(ball_count == 3){
+        return new Autonomous3Balls(position);
+      }
+    }
     return null;
   }
 }

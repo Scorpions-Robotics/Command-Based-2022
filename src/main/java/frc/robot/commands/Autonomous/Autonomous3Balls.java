@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Autonomous3Balls extends CommandBase {
 
-  public Autonomous3Balls() {
+  public Autonomous3Balls(int position) {
     
   }
 
