@@ -11,6 +11,6 @@ import frc.robot.subsystems.VisionSubsystem;
 
 public class CenteredAndFixed extends SequentialCommandGroup {
   public CenteredAndFixed(DriveSubsystem m_drive, VisionSubsystem m_vision, boolean mode) {
-    addCommands(new TakeAim(m_drive, m_vision).withTimeout(4).andThen(new FixedPosition(m_drive, mode)));
+    addCommands(new TakeAim(m_drive, m_vision).withTimeout(2.5).andThen(new FixedPosition(m_drive, mode)));
   }
 }
