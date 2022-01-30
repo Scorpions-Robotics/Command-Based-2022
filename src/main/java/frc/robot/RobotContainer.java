@@ -61,17 +61,18 @@ public class RobotContainer {
 
 
   private void configureButtonBindings() {
-    stickButton1.whileActiveContinuous(new RunCommand(() -> m_vision.send_mode(true)));
-    stickButton1.whenInactive(new RunCommand(() -> m_vision.send_mode(false)));
-    stickButton2.whileHeld(new ShooterTurn(m_shooter, 1));
+    // stickButton1.whileActiveContinuous(new RunCommand(() -> m_vision.send_mode(true)));
+    // stickButton1.whenInactive(new RunCommand(() -> m_vision.send_mode(false)));
+    
+    // stickButton2.whileHeld(new ShooterTurn(m_shooter, 1));
 
-    stickButton3.whenPressed(new FeederTurn(m_feeder, 1));
-    stickButton3.whenReleased(new FeederTurn(m_feeder, 0));
+    // stickButton3.whenPressed(new FeederTurn(m_feeder, 1));
+    // stickButton3.whenReleased(new FeederTurn(m_feeder, 0));
 
-    stickButton4.whenPressed(new FeederTurn(m_feeder, -1));
-    stickButton4.whenReleased(new FeederTurn(m_feeder, 0));
+    // stickButton4.whenPressed(new FeederTurn(m_feeder, -1));
+    // stickButton4.whenReleased(new FeederTurn(m_feeder, 0));
 
-    stickButton5.whileHeld(new IntakeTurn(m_intake, 1));
+    // stickButton5.whileHeld(new IntakeTurn(m_intake, 1));
   }
 
 

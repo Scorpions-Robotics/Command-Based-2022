@@ -9,7 +9,7 @@ import frc.robot.subsystems.DriveSubsystem;
 
 
 public class AutoStraightDrive extends PIDCommand {
-
+  DriveSubsystem m_drive;
 
   public AutoStraightDrive(DriveSubsystem m_drive, double meters) {
     super(
@@ -19,10 +19,15 @@ public class AutoStraightDrive extends PIDCommand {
         output -> {
           m_drive.arcadeDrive(output, 0);
         });
+        this.m_drive = m_drive;
         m_drive.resetEncoders();
   }
 
-
+  @Override
+  public void end(boolean interrupted) {
+    m_drive.stopMotors();
+  }
+  
   @Override
   public boolean isFinished() {
     return getController().atSetpoint();

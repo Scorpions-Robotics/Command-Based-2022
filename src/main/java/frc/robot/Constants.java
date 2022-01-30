@@ -39,7 +39,11 @@ public final class Constants {
 
         public static final int intakeMotorID = 9;
     }
-    public class PNEUMATICS{}
+    public class PNEUMATICS{
+        public static final int intakeSolenoidForwardChannel = 1;
+        public static final int intakeSolenoidReverseChannel = 2;
+        
+    }
     public class ENCODERS{
         public static final int leftDriveEncoderChannelA = 0;
         public static final int leftDriveEncoderChannelB = 1;
