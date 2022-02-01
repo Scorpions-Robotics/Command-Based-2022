@@ -1,5 +1,3 @@
-
-
 package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -8,7 +6,6 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveSubsystem;
 
-
 public class FixedPosition extends PIDCommand {
   boolean mode;
   DriveSubsystem m_drive;
@@ -16,13 +13,14 @@ public class FixedPosition extends PIDCommand {
   public FixedPosition(DriveSubsystem m_drive, boolean mode) {
     super(
         new PIDController(Constants.PID.kP, Constants.PID.kI, Constants.PID.kD),
-        () -> m_drive.getLeftEncoderDistance()-m_drive.getRightEncoderDistance(),
+        () -> m_drive.getLeftEncoderDistance() - m_drive.getRightEncoderDistance(),
         () -> 0,
         output -> {
           m_drive.arcadeDrive(RobotContainer.stick.getY(), output);
-        }, m_drive);
-        this.m_drive = m_drive;
-        this.mode = mode;
+        },
+        m_drive);
+    this.m_drive = m_drive;
+    this.mode = mode;
   }
 
   @Override
@@ -30,10 +28,9 @@ public class FixedPosition extends PIDCommand {
     m_drive.stopMotors();
   }
 
-
   @Override
   public boolean isFinished() {
-    if(mode == false){
+    if (mode == false) {
       return true;
     }
     return false;

@@ -1,5 +1,3 @@
-
-
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -10,7 +8,6 @@ public class ShooterSubsystem extends SubsystemBase {
   private WPI_VictorSPX shooterLeftMotor = new WPI_VictorSPX(Constants.CAN.shooterLeftMotorID);
   private WPI_VictorSPX shooterRightMotor = new WPI_VictorSPX(Constants.CAN.shooterRightMotorID);
 
-
   public ShooterSubsystem() {
     shooterLeftMotor.follow(shooterRightMotor);
   }
@@ -18,7 +15,7 @@ public class ShooterSubsystem extends SubsystemBase {
   @Override
   public void periodic() {}
 
-  public void runShooter(double speed){
+  public void runShooter(double speed) {
     shooterRightMotor.set(speed);
   }
 

@@ -1,5 +1,3 @@
-
-
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -14,11 +12,11 @@ public class ClimbSubsystem extends SubsystemBase {
   @Override
   public void periodic() {}
 
-  public void runClimb(double speed){
+  public void runClimb(double speed) {
     climbMotor.set(speed);
   }
 
-  public void stopClimb(){
+  public void stopClimb() {
     climbMotor.set(Constants.VARIABLES.kZero);
   }
 }

@@ -1,5 +1,3 @@
-
-
 package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -18,7 +16,7 @@ public class TakeAim extends PIDCommand {
         () -> m_vision.getR(),
         () -> 0,
         output -> {
-          if(Math.abs(m_vision.getR())>10){
+          if (Math.abs(m_vision.getR()) > 10) {
             m_drive.arcadeDrive(0, output);
           }
         });
