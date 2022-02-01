@@ -96,7 +96,7 @@ public void calibrate() {
     try{
         Thread.sleep(5000);
     } catch(Exception e) {
-
+      e.printStackTrace();
     }
     this.driftPerSecond = (imu.getAngle() - startAngle)/(Timer.getFPGATimestamp() - startTime);
   }
