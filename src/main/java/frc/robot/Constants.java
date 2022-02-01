@@ -18,11 +18,13 @@ public final class Constants {
     public static final int button11 = 11;
     public static final int button12 = 12;
   }
+
   public class PID {
     public static final double kP = 0.0;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
   }
+
   public class CAN {
     public static final int rightLeaderID = 1;
     public static final int rightFollowerID = 2;
@@ -37,10 +39,12 @@ public final class Constants {
 
     public static final int intakeMotorID = 9;
   }
+
   public class PNEUMATICS {
     public static final int intakeSolenoidForwardChannel = 1;
     public static final int intakeSolenoidReverseChannel = 2;
   }
+
   public class ENCODERS {
     public static final int leftDriveEncoderChannelA = 0;
     public static final int leftDriveEncoderChannelB = 1;
@@ -48,6 +52,7 @@ public final class Constants {
     public static final int rightDriveEncoderChannelA = 2;
     public static final int rightDriveEncoderChannelB = 3;
   }
+
   public class VARIABLES {
     public static final int kZero = 0;
   }
