@@ -1,5 +1,3 @@
-
-
 package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,22 +14,18 @@ public class IntakeTurn extends CommandBase {
     addRequirements(m_intake);
   }
 
-
   @Override
   public void initialize() {}
-
 
   @Override
   public void execute() {
     m_intake.runIntake(speed);
   }
 
-
   @Override
   public void end(boolean interrupted) {
     m_intake.stopIntake();
   }
-
 
   @Override
   public boolean isFinished() {
