@@ -27,16 +27,15 @@ public class AutoAngleTurn extends PIDCommand {
         output -> {
           m_drive.arcadeDrive(0, output);
         });
-        this.m_drive = m_drive;
-        m_drive.resetGyro();
-        addRequirements(m_drive);
+    this.m_drive = m_drive;
+    m_drive.resetGyro();
+    addRequirements(m_drive);
   }
 
   @Override
   public void end(boolean interrupted) {
     m_drive.stopMotors();
   }
-
 
   @Override
   public boolean isFinished() {

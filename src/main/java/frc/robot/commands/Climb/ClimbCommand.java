@@ -1,5 +1,3 @@
-
-
 package frc.robot.commands.Climb;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,22 +14,18 @@ public class ClimbCommand extends CommandBase {
     addRequirements(m_climb);
   }
 
-
   @Override
   public void initialize() {}
-
 
   @Override
   public void execute() {
     m_climb.runClimb(speed);
   }
 
-
   @Override
   public void end(boolean interrupted) {
     m_climb.stopClimb();
   }
-
 
   @Override
   public boolean isFinished() {
