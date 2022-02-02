@@ -7,6 +7,8 @@ on:
     branches: [ "**" ]
   pull_request:
     branches: [ "**" ]
+  schedule:
+    - cron: '0 3 * * *'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -27,6 +29,21 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
+    - name: Formatting the code
+      run: ./gradlew spotlessApply
+
     # Runs a single command using the runners shell
     - name: Compile and run tests on robot code
       run: ./gradlew spotlessCheck
+
+    - name: Commit back to GitHub
+      if: ${{ github.event_name == 'schedule' }}
+      run: |   
+        git config --global user.name "github-actiuons[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+        git add -A
+        if ! git diff-index --quiet HEAD; then
+          git commit -m "Formatting"
+          git push -u origin master
+        fi
