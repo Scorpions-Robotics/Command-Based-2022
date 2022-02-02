@@ -52,7 +52,6 @@ public final class Constants {
     public static final int rightDriveEncoderChannelA = 2;
     public static final int rightDriveEncoderChannelB = 3;
   }
-
   public class VARIABLES {
     public static final int kZero = 0;
   }
