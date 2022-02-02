@@ -16,7 +16,7 @@ public class Robot extends TimedRobot {
   public static SendableChooser<Integer> ball_chooser = new SendableChooser<>();
 
   @Override
-  public void robotInit() {
+  public void robotInit(){
     m_robotContainer = new RobotContainer();
 
     terminal_chooser.setDefaultOption("Go to terminal", true);
@@ -35,7 +35,8 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void robotPeriodic() {
+  public void robotPeriodic()
+  {
     CommandScheduler.getInstance().run();
   }
 
