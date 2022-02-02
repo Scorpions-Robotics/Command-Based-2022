@@ -9,6 +9,8 @@ on:
     branches: [ "**" ]
   schedule:
     - cron: '0 3 * * *'
+  workflow_dispatch:
+    branches: [ "**" ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -37,7 +39,7 @@ jobs:
       run: ./gradlew spotlessCheck
 
     - name: Commit back to GitHub
-      if: ${{ github.event_name == 'schedule' }}
+      if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'}}
       run: |   
         git config --global user.name "github-actiuons[bot]"
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
