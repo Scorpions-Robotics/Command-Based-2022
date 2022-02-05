@@ -8,11 +8,11 @@ import frc.robot.subsystems.DriveSubsystem;
 public class AutoStraightDrive extends PIDCommand {
   DriveSubsystem m_drive;
 
-  public AutoStraightDrive(DriveSubsystem m_drive, double meters) {
+  public AutoStraightDrive(DriveSubsystem m_drive, double meters, boolean reversed) {
     super(
         new PIDController(Constants.PID.kP, Constants.PID.kI, Constants.PID.kD),
         () -> m_drive.getStraightDriveDistance(),
-        () -> meters,
+        () -> reversed ? -meters : meters,
         output -> {
           m_drive.arcadeDrive(output, 0);
         });

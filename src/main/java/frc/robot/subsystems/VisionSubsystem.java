@@ -11,88 +11,29 @@ public class VisionSubsystem extends SubsystemBase {
 
   NetworkTableInstance inst = NetworkTableInstance.create();
   NetworkTable table = inst.getTable("vision");
+  NetworkTable ballTable = table.getSubTable("ball");
+  NetworkTable hoopTable = table.getSubTable("hoop");
 
-  NetworkTableEntry xEntry = table.getEntry("X");
-  NetworkTableEntry yEntry = table.getEntry("Y");
-  NetworkTableEntry wEntry = table.getEntry("W");
-  NetworkTableEntry hEntry = table.getEntry("H");
-  NetworkTableEntry dEntry = table.getEntry("D");
-  NetworkTableEntry bEntry = table.getEntry("B");
-  NetworkTableEntry rEntry = table.getEntry("R");
+  NetworkTableEntry ballXEntry = ballTable.getEntry("X");
+  NetworkTableEntry ballYEntry = ballTable.getEntry("Y");
+  NetworkTableEntry ballWEntry = ballTable.getEntry("W");
+  NetworkTableEntry ballHEntry = ballTable.getEntry("H");
+  NetworkTableEntry ballDEntry = ballTable.getEntry("D");
+  NetworkTableEntry ballBEntry = ballTable.getEntry("B");
+  NetworkTableEntry ballREntry = ballTable.getEntry("R");
 
-  double x;
-  double y;
-  double w;
-  double h;
-  double d;
-  double b;
-  double r;
+  NetworkTableEntry hoopXEntry = hoopTable.getEntry("X");
+  NetworkTableEntry hoopYEntry = hoopTable.getEntry("Y");
+  NetworkTableEntry hoopWEntry = hoopTable.getEntry("W");
+  NetworkTableEntry hoopHEntry = hoopTable.getEntry("H");
+  NetworkTableEntry hoopDEntry = hoopTable.getEntry("D");
+  NetworkTableEntry hoopBEntry = hoopTable.getEntry("B");
+  NetworkTableEntry hoopREntry = hoopTable.getEntry("R");
+
+  double value;
 
   public VisionSubsystem() {
     inst.startClient("10.76.72.10");
-  }
-
-  public double getX() {
-    try {
-      x = Double.valueOf(xEntry.getString(""));
-    } catch (Exception e) {
-      x = 0.0;
-    }
-    return x;
-  }
-
-  public double getY() {
-    try {
-      y = Double.valueOf(yEntry.getString(""));
-    } catch (Exception e) {
-      y = 0.0;
-    }
-    return y;
-  }
-
-  public double getW() {
-    try {
-      w = Double.valueOf(wEntry.getString(""));
-    } catch (Exception e) {
-      w = 0.0;
-    }
-    return w;
-  }
-
-  public double getH() {
-    try {
-      h = Double.valueOf(hEntry.getString(""));
-    } catch (Exception e) {
-      h = 0.0;
-    }
-    return h;
-  }
-
-  public double getD() {
-    try {
-      d = Double.valueOf(dEntry.getString(""));
-    } catch (Exception e) {
-      d = 0.0;
-    }
-    return d;
-  }
-
-  public double getB() {
-    try {
-      b = Double.valueOf(bEntry.getString(""));
-    } catch (Exception e) {
-      b = 0.0;
-    }
-    return b;
-  }
-
-  public double getR() {
-    try {
-      r = Double.valueOf(rEntry.getString(""));
-    } catch (Exception e) {
-      r = 0.0;
-    }
-    return r;
   }
 
   public String getPeriod() {
@@ -105,39 +46,114 @@ public class VisionSubsystem extends SubsystemBase {
     }
   }
 
-  public void send_mode(boolean mode) {
-    NetworkTableEntry mode_entry = table.getEntry("mode");
+  public void sendMode(boolean mode) {
+    NetworkTableEntry modeEntry = table.getEntry("mode");
 
     if (mode) {
-      mode_entry.setString("1");
+      modeEntry.setString("1");
     } else {
-      mode_entry.setString("0");
+      modeEntry.setString("0");
     }
   }
 
-  public void send_necessary_datas() {
-    show_datas();
-    NetworkTableEntry period_entry = table.getEntry("period");
-    NetworkTableEntry position_entry = table.getEntry("position");
-    NetworkTableEntry alliance_entry = table.getEntry("alliance");
+  public double getDouble(NetworkTableEntry entry){
+    try {
+        value = Double.valueOf(entry.getString(""));
+      } catch (Exception e) {
+        value = 0.0;
+      }
+    return value;
+}
 
-    alliance_entry.setString(DriverStation.getAlliance().toString());
-    position_entry.setNumber(DriverStation.getLocation());
-    period_entry.setString(getPeriod());
-  }
+  public void sendNecessaryDatas() {
+    showDatas();
+    NetworkTableEntry periodEntry = table.getEntry("period");
+    NetworkTableEntry positionEntry = table.getEntry("position");
+    NetworkTableEntry allianceEntry = table.getEntry("alliance");
 
-  public void show_datas() {
-    SmartDashboard.putNumber("X", getX());
-    SmartDashboard.putNumber("Y", getY());
-    SmartDashboard.putNumber("W", getW());
-    SmartDashboard.putNumber("H", getH());
-    SmartDashboard.putNumber("D", getD());
-    SmartDashboard.putNumber("B", getB());
-    SmartDashboard.putNumber("R", getR());
+    allianceEntry.setString(DriverStation.getAlliance().toString());
+    positionEntry.setNumber(DriverStation.getLocation());
+    periodEntry.setString(getPeriod());
   }
 
   @Override
   public void periodic() {
-    send_necessary_datas();
+    sendNecessaryDatas();
+  }
+
+  
+  public double getBallX() {
+    return getDouble(ballXEntry);
+  }
+
+  public double getBallY() {
+    return getDouble(ballYEntry);
+  }
+
+  public double getBallW() {
+    return getDouble(ballWEntry);
+  }
+
+  public double getBallH() {
+    return getDouble(ballHEntry);
+  }
+
+  public double getBallD() {
+    return getDouble(ballDEntry);
+  }
+
+  public double getBallB() {
+    return getDouble(ballBEntry);
+  }
+
+  public double getBallR() {
+    return getDouble(ballREntry);
+  }
+
+  
+  public double getHoopX() {
+    return getDouble(hoopXEntry);
+  }
+
+  public double getHoopY() {
+    return getDouble(hoopYEntry);
+  }
+
+  public double getHoopW() {
+    return getDouble(hoopWEntry);
+  }
+
+  public double getHoopH() {
+    return getDouble(hoopHEntry);
+  }
+
+  public double getHoopD() {
+    return getDouble(hoopDEntry);
+  }
+
+  public double getHoopB() {
+    return getDouble(hoopBEntry);
+  }
+
+  public double getHoopR() {
+    return getDouble(hoopREntry);
+  }
+
+  public void showDatas(){
+    SmartDashboard.putNumber("Ball X", getBallX());
+    SmartDashboard.putNumber("Ball Y", getBallY());
+    SmartDashboard.putNumber("Ball W", getBallW());
+    SmartDashboard.putNumber("Ball H", getBallH());
+    SmartDashboard.putNumber("Ball D", getBallD());
+    SmartDashboard.putNumber("Ball B", getBallB());
+    SmartDashboard.putNumber("Ball R", getBallR());
+
+    SmartDashboard.putNumber("Hoop X", getBallX());
+    SmartDashboard.putNumber("Hoop Y", getBallY());
+    SmartDashboard.putNumber("Hoop W", getBallW());
+    SmartDashboard.putNumber("Hoop H", getBallH());
+    SmartDashboard.putNumber("Hoop D", getBallD());
+    SmartDashboard.putNumber("Hoop B", getBallB());
+    SmartDashboard.putNumber("Hoop R", getBallR());
   }
 }

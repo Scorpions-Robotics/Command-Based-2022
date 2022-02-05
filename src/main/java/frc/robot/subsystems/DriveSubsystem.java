@@ -16,24 +16,24 @@ public class DriveSubsystem extends SubsystemBase {
   private double startTime;
   private double driftPerSecond;
 
-  private Encoder rightDriveEncoder =
-      new Encoder(
-          Constants.ENCODERS.leftDriveEncoderChannelA,
-          Constants.ENCODERS.leftDriveEncoderChannelB,
-          false,
-          EncodingType.k4X);
   private Encoder leftDriveEncoder =
       new Encoder(
-          Constants.ENCODERS.rightDriveEncoderChannelA,
-          Constants.ENCODERS.rightDriveEncoderChannelB,
+          Constants.ENCODERS.kLeftDriveEncoderChannelA,
+          Constants.ENCODERS.kLeftDriveEncoderChannelB,
+          false,
+          EncodingType.k4X);
+  private Encoder rightDriveEncoder =
+      new Encoder(
+          Constants.ENCODERS.kRightDriveEncoderChannelA,
+          Constants.ENCODERS.kRightDriveEncoderChannelB,
           false,
           EncodingType.k4X);
 
-  private WPI_VictorSPX rightLeader = new WPI_VictorSPX(Constants.CAN.rightLeaderID);
-  private WPI_VictorSPX rightFollower = new WPI_VictorSPX(Constants.CAN.rightFollowerID);
+  private WPI_VictorSPX rightLeader = new WPI_VictorSPX(Constants.CAN.kRightLeaderID);
+  private WPI_VictorSPX rightFollower = new WPI_VictorSPX(Constants.CAN.kRightFollowerID);
 
-  private WPI_VictorSPX leftLeader = new WPI_VictorSPX(Constants.CAN.leftLeaderID);
-  private WPI_VictorSPX leftFollower = new WPI_VictorSPX(Constants.CAN.leftFollowerID);
+  private WPI_VictorSPX leftLeader = new WPI_VictorSPX(Constants.CAN.kLeftLeaderID);
+  private WPI_VictorSPX leftFollower = new WPI_VictorSPX(Constants.CAN.kLeftFollowerID);
 
   private DifferentialDrive drive = new DifferentialDrive(rightLeader, leftLeader);
 

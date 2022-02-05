@@ -16,8 +16,8 @@ import frc.robot.subsystems.VisionSubsystem;
 
 public class RobotContainer {
 
-  public static final Joystick stick = new Joystick(Constants.OI.stickId);
-  public static final Joystick panel = new Joystick(Constants.OI.panelId);
+  public static final Joystick stick = new Joystick(Constants.OI.kStickId);
+  public static final Joystick panel = new Joystick(Constants.OI.kPanelId);
 
   private final DriveSubsystem m_drive = new DriveSubsystem();
   private final VisionSubsystem m_vision = new VisionSubsystem();
@@ -26,18 +26,18 @@ public class RobotContainer {
   private final IntakeSubsystem m_intake = new IntakeSubsystem();
   private final ClimbSubsystem m_climb = new ClimbSubsystem();
 
-  private final JoystickButton stickButton1 = new JoystickButton(stick, Constants.OI.button1);
-  private final JoystickButton stickButton2 = new JoystickButton(stick, Constants.OI.button1);
-  private final JoystickButton stickButton3 = new JoystickButton(stick, Constants.OI.button1);
-  private final JoystickButton stickButton4 = new JoystickButton(stick, Constants.OI.button1);
-  private final JoystickButton stickButton5 = new JoystickButton(stick, Constants.OI.button1);
-  private final JoystickButton stickButton6 = new JoystickButton(stick, Constants.OI.button1);
-  private final JoystickButton stickButton7 = new JoystickButton(stick, Constants.OI.button1);
-  private final JoystickButton stickButton8 = new JoystickButton(stick, Constants.OI.button1);
-  private final JoystickButton stickButton9 = new JoystickButton(stick, Constants.OI.button1);
-  private final JoystickButton stickButton10 = new JoystickButton(stick, Constants.OI.button1);
-  private final JoystickButton stickButton11 = new JoystickButton(stick, Constants.OI.button1);
-  private final JoystickButton stickButton12 = new JoystickButton(stick, Constants.OI.button1);
+  private final JoystickButton stickButton1 = new JoystickButton(stick, Constants.OI.kButton1);
+  private final JoystickButton stickButton2 = new JoystickButton(stick, Constants.OI.kButton2);
+  private final JoystickButton stickButton3 = new JoystickButton(stick, Constants.OI.kButton3);
+  private final JoystickButton stickButton4 = new JoystickButton(stick, Constants.OI.kButton4);
+  private final JoystickButton stickButton5 = new JoystickButton(stick, Constants.OI.kButton5);
+  private final JoystickButton stickButton6 = new JoystickButton(stick, Constants.OI.kButton6);
+  private final JoystickButton stickButton7 = new JoystickButton(stick, Constants.OI.kButton7);
+  private final JoystickButton stickButton8 = new JoystickButton(stick, Constants.OI.kButton8);
+  private final JoystickButton stickButton9 = new JoystickButton(stick, Constants.OI.kButton9);
+  private final JoystickButton stickButton10 = new JoystickButton(stick, Constants.OI.kButton10);
+  private final JoystickButton stickButton11 = new JoystickButton(stick, Constants.OI.kButton11);
+  private final JoystickButton stickButton12 = new JoystickButton(stick, Constants.OI.kButton12);
 
   public RobotContainer() {
     m_drive.setDefaultCommand(
@@ -48,8 +48,8 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    // stickButton1.whileActiveContinuous(new RunCommand(() -> m_vision.send_mode(true)));
-    // stickButton1.whenInactive(new RunCommand(() -> m_vision.send_mode(false)));
+    // stickButton1.whileActiveContinuous(new RunCommand(() -> m_vision.sendMode(true)));
+    // stickButton1.whenInactive(new RunCommand(() -> m_vision.sendMode(false)));
 
     // stickButton2.whileHeld(new ShooterTurn(m_shooter, 1));
 

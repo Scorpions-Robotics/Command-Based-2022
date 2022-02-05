@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ShooterSubsystem extends SubsystemBase {
-  private WPI_VictorSPX shooterLeftMotor = new WPI_VictorSPX(Constants.CAN.shooterLeftMotorID);
-  private WPI_VictorSPX shooterRightMotor = new WPI_VictorSPX(Constants.CAN.shooterRightMotorID);
+  private WPI_VictorSPX shooterLeftMotor = new WPI_VictorSPX(Constants.CAN.kShooterLeftMotorID);
+  private WPI_VictorSPX shooterRightMotor = new WPI_VictorSPX(Constants.CAN.kShooterRightMotorID);
 
   public ShooterSubsystem() {
     shooterLeftMotor.follow(shooterRightMotor);

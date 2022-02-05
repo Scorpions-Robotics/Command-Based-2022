@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
-  private WPI_VictorSPX intakeMotor = new WPI_VictorSPX(Constants.CAN.intakeMotorID);
+  private WPI_VictorSPX intakeMotor = new WPI_VictorSPX(Constants.CAN.kIntakeMotorID);
   DoubleSolenoid intake_solenoid =
       new DoubleSolenoid(
           PneumaticsModuleType.CTREPCM,
-          Constants.PNEUMATICS.intakeSolenoidForwardChannel,
-          Constants.PNEUMATICS.intakeSolenoidReverseChannel);
+          Constants.PNEUMATICS.kIntakeSolenoidForwardChannel,
+          Constants.PNEUMATICS.kIntakeSolenoidReverseChannel);
 
   public IntakeSubsystem() {}
 
