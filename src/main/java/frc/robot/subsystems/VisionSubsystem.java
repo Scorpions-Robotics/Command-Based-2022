@@ -56,14 +56,14 @@ public class VisionSubsystem extends SubsystemBase {
     }
   }
 
-  public double getDouble(NetworkTableEntry entry){
+  public double getDouble(NetworkTableEntry entry) {
     try {
-        value = Double.valueOf(entry.getString(""));
-      } catch (Exception e) {
-        value = 0.0;
-      }
+      value = Double.valueOf(entry.getString(""));
+    } catch (Exception e) {
+      value = 0.0;
+    }
     return value;
-}
+  }
 
   public void sendNecessaryDatas() {
     showDatas();
@@ -81,7 +81,6 @@ public class VisionSubsystem extends SubsystemBase {
     sendNecessaryDatas();
   }
 
-  
   public double getBallX() {
     return getDouble(ballXEntry);
   }
@@ -110,7 +109,6 @@ public class VisionSubsystem extends SubsystemBase {
     return getDouble(ballREntry);
   }
 
-  
   public double getHoopX() {
     return getDouble(hoopXEntry);
   }
@@ -139,7 +137,7 @@ public class VisionSubsystem extends SubsystemBase {
     return getDouble(hoopREntry);
   }
 
-  public void showDatas(){
+  public void showDatas() {
     SmartDashboard.putNumber("Ball X", getBallX());
     SmartDashboard.putNumber("Ball Y", getBallY());
     SmartDashboard.putNumber("Ball W", getBallW());
