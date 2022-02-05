@@ -32,6 +32,7 @@ jobs:
       run: chmod +x gradlew
 
     - name: Formatting the code
+      if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'}}
       run: ./gradlew spotlessApply
 
     # Runs a single command using the runners shell
