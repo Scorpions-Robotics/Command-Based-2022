@@ -2,14 +2,15 @@ package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 
 public class ShooterTurn extends CommandBase {
   ShooterSubsystem m_shooter;
-  double speed;
+  VisionSubsystem m_vision;
 
-  public ShooterTurn(ShooterSubsystem m_shooter, double speed) {
+  public ShooterTurn(VisionSubsystem m_vision, ShooterSubsystem m_shooter) {
     this.m_shooter = m_shooter;
-    this.speed = speed;
+    this.m_vision = m_vision;
 
     addRequirements(m_shooter);
   }
@@ -21,7 +22,8 @@ public class ShooterTurn extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.runShooter(speed);
+    // gonna change 100 and 600 values
+    m_shooter.runShooter(m_shooter.calculateShooterSpeed(m_vision.getHoopD(), 100, 600));
   }
 
   // Called once the command ends or is interrupted.

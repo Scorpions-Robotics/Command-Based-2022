@@ -2,11 +2,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commandgroups.Autonomous2Balls;
-import frc.robot.commandgroups.Autonomous3Balls;
-import frc.robot.commandgroups.Autonomous5Balls;
+import frc.robot.commandgroups.Autonomous.Autonomous2Balls;
+import frc.robot.commandgroups.Autonomous.Autonomous3Balls;
+import frc.robot.commandgroups.Autonomous.Autonomous5Balls;
 import frc.robot.commands.DriveTrain.TeleopDrive;
+import frc.robot.commands.Feeder.FeederTurn;
+import frc.robot.commands.Intake.IntakeTurn;
+import frc.robot.commands.Shooter.ShooterTurn;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
@@ -51,7 +55,8 @@ public class RobotContainer {
     // stickButton1.whileActiveContinuous(new RunCommand(() -> m_vision.sendMode(true)));
     // stickButton1.whenInactive(new RunCommand(() -> m_vision.sendMode(false)));
 
-    // stickButton2.whileHeld(new ShooterTurn(m_shooter, 1));
+    // // don't forget to try that part.
+    // stickButton2.whileHeld(new ShooterTurn(m_vision, m_shooter).withInterrupt(() -> !stick.getRawButton(2)));
 
     // stickButton3.whenPressed(new FeederTurn(m_feeder, 1));
     // stickButton3.whenReleased(new FeederTurn(m_feeder, 0));
@@ -67,7 +72,7 @@ public class RobotContainer {
       return new Autonomous5Balls(position);
     } else {
       if (ball_count == 2) {
-        return new Autonomous2Balls(position);
+        return new Autonomous2Balls();
       } else if (ball_count == 3) {
         return new Autonomous3Balls(position);
       }
