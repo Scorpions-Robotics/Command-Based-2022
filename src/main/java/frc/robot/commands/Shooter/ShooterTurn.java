@@ -23,7 +23,7 @@ public class ShooterTurn extends CommandBase {
   @Override
   public void execute() {
     // gonna change 100 and 600 values
-    m_shooter.runShooter(m_shooter.calculateShooterSpeed(m_vision.getHoopD(), 100, 600));
+    m_shooter.runShooter(m_shooter.calculateShooterSpeed(m_vision.getHoopD(), 100, 600, 0.25, 0.75));
   }
 
   // Called once the command ends or is interrupted.
