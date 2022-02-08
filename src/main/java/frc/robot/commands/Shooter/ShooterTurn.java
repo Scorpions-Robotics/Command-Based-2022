@@ -1,33 +1,33 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot.commands.Shooter;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
+import frc.robot.Constants;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
-public class ShooterTurn extends CommandBase {
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+public class ShooterTurn extends PIDCommand {
   ShooterSubsystem m_shooter;
   VisionSubsystem m_vision;
-
-  public ShooterTurn(VisionSubsystem m_vision, ShooterSubsystem m_shooter) {
+  public ShooterTurn(ShooterSubsystem m_shooter, VisionSubsystem m_vision) {
+    super(
+        new PIDController(Constants.PID.kP, Constants.PID.kI, Constants.PID.kD),
+        () -> m_shooter.getShooterEncoderRate(),
+        () -> m_shooter.calculateShooterSpeed(m_vision.getHoopD(), 2, 6, 12, 18),
+        output -> {
+          m_shooter.runShooter(output);
+        });
     this.m_shooter = m_shooter;
     this.m_vision = m_vision;
-
-    addRequirements(m_shooter);
   }
-
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    // gonna change 100 and 600 values
-    m_shooter.runShooter(
-        m_shooter.calculateShooterSpeed(m_vision.getHoopD(), 100, 600, 0.25, 0.75));
-  }
-
-  // Called once the command ends or is interrupted.
+  
   @Override
   public void end(boolean interrupted) {
     m_shooter.stopShooter();

@@ -51,6 +51,9 @@ public final class Constants {
 
     public static final int kRightDriveEncoderChannelA = 2;
     public static final int kRightDriveEncoderChannelB = 3;
+
+    public static final int kShooterEncoderChannelA = 4;
+    public static final int kShooterEncoderChannelB = 5;
   }
 
   public class VARIABLES {
