@@ -1,22 +1,21 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ShooterSubsystem extends SubsystemBase {
   private WPI_VictorSPX shooterLeftMotor = new WPI_VictorSPX(Constants.CAN.kShooterLeftMotorID);
   private WPI_VictorSPX shooterRightMotor = new WPI_VictorSPX(Constants.CAN.kShooterRightMotorID);
-  
+
   private Encoder ShooterEncoder =
-  new Encoder(
-      Constants.ENCODERS.kShooterEncoderChannelA,
-      Constants.ENCODERS.kShooterEncoderChannelB,
-      false,
-      EncodingType.k4X);
+      new Encoder(
+          Constants.ENCODERS.kShooterEncoderChannelA,
+          Constants.ENCODERS.kShooterEncoderChannelB,
+          false,
+          EncodingType.k4X);
 
   double result;
   double max_min_distance_diff;
@@ -36,11 +35,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double calculateShooterSpeed(
-      double distance,
-      double min_distance,
-      double max_distance,
-      double min_rate,
-      double max_rate) {
+      double distance, double min_distance, double max_distance, double min_rate, double max_rate) {
     max_min_distance_diff = max_distance - min_distance;
     current_min_distance_diff = distance - min_distance;
 
@@ -54,7 +49,7 @@ public class ShooterSubsystem extends SubsystemBase {
     return Math.max(min_rate, result);
   }
 
-  public double getShooterEncoderRate(){
+  public double getShooterEncoderRate() {
     return ShooterEncoder.getRate();
   }
 

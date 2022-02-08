@@ -16,6 +16,7 @@ import frc.robot.subsystems.VisionSubsystem;
 public class ShooterTurn extends PIDCommand {
   ShooterSubsystem m_shooter;
   VisionSubsystem m_vision;
+
   public ShooterTurn(ShooterSubsystem m_shooter, VisionSubsystem m_vision) {
     super(
         new PIDController(Constants.PID.kP, Constants.PID.kI, Constants.PID.kD),
@@ -27,7 +28,7 @@ public class ShooterTurn extends PIDCommand {
     this.m_shooter = m_shooter;
     this.m_vision = m_vision;
   }
-  
+
   @Override
   public void end(boolean interrupted) {
     m_shooter.stopShooter();
