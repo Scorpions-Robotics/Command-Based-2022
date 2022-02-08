@@ -23,16 +23,21 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterRightMotor.set(speed);
   }
 
-  public double calculateShooterSpeed(double distance, double min_distance, double max_distance, double min_speed, double max_speed) {
+  public double calculateShooterSpeed(
+      double distance,
+      double min_distance,
+      double max_distance,
+      double min_speed,
+      double max_speed) {
     max_min_distance_diff = max_distance - min_distance;
     current_min_distance_diff = distance - min_distance;
 
     result = current_min_distance_diff / max_min_distance_diff;
-    
+
     max_min_speed_diff = max_speed - min_speed;
-    
+
     result = max_min_speed_diff * result + min_speed;
-    
+
     // could modify 0.4 constant
     return Math.max(0.4, result);
   }
