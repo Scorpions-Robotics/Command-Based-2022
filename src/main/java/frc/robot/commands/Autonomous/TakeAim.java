@@ -2,7 +2,6 @@ package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
-import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
@@ -10,7 +9,7 @@ public class TakeAim extends PIDCommand {
 
   public TakeAim(DriveSubsystem m_drive, VisionSubsystem m_vision) {
     super(
-        new PIDController(Constants.PID.kP, Constants.PID.kI, Constants.PID.kD),
+        new PIDController(0, 0, 0),
         () -> m_vision.getHoopR(),
         () -> 0,
         output -> {

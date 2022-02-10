@@ -6,7 +6,6 @@ package frc.robot.commands.Shooter;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
-import frc.robot.Constants;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
@@ -19,7 +18,7 @@ public class ShooterTurn extends PIDCommand {
 
   public ShooterTurn(ShooterSubsystem m_shooter, VisionSubsystem m_vision) {
     super(
-        new PIDController(Constants.PID.kP, Constants.PID.kI, Constants.PID.kD),
+        new PIDController(0, 0, 0),
         () -> m_shooter.getShooterEncoderRate(),
         () -> m_shooter.calculateShooterSpeed(m_vision.getHoopD(), 2, 6, 12, 18),
         output -> {

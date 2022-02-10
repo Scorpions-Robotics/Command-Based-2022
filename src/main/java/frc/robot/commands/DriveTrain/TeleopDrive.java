@@ -7,15 +7,19 @@ import java.util.function.DoubleSupplier;
 public class TeleopDrive extends CommandBase {
   DoubleSupplier xSpeed;
   DoubleSupplier zRotation;
+  DoubleSupplier throttleSupplier;
   double throttle;
 
   DriveSubsystem m_drive;
 
   public TeleopDrive(
-      DriveSubsystem m_drive, DoubleSupplier xSpeed, DoubleSupplier zRotation, double throttle) {
+      DriveSubsystem m_drive,
+      DoubleSupplier xSpeed,
+      DoubleSupplier zRotation,
+      DoubleSupplier throttleSupplier) {
     this.xSpeed = xSpeed;
     this.zRotation = zRotation;
-    this.throttle = throttle;
+    this.throttleSupplier = throttleSupplier;
     this.m_drive = m_drive;
 
     addRequirements(m_drive);
@@ -26,8 +30,8 @@ public class TeleopDrive extends CommandBase {
 
   @Override
   public void execute() {
-    throttle = (throttle + 1) / 2;
-    m_drive.arcadeDrive(throttle * xSpeed.getAsDouble(), zRotation.getAsDouble());
+    throttle = (throttleSupplier.getAsDouble() * -1 + 1) / 2;
+    m_drive.arcadeDrive(throttle * xSpeed.getAsDouble(), throttle * zRotation.getAsDouble());
   }
 
   @Override

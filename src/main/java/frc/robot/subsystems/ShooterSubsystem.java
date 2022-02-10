@@ -10,7 +10,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private WPI_VictorSPX shooterLeftMotor = new WPI_VictorSPX(Constants.CAN.kShooterLeftMotorID);
   private WPI_VictorSPX shooterRightMotor = new WPI_VictorSPX(Constants.CAN.kShooterRightMotorID);
 
-  private Encoder ShooterEncoder =
+  private Encoder shooterEncoder =
       new Encoder(
           Constants.ENCODERS.kShooterEncoderChannelA,
           Constants.ENCODERS.kShooterEncoderChannelB,
@@ -50,7 +50,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double getShooterEncoderRate() {
-    return ShooterEncoder.getRate();
+    return shooterEncoder.getRate();
   }
 
   public void stopShooter() {
