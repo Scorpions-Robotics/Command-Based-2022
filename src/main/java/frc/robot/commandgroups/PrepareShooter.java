@@ -10,11 +10,11 @@ import frc.robot.subsystems.VisionSubsystem;
 
 public class PrepareShooter extends SequentialCommandGroup {
   public PrepareShooter(
-      DriveSubsystem m_drive, VisionSubsystem m_vision, ShooterSubsystem m_shooter, boolean mode) {
+      DriveSubsystem m_drive, VisionSubsystem m_vision, ShooterSubsystem m_shooter) {
     addCommands(
         new TakeAim(m_drive, m_vision)
             .withTimeout(2.5)
-            .andThen(new FixedPosition(m_drive, mode))
+            .andThen(new FixedPosition(m_drive))
             .alongWith(new AdjustShooterAngle()));
   }
 }

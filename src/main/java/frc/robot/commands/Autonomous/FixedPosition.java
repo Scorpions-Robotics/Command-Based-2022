@@ -7,10 +7,9 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class FixedPosition extends PIDCommand {
-  boolean mode;
   DriveSubsystem m_drive;
 
-  public FixedPosition(DriveSubsystem m_drive, boolean mode) {
+  public FixedPosition(DriveSubsystem m_drive) {
     super(
         new PIDController(Constants.PID.kP, Constants.PID.kI, Constants.PID.kD),
         () -> m_drive.getLeftEncoderDistance() - m_drive.getRightEncoderDistance(),
@@ -20,7 +19,6 @@ public class FixedPosition extends PIDCommand {
         },
         m_drive);
     this.m_drive = m_drive;
-    this.mode = mode;
   }
 
   @Override
@@ -30,9 +28,6 @@ public class FixedPosition extends PIDCommand {
 
   @Override
   public boolean isFinished() {
-    if (mode == false) {
-      return true;
-    }
     return false;
   }
 }
