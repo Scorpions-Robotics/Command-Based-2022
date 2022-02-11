@@ -42,7 +42,10 @@ public class RobotContainer {
   public RobotContainer() {
     m_drive.setDefaultCommand(
         new TeleopDrive(
-            m_drive, () -> stick.getRawAxis(1), () -> stick.getRawAxis(0), stick.getThrottle()));
+            m_drive,
+            () -> stick.getRawAxis(1),
+            () -> stick.getRawAxis(0),
+            () -> stick.getThrottle()));
 
     configureButtonBindings();
   }

@@ -2,7 +2,6 @@ package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveSubsystem;
 
@@ -11,7 +10,7 @@ public class FixedPosition extends PIDCommand {
 
   public FixedPosition(DriveSubsystem m_drive) {
     super(
-        new PIDController(Constants.PID.kP, Constants.PID.kI, Constants.PID.kD),
+        new PIDController(0, 0, 0),
         () -> m_drive.getLeftEncoderDistance() - m_drive.getRightEncoderDistance(),
         () -> 0,
         output -> {
