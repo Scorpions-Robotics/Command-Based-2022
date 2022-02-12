@@ -19,11 +19,11 @@ public class ShooterTurn extends PIDCommand {
   public ShooterTurn(ShooterSubsystem m_shooter, VisionSubsystem m_vision) {
     super(
         new PIDController(0, 0, 0),
-        () -> m_shooter.getShooterEncoderRate(),
-        () -> m_shooter.calculateShooterSpeed(m_vision.getHoopD(), 2, 6, 12, 18),
+        () -> m_shooter.getShooterEncoderRPM(),
+        () -> m_shooter.calculateShooterSpeed(m_vision.getHoopD(), m_vision.getHoopB(), 2, 6, 12, 18),
         output -> {
           m_shooter.runShooter(output);
-        });
+        }, m_shooter);
     this.m_shooter = m_shooter;
     this.m_vision = m_vision;
   }

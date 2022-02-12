@@ -14,21 +14,21 @@ public class VisionSubsystem extends SubsystemBase {
   NetworkTable ballTable = table.getSubTable("ball");
   NetworkTable hoopTable = table.getSubTable("hoop");
 
-  NetworkTableEntry ballXEntry = ballTable.getEntry("X");
-  NetworkTableEntry ballYEntry = ballTable.getEntry("Y");
-  NetworkTableEntry ballWEntry = ballTable.getEntry("W");
-  NetworkTableEntry ballHEntry = ballTable.getEntry("H");
-  NetworkTableEntry ballDEntry = ballTable.getEntry("D");
-  NetworkTableEntry ballBEntry = ballTable.getEntry("B");
-  NetworkTableEntry ballREntry = ballTable.getEntry("R");
+  NetworkTableEntry ballXEntry = ballTable.getEntry("ball_X");
+  NetworkTableEntry ballYEntry = ballTable.getEntry("ball_Y");
+  NetworkTableEntry ballWEntry = ballTable.getEntry("ball_W");
+  NetworkTableEntry ballHEntry = ballTable.getEntry("ball_H");
+  NetworkTableEntry ballDEntry = ballTable.getEntry("ball_D");
+  NetworkTableEntry ballBEntry = ballTable.getEntry("ball_B");
+  NetworkTableEntry ballREntry = ballTable.getEntry("ball_R");
 
-  NetworkTableEntry hoopXEntry = hoopTable.getEntry("X");
-  NetworkTableEntry hoopYEntry = hoopTable.getEntry("Y");
-  NetworkTableEntry hoopWEntry = hoopTable.getEntry("W");
-  NetworkTableEntry hoopHEntry = hoopTable.getEntry("H");
-  NetworkTableEntry hoopDEntry = hoopTable.getEntry("D");
-  NetworkTableEntry hoopBEntry = hoopTable.getEntry("B");
-  NetworkTableEntry hoopREntry = hoopTable.getEntry("R");
+  NetworkTableEntry hoopXEntry = hoopTable.getEntry("hoop_X");
+  NetworkTableEntry hoopYEntry = hoopTable.getEntry("hoop_Y");
+  NetworkTableEntry hoopWEntry = hoopTable.getEntry("hoop_W");
+  NetworkTableEntry hoopHEntry = hoopTable.getEntry("hoop_H");
+  NetworkTableEntry hoopDEntry = hoopTable.getEntry("hoop_D");
+  NetworkTableEntry hoopBEntry = hoopTable.getEntry("hoop_B");
+  NetworkTableEntry hoopREntry = hoopTable.getEntry("hoop_R");
 
   double value;
 
@@ -58,9 +58,9 @@ public class VisionSubsystem extends SubsystemBase {
 
   public double getDouble(NetworkTableEntry entry) {
     try {
-      value = Double.valueOf(entry.getString(""));
+      return Double.valueOf(entry.getString(""));
     } catch (Exception e) {
-      value = 0.0;
+      e.printStackTrace();
     }
     return value;
   }

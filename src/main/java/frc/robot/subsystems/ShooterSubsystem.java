@@ -20,7 +20,7 @@ public class ShooterSubsystem extends SubsystemBase {
   double result;
   double max_min_distance_diff;
   double current_min_distance_diff;
-  double max_min_rate_diff;
+  double max_min_rpm_diff;
 
   public ShooterSubsystem() {
     shooterLeftMotor.follow(shooterRightMotor);
@@ -35,22 +35,27 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double calculateShooterSpeed(
-      double distance, double min_distance, double max_distance, double min_rate, double max_rate) {
-    max_min_distance_diff = max_distance - min_distance;
-    current_min_distance_diff = distance - min_distance;
+      double distance, double isHoopInVision, double min_distance, double max_distance, double min_rpm, double max_rpm) {
+        if(isHoopInVision == 1){
+          max_min_distance_diff = max_distance - min_distance;
+          current_min_distance_diff = distance - min_distance;
 
-    result = current_min_distance_diff / max_min_distance_diff;
+          result = current_min_distance_diff / max_min_distance_diff;
 
-    max_min_rate_diff = max_rate - min_rate;
+          max_min_rpm_diff = max_rpm - min_rpm;
 
-    result = max_min_rate_diff * result + min_rate;
+          result = max_min_rpm_diff * result + min_rpm;
 
-    // could modify 0.4 constant
-    return Math.max(min_rate, result);
+          return Math.max(min_rpm, result);
+        }
+        else{
+          // this is just for testing.
+          return 0.5;
+        }
   }
 
-  public double getShooterEncoderRate() {
-    return shooterEncoder.getRate();
+  public double getShooterEncoderRPM() {
+    return shooterEncoder.getRate() * 60;
   }
 
   public void stopShooter() {
