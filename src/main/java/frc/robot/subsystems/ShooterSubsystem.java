@@ -2,7 +2,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -16,6 +18,8 @@ public class ShooterSubsystem extends SubsystemBase {
           Constants.ENCODERS.kShooterEncoderChannelB,
           false,
           EncodingType.k4X);
+
+  private DoubleSolenoid anglePneumatic = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.PNEUMATICS.kShooterSolenoidForwardChannel, Constants.PNEUMATICS.kShooterSolenoidReverseChannel);
 
   double result;
   double max_min_distance_diff;
@@ -32,6 +36,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void runShooter(double speed) {
     shooterRightMotor.set(speed);
+  }
+
+  public void pushPneumatic(){
+    anglePneumatic.set(DoubleSolenoid.Value.kForward);
+  }
+
+  public void pullPneumatic(){
+    anglePneumatic.set(DoubleSolenoid.Value.kReverse);
   }
 
   public double calculateShooterSpeed(

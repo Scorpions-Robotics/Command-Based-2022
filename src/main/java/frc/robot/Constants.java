@@ -49,6 +49,9 @@ public final class Constants {
   public class PNEUMATICS {
     public static final int kIntakeSolenoidForwardChannel = 1;
     public static final int kIntakeSolenoidReverseChannel = 2;
+
+    public static final int kShooterSolenoidForwardChannel = 3;
+    public static final int kShooterSolenoidReverseChannel = 4;
   }
 
   public class ENCODERS {
