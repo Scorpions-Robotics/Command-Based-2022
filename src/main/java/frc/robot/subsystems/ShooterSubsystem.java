@@ -58,6 +58,10 @@ public class ShooterSubsystem extends SubsystemBase {
     }
   }
 
+  public void runShooterVoltage(double voltage) {
+    shooterRightMotor.setVoltage(voltage);
+  }
+
   public double getShooterEncoderRPM() {
     return shooterEncoder.getRate() * 60;
   }

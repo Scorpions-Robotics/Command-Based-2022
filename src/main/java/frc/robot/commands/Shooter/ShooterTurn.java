@@ -17,7 +17,7 @@ import frc.robot.subsystems.VisionSubsystem;
 public class ShooterTurn extends PIDCommand {
   ShooterSubsystem m_shooter;
   VisionSubsystem m_vision;
-  double motorOutput;
+  static double motorOutput;
   private static final SimpleMotorFeedforward m_shooterFeedForward =
       new SimpleMotorFeedforward(SHOOTER.kS, SHOOTER.kV, SHOOTER.kA);
 
@@ -26,9 +26,14 @@ public class ShooterTurn extends PIDCommand {
         new PIDController(0, 0, 0),
         () -> m_shooter.getShooterEncoderRPM(),
         () ->
-            m_shooter.calculateShooterSpeed(m_vision.getHoopD(), m_vision.getHoopB(), 2, 6, 12, 18),
-        (output, setpoint) -> {
-          motorOutput = output + m_shooterFeedForward.calculate(setpoint);
+            m_shooter.calculateShooterSpeed(
+                m_vision.getHoopD(), m_vision.getHoopB(), 2, 6, 3000, 5000),
+        output -> {
+          motorOutput =
+              output
+                  + m_shooterFeedForward.calculate(
+                      m_shooter.calculateShooterSpeed(
+                          m_vision.getHoopD(), m_vision.getHoopB(), 2, 6, 3000, 5000));
           m_shooter.runShooterVoltage(-motorOutput);
         },
         m_shooter);
