@@ -25,6 +25,12 @@ public final class Constants {
     public static final double kD = 0.0;
   }
 
+  public class SHOOTER {
+    public static final double kV = 0.0;
+    public static final double kS = 0.0;
+    public static final double kA = 0.0;
+  }
+
   public class CAN {
     public static final int kRightLeaderID = 1;
     public static final int kRightFollowerID = 2;

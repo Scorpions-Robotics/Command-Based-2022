@@ -5,7 +5,9 @@
 package frc.robot.commands.Shooter;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import frc.robot.Constants.SHOOTER;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
@@ -15,6 +17,9 @@ import frc.robot.subsystems.VisionSubsystem;
 public class ShooterTurn extends PIDCommand {
   ShooterSubsystem m_shooter;
   VisionSubsystem m_vision;
+  double motorOutput;
+  private static final SimpleMotorFeedforward m_shooterFeedForward =
+      new SimpleMotorFeedforward(SHOOTER.kS, SHOOTER.kV, SHOOTER.kA);
 
   public ShooterTurn(ShooterSubsystem m_shooter, VisionSubsystem m_vision) {
     super(
@@ -22,8 +27,9 @@ public class ShooterTurn extends PIDCommand {
         () -> m_shooter.getShooterEncoderRPM(),
         () ->
             m_shooter.calculateShooterSpeed(m_vision.getHoopD(), m_vision.getHoopB(), 2, 6, 12, 18),
-        output -> {
-          m_shooter.runShooter(output);
+        (output, setpoint) -> {
+          motorOutput = output + m_shooterFeedForward.calculate(setpoint);
+          m_shooter.runShooterVoltage(-motorOutput);
         },
         m_shooter);
     this.m_shooter = m_shooter;
