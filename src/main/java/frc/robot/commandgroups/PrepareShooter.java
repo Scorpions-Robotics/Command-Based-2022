@@ -15,6 +15,6 @@ public class PrepareShooter extends SequentialCommandGroup {
         new TakeAim(m_drive, m_vision)
             .withTimeout(2.5)
             .andThen(new FixedPosition(m_drive))
-            .alongWith(new AdjustShooterAngle()));
+            .alongWith(new AdjustShooterAngle(m_shooter, m_vision)));
   }
 }

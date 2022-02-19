@@ -25,6 +25,12 @@ public final class Constants {
     public static final double kD = 0.0;
   }
 
+  public class SHOOTER {
+    public static final double kV = 0.0;
+    public static final double kS = 0.0;
+    public static final double kA = 0.0;
+  }
+
   public class CAN {
     public static final int kRightLeaderID = 1;
     public static final int kRightFollowerID = 2;
@@ -43,6 +49,9 @@ public final class Constants {
   public class PNEUMATICS {
     public static final int kIntakeSolenoidForwardChannel = 1;
     public static final int kIntakeSolenoidReverseChannel = 2;
+
+    public static final int kShooterSolenoidForwardChannel = 3;
+    public static final int kShooterSolenoidReverseChannel = 4;
   }
 
   public class ENCODERS {
