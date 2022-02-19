@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -30,128 +29,46 @@ public class VisionSubsystem extends SubsystemBase {
   NetworkTableEntry hoopBEntry = hoopTable.getEntry("hoop_B");
   NetworkTableEntry hoopREntry = hoopTable.getEntry("hoop_R");
 
-  double value;
+  NetworkTableEntry modeEntry = table.getEntry("mode");
+
+  String mode = "hoop";
 
   public VisionSubsystem() {
     inst.startClient("10.76.72.10");
+    sendMode(mode);
   }
 
-  public String getPeriod() {
-    if (DriverStation.isAutonomous()) {
-      return "Autonomous";
-    } else if (DriverStation.isTeleop()) {
-      return "Teleoperated";
-    } else {
-      return "None";
-    }
-  }
-
-  public void sendMode(boolean mode) {
-    NetworkTableEntry modeEntry = table.getEntry("mode");
-
-    if (mode) {
-      modeEntry.setString("1");
-    } else {
-      modeEntry.setString("0");
-    }
-  }
-
-  public double getDouble(NetworkTableEntry entry) {
-    try {
-      return Double.valueOf(entry.getString(""));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return value;
-  }
-
-  public void sendNecessaryDatas() {
-    showDatas();
-    NetworkTableEntry periodEntry = table.getEntry("period");
-    NetworkTableEntry positionEntry = table.getEntry("position");
-    NetworkTableEntry allianceEntry = table.getEntry("alliance");
-
-    allianceEntry.setString(DriverStation.getAlliance().toString());
-    positionEntry.setNumber(DriverStation.getLocation());
-    periodEntry.setString(getPeriod());
+  public void sendMode(String mode) {
+    this.mode = mode;
+    modeEntry.setString(mode);
   }
 
   @Override
   public void periodic() {
-    sendNecessaryDatas();
+    showDatas();
   }
 
-  public double getBallX() {
-    return getDouble(ballXEntry);
-  }
+  public double getBallD() {return getBallB() == 1 ? Double.valueOf(ballDEntry.getString("")) : 0.0;}
 
-  public double getBallY() {
-    return getDouble(ballYEntry);
-  }
+  public double getBallB() {return Double.valueOf(ballBEntry.getString("0"));}
 
-  public double getBallW() {
-    return getDouble(ballWEntry);
-  }
+  public double getBallR() {return getBallB() == 1 ? Double.valueOf(ballREntry.getString("")) : 0.0;}
 
-  public double getBallH() {
-    return getDouble(ballHEntry);
-  }
+  public double getHoopD() {return getHoopB() == 1 ? Double.valueOf(hoopDEntry.getString("")) : 0.0;}
 
-  public double getBallD() {
-    return getDouble(ballDEntry);
-  }
+  public double getHoopB() {return Double.valueOf(hoopBEntry.getString("0"));}
 
-  public double getBallB() {
-    return getDouble(ballBEntry);
-  }
+  public double getHoopR(){return getHoopB() == 1 ? Double.valueOf(hoopREntry.getString("")) : 0.0;}
 
-  public double getBallR() {
-    return getDouble(ballREntry);
-  }
-
-  public double getHoopX() {
-    return getDouble(hoopXEntry);
-  }
-
-  public double getHoopY() {
-    return getDouble(hoopYEntry);
-  }
-
-  public double getHoopW() {
-    return getDouble(hoopWEntry);
-  }
-
-  public double getHoopH() {
-    return getDouble(hoopHEntry);
-  }
-
-  public double getHoopD() {
-    return getDouble(hoopDEntry);
-  }
-
-  public double getHoopB() {
-    return getDouble(hoopBEntry);
-  }
-
-  public double getHoopR() {
-    return getDouble(hoopREntry);
-  }
+  
 
   public void showDatas() {
-    SmartDashboard.putNumber("Ball X", getBallX());
-    SmartDashboard.putNumber("Ball Y", getBallY());
-    SmartDashboard.putNumber("Ball W", getBallW());
-    SmartDashboard.putNumber("Ball H", getBallH());
     SmartDashboard.putNumber("Ball D", getBallD());
     SmartDashboard.putNumber("Ball B", getBallB());
     SmartDashboard.putNumber("Ball R", getBallR());
 
-    SmartDashboard.putNumber("Hoop X", getBallX());
-    SmartDashboard.putNumber("Hoop Y", getBallY());
-    SmartDashboard.putNumber("Hoop W", getBallW());
-    SmartDashboard.putNumber("Hoop H", getBallH());
-    SmartDashboard.putNumber("Hoop D", getBallD());
-    SmartDashboard.putNumber("Hoop B", getBallB());
-    SmartDashboard.putNumber("Hoop R", getBallR());
+    SmartDashboard.putNumber("Hoop D", getHoopD());
+    SmartDashboard.putNumber("Hoop B", getHoopB());
+    SmartDashboard.putNumber("Hoop R", getHoopR());
   }
 }

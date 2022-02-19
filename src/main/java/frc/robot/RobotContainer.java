@@ -51,8 +51,8 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    // stickButton1.whileActiveContinuous(new RunCommand(() -> m_vision.sendMode(true)));
-    // stickButton1.whenInactive(new RunCommand(() -> m_vision.sendMode(false)));
+    // stickButton1.whileActiveContinuous(new RunCommand(() -> m_vision.sendMode("hoop")));
+    // stickButton1.whenInactive(new RunCommand(() -> m_vision.sendMode("ball")));
 
     // // don't forget to try that part.
     // stickButton2.whileHeld(new ShooterTurn(m_vision, m_shooter).withInterrupt(() ->
@@ -65,6 +65,9 @@ public class RobotContainer {
     // stickButton4.whenReleased(new FeederTurn(m_feeder, 0));
 
     // stickButton5.whileHeld(new IntakeTurn(m_intake, 1));
+
+    // sensör için trigger
+    // new Trigger(() -> stick.getRawButton(3)).whenActive(new FeederTurn(m_feeder, 1).withInterrupt(() -> m_feeder.getSwitchValue()));
   }
 
   public Command getAutonomousCommand(boolean go_to_terminal, int position, int ball_count) {
