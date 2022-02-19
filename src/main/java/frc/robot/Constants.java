@@ -19,16 +19,14 @@ public final class Constants {
     public static final int kButton12 = 12;
   }
 
-  public class PID {
-    public static final double kP = 0.0;
-    public static final double kI = 0.0;
-    public static final double kD = 0.0;
-  }
-
   public class SHOOTER {
     public static final double kV = 0.0;
     public static final double kS = 0.0;
     public static final double kA = 0.0;
+  }
+
+  public class FEEDER{
+    public static final int limitPort = 0;
   }
 
   public class CAN {
