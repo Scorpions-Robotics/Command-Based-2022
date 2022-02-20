@@ -14,7 +14,10 @@ import frc.robot.subsystems.DriveSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoDriveWithHeading extends SequentialCommandGroup {
   /** Creates a new AutoDriveWithHeading. */
-  public AutoDriveWithHeading(DriveSubsystem m_drive, double meters, double heading, boolean reversed) {
-    addCommands(new AutoStraightDrive(m_drive, meters, reversed).andThen(new AutoAngleTurn(m_drive, heading)));
+  public AutoDriveWithHeading(
+      DriveSubsystem m_drive, double meters, double heading, boolean reversed) {
+    addCommands(
+        new AutoStraightDrive(m_drive, meters, reversed)
+            .andThen(new AutoAngleTurn(m_drive, heading)));
   }
 }

@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -23,7 +22,7 @@ public class FeederSubsystem extends SubsystemBase {
     feederMotor.set(Constants.VARIABLES.kZero);
   }
 
-  public boolean getSwitchValue(){
+  public boolean getSwitchValue() {
     return limitSwitch.get();
   }
 }

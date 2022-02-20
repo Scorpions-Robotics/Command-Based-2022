@@ -67,7 +67,8 @@ public class RobotContainer {
     // stickButton5.whileHeld(new IntakeTurn(m_intake, 1));
 
     // sensör için trigger
-    // new Trigger(() -> stick.getRawButton(3)).whenActive(new FeederTurn(m_feeder, 1).withInterrupt(() -> m_feeder.getSwitchValue()));
+    // new Trigger(() -> stick.getRawButton(3)).whenActive(new FeederTurn(m_feeder,
+    // 1).withInterrupt(() -> m_feeder.getSwitchValue()));
   }
 
   public Command getAutonomousCommand(boolean go_to_terminal, int position, int ball_count) {

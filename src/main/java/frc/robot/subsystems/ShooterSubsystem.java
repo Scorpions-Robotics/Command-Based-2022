@@ -19,7 +19,11 @@ public class ShooterSubsystem extends SubsystemBase {
           false,
           EncodingType.k4X);
 
-  private DoubleSolenoid anglePneumatic = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.PNEUMATICS.kShooterSolenoidForwardChannel, Constants.PNEUMATICS.kShooterSolenoidReverseChannel);
+  private DoubleSolenoid anglePneumatic =
+      new DoubleSolenoid(
+          PneumaticsModuleType.CTREPCM,
+          Constants.PNEUMATICS.kShooterSolenoidForwardChannel,
+          Constants.PNEUMATICS.kShooterSolenoidReverseChannel);
 
   double result;
   double max_min_distance_diff;
@@ -38,11 +42,11 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterRightMotor.set(speed);
   }
 
-  public void pushPneumatic(){
+  public void pushPneumatic() {
     anglePneumatic.set(DoubleSolenoid.Value.kForward);
   }
 
-  public void pullPneumatic(){
+  public void pullPneumatic() {
     anglePneumatic.set(DoubleSolenoid.Value.kReverse);
   }
 
