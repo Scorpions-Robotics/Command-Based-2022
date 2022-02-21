@@ -5,12 +5,15 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ShooterSubsystem extends SubsystemBase {
   private WPI_VictorSPX shooterLeftMotor = new WPI_VictorSPX(Constants.CAN.kShooterLeftMotorID);
   private WPI_VictorSPX shooterRightMotor = new WPI_VictorSPX(Constants.CAN.kShooterRightMotorID);
+
+  Servo servo = new Servo(Constants.SHOOTER.kServoPWM);
 
   private Encoder shooterEncoder =
       new Encoder(
@@ -44,6 +47,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void pushPneumatic() {
     anglePneumatic.set(DoubleSolenoid.Value.kForward);
+  }
+
+  public void SetServoAngle(double angle){
+    servo.setAngle(angle);
   }
 
   public void pullPneumatic() {

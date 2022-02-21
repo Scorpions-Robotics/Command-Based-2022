@@ -1,0 +1,8 @@
+1 - left 1
+2 - feeder
+3 - shooter 1
+5 - right 1
+6 - right 2
+7 - left 2
+8 - intake
+9 - shooter 2

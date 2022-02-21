@@ -1,5 +1,6 @@
 package frc.robot.commands.DriveTrain;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 import java.util.function.DoubleSupplier;
@@ -31,6 +32,7 @@ public class TeleopDrive extends CommandBase {
   @Override
   public void execute() {
     throttle = (throttleSupplier.getAsDouble() * -1 + 1) / 2;
+    SmartDashboard.putNumber("throttle", throttle);
     m_drive.arcadeDrive(throttle * xSpeed.getAsDouble(), throttle * zRotation.getAsDouble());
   }
 

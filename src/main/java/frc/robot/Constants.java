@@ -27,29 +27,30 @@ public final class Constants {
     public static final double kV = 0.0;
     public static final double kS = 0.0;
     public static final double kA = 0.0;
+    public static final int kServoPWM = 1;
   }
 
   public class CAN {
-    public static final int kRightLeaderID = 1;
-    public static final int kRightFollowerID = 2;
-    public static final int kLeftLeaderID = 3;
-    public static final int kLeftFollowerID = 4;
+    public static final int kRightLeaderID = 5;
+    public static final int kRightFollowerID = 6;
+    public static final int kLeftLeaderID = 1;
+    public static final int kLeftFollowerID = 7;
 
-    public static final int kClimbMotorID = 5;
-    public static final int kFeederMotorID = 6;
+    public static final int kClimbMotorID = 0;
+    public static final int kFeederMotorID = 2;
 
-    public static final int kShooterRightMotorID = 7;
-    public static final int kShooterLeftMotorID = 8;
+    public static final int kShooterRightMotorID = 3;
+    public static final int kShooterLeftMotorID = 9;
 
-    public static final int kIntakeMotorID = 9;
+    public static final int kIntakeMotorID = 8;
   }
 
   public class PNEUMATICS {
-    public static final int kIntakeSolenoidForwardChannel = 1;
-    public static final int kIntakeSolenoidReverseChannel = 2;
+    public static final int kIntakeSolenoidForwardChannel = 4;
+    public static final int kIntakeSolenoidReverseChannel = 5;
 
-    public static final int kShooterSolenoidForwardChannel = 3;
-    public static final int kShooterSolenoidReverseChannel = 4;
+    public static final int kShooterSolenoidForwardChannel = 6;
+    public static final int kShooterSolenoidReverseChannel = 7;
   }
 
   public class ENCODERS {
