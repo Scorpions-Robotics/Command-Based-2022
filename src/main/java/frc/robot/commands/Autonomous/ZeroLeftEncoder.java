@@ -8,7 +8,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.DriveSubsystem;
 
-
 public class ZeroLeftEncoder extends PIDCommand {
 
   public ZeroLeftEncoder(DriveSubsystem m_drive) {

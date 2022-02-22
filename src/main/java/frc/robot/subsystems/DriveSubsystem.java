@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.ColorSensorV3;
-
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
@@ -69,11 +68,12 @@ public class DriveSubsystem extends SubsystemBase {
     return (getLeftEncoderDistance() + getRightEncoderDistance()) / 2;
   }
 
-  public void runLeftMotor(double speed){
-    leftLeader.set(speed);;
+  public void runLeftMotor(double speed) {
+    leftLeader.set(speed);
+    ;
   }
 
-  public void runRightMotor(double speed){
+  public void runRightMotor(double speed) {
     rightLeader.set(speed);
   }
 
@@ -120,7 +120,7 @@ public class DriveSubsystem extends SubsystemBase {
     this.driftPerSecond = (imu.getAngle() - startAngle) / (Timer.getFPGATimestamp() - startTime);
   }
 
-  public double getIR(){
+  public double getIR() {
     return m_colorSensor.getIR();
   }
 

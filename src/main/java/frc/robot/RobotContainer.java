@@ -4,13 +4,14 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.Autonomous.AutoAngleTurn;
 import frc.robot.commands.DriveTrain.TeleopDrive;
 import frc.robot.commands.Feeder.FeederTurn;
 import frc.robot.commands.Intake.IntakePneumaticPull;
 import frc.robot.commands.Intake.IntakePneumaticPush;
 import frc.robot.commands.Intake.IntakeTurn;
 import frc.robot.commands.Shooter.SetServoAngle;
-import frc.robot.commands.Shooter.ShooterTurn;
 import frc.robot.commands.Shooter.ShooterTurnManual;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
@@ -57,25 +58,23 @@ public class RobotContainer {
   private void configureButtonBindings() {
     stickButton1.whileActiveContinuous(new RunCommand(() -> m_vision.sendMode("hoop")));
     stickButton1.whenInactive(new RunCommand(() -> m_vision.sendMode("ball")));
+    stickButton12.whenActive(new RunCommand(() -> m_drive.resetGyro(), m_drive));
 
-    // // don't forget to try that part.
-    // stickButton2.whileHeld(new ShooterTurn1(m_shooter, 0.7));
+    stickButton2.whileHeld(new ShooterTurnManual(m_shooter, () -> stick.getThrottle()));
 
-    // stickButton3.whenPressed(new FeederTurn(m_feeder, 1));
-    // stickButton3.whenReleased(new FeederTurn(m_feeder, 0));
+    stickButton3.whileHeld(new FeederTurn(m_feeder, 1));
 
-    // stickButton4.whenPressed(new FeederTurn(m_feeder, -1));
-    // stickButton4.whenReleased(new FeederTurn(m_feeder, 0));
+    stickButton4.whileHeld(new FeederTurn(m_feeder, -1));
 
-    // stickButton5.whileHeld(new IntakeTurn(m_intake, 1));
+    stickButton5.whenActive(new AutoAngleTurn(m_drive, -90));
 
     // sensör için trigger
-    // new Trigger(() -> stick.getRawButton(3)).whenActive(new FeederTurn(m_feeder,
-    // 1).withInterrupt(() -> !stick.getRawButton(3)));
+    // new Trigger(() -> stick.getRawButton(3))
+    //     .whenActive(new FeederTurn(m_feeder, 1).withInterrupt(() -> stick.getRawButton(4)));
 
     stickButton7.whenActive(new IntakePneumaticPush(m_intake));
     stickButton8.whenActive(new IntakePneumaticPull(m_intake));
-    stickButton10.whenActive(new SetServoAngle(m_shooter, 30));
+    stickButton10.whenActive(new SetServoAngle(m_shooter, 20));
     stickButton11.whenActive(new SetServoAngle(m_shooter, 60));
   }
 

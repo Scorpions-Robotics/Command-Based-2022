@@ -4,16 +4,19 @@
 
 package frc.robot.commands.Shooter;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterTurnManual extends CommandBase {
   ShooterSubsystem m_shooter;
+  DoubleSupplier speedSupplier;
   double speed;
   /** Creates a new ShooterTurn1. */
-  public ShooterTurnManual(ShooterSubsystem m_shooter, double speed) {
+  public ShooterTurnManual(ShooterSubsystem m_shooter, DoubleSupplier speedSupplier) {
     this.m_shooter = m_shooter;
-    this.speed = speed;
+    this.speedSupplier = speedSupplier;
     addRequirements(m_shooter);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -25,6 +28,7 @@ public class ShooterTurnManual extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    speed = (speedSupplier.getAsDouble() * -1 + 1) / 2;
     m_shooter.runShooter(speed);
   }
 

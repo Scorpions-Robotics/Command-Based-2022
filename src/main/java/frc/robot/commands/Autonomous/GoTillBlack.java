@@ -11,24 +11,20 @@ public class GoTillBlack extends CommandBase {
     addRequirements(m_drive);
   }
 
-
   @Override
   public void initialize() {}
-
 
   @Override
   public void execute() {
     m_drive.arcadeDrive(0.5, 0);
   }
 
-
   @Override
   public void end(boolean interrupted) {}
 
-
   @Override
   public boolean isFinished() {
-    if(m_drive.getIR() < 12){
+    if (m_drive.getIR() < 12) {
       m_drive.resetEncoders();
       return true;
     }

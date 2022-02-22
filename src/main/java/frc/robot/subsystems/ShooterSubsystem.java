@@ -49,7 +49,7 @@ public class ShooterSubsystem extends SubsystemBase {
     anglePneumatic.set(DoubleSolenoid.Value.kForward);
   }
 
-  public void SetServoAngle(double angle){
+  public void SetServoAngle(double angle) {
     servo.setAngle(angle);
   }
 
