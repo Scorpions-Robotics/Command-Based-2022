@@ -1,10 +1,13 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.revrobotics.ColorSensorV3;
+
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,6 +18,9 @@ public class DriveSubsystem extends SubsystemBase {
   private ADIS16470_IMU imu;
   private double startTime;
   private double driftPerSecond;
+
+  private final I2C.Port i2cPort = I2C.Port.kOnboard;
+  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
 
   private Encoder leftDriveEncoder =
       new Encoder(
@@ -63,6 +69,14 @@ public class DriveSubsystem extends SubsystemBase {
     return (getLeftEncoderDistance() + getRightEncoderDistance()) / 2;
   }
 
+  public void runLeftMotor(double speed){
+    leftLeader.set(speed);;
+  }
+
+  public void runRightMotor(double speed){
+    rightLeader.set(speed);
+  }
+
   public void resetEncoders() {
     leftDriveEncoder.reset();
     rightDriveEncoder.reset();
@@ -104,6 +118,10 @@ public class DriveSubsystem extends SubsystemBase {
       e.printStackTrace();
     }
     this.driftPerSecond = (imu.getAngle() - startAngle) / (Timer.getFPGATimestamp() - startTime);
+  }
+
+  public double getIR(){
+    return m_colorSensor.getIR();
   }
 
   @Override

@@ -11,7 +11,7 @@ import frc.robot.commands.Intake.IntakePneumaticPush;
 import frc.robot.commands.Intake.IntakeTurn;
 import frc.robot.commands.Shooter.SetServoAngle;
 import frc.robot.commands.Shooter.ShooterTurn;
-import frc.robot.commands.Shooter.ShooterTurn1;
+import frc.robot.commands.Shooter.ShooterTurnManual;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;

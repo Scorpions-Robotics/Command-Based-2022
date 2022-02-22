@@ -37,7 +37,7 @@ public class VisionSubsystem extends SubsystemBase {
   String mode = "hoop";
 
   public VisionSubsystem() {
-    inst.startClient("10.76.72.193");
+    inst.startClient("10.76.72.10");
     sendMode(mode);
   }
 
@@ -84,6 +84,6 @@ public class VisionSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Hoop B", getHoopB());
     SmartDashboard.putNumber("Hoop R", getHoopR());
     sendMode(mode);
-    allianceEntry.setString(DriverStation.getAlliance().toString());
+    allianceEntry.setString(DriverStation.getAlliance().toString().toLowerCase());
   }
 }
