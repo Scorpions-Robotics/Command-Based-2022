@@ -20,7 +20,7 @@ public final class Constants {
   }
 
   public class FEEDER {
-    public static final int limitPort = 6;
+    public static final int limitPort = 9;
   }
 
   public class SHOOTER {

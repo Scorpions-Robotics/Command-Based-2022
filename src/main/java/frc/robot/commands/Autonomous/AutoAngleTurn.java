@@ -1,7 +1,6 @@
 package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.estimator.AngleStatistics;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.DriveSubsystem;
@@ -12,7 +11,7 @@ public class AutoAngleTurn extends PIDCommand {
 
   public AutoAngleTurn(DriveSubsystem m_drive, double angle) {
     super(
-        new PIDController(0.0125, 0.0005, 0.0040),
+        new PIDController(0.015, 0.0005, 0.0040),
         () -> m_drive.getGyroAngle(),
         () -> angle,
         output -> {
@@ -24,10 +23,9 @@ public class AutoAngleTurn extends PIDCommand {
           }
           SmartDashboard.putNumber("Output", -output);
         });
-    getController().setTolerance(0.075);
+    getController().setTolerance(0.0825);
     this.m_drive = m_drive;
     this.angle = angle;
-    m_drive.resetGyro();
     addRequirements(m_drive);
   }
 

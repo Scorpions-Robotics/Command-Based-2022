@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Autonomous.AutoAngleTurn;
+import frc.robot.commands.Autonomous.FixedPosition;
 import frc.robot.commands.DriveTrain.TeleopDrive;
 import frc.robot.commands.Feeder.FeederTurn;
 import frc.robot.commands.Intake.IntakePneumaticPull;
@@ -56,26 +57,31 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    stickButton1.whileActiveContinuous(new RunCommand(() -> m_vision.sendMode("hoop")));
-    stickButton1.whenInactive(new RunCommand(() -> m_vision.sendMode("ball")));
-    stickButton12.whenActive(new RunCommand(() -> m_drive.resetGyro(), m_drive));
+    // stickButton1.whileActiveContinuous(new RunCommand(() -> m_vision.sendMode("hoop")));
+    // stickButton1.whenInactive(new RunCommand(() -> m_vision.sendMode("ball")));
+    // stickButton12.whenActive(new RunCommand(() -> m_drive.resetGyro(), m_drive));
 
-    stickButton2.whileHeld(new ShooterTurnManual(m_shooter, () -> stick.getThrottle()));
+    stickButton1.whileHeld(new ShooterTurnManual(m_shooter, () -> stick.getThrottle()));
 
-    stickButton3.whileHeld(new FeederTurn(m_feeder, 1));
+    // stickButton2.whileHeld(new FeederTurn(m_feeder, 1));
 
-    stickButton4.whileHeld(new FeederTurn(m_feeder, -1));
+    // stickButton3.whileHeld(new IntakeTurn(m_intake, -1));
 
-    stickButton5.whenActive(new AutoAngleTurn(m_drive, -90));
+    // stickButton4.whileHeld(new FeederTurn(m_feeder, -1));
+
+    // stickButton5.whenActive(new AutoAngleTurn(m_drive, -60));
+    // stickButton6.whenActive(new AutoAngleTurn(m_drive, 60));
 
     // sensör için trigger
-    // new Trigger(() -> stick.getRawButton(3))
-    //     .whenActive(new FeederTurn(m_feeder, 1).withInterrupt(() -> stick.getRawButton(4)));
-
+    new Trigger(() -> stick.getRawButton(3))
+        .whileActiveContinuous(new FeederTurn(m_feeder, 0.8).withInterrupt(() -> m_feeder.getSwitchValue()));
+    stickButton4.whileHeld(new FeederTurn(m_feeder, 1));
+    stickButton5.whileHeld(new FeederTurn(m_feeder, -1));
     stickButton7.whenActive(new IntakePneumaticPush(m_intake));
     stickButton8.whenActive(new IntakePneumaticPull(m_intake));
-    stickButton10.whenActive(new SetServoAngle(m_shooter, 20));
-    stickButton11.whenActive(new SetServoAngle(m_shooter, 60));
+    // stickButton10.whenActive(new SetServoAngle(m_shooter, 50));
+    // stickButton11.whenActive(new SetServoAngle(m_shooter, 95));
+    // stickButton1.whileHeld(new FixedPosition(m_drive, () -> stick.getRawAxis(1), () -> stick.getThrottle()));
   }
 
   public Command getAutonomousCommand(boolean go_to_terminal, int position, int ball_count) {
