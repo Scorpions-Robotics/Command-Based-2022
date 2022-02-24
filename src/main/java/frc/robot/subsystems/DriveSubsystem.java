@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -34,18 +35,18 @@ public class DriveSubsystem extends SubsystemBase {
           false,
           EncodingType.k4X);
 
-  private WPI_VictorSPX rightLeader = new WPI_VictorSPX(Constants.CAN.kRightLeaderID);
-  private WPI_VictorSPX rightFollower = new WPI_VictorSPX(Constants.CAN.kRightFollowerID);
+  private WPI_VictorSPX rightFront = new WPI_VictorSPX(Constants.CAN.kRightLeaderID);
+  private WPI_VictorSPX rightRear = new WPI_VictorSPX(Constants.CAN.kRightFollowerID);
 
-  private WPI_VictorSPX leftLeader = new WPI_VictorSPX(Constants.CAN.kLeftLeaderID);
-  private WPI_VictorSPX leftFollower = new WPI_VictorSPX(Constants.CAN.kLeftFollowerID);
+  private WPI_VictorSPX leftFront = new WPI_VictorSPX(Constants.CAN.kLeftLeaderID);
+  private WPI_VictorSPX leftRear = new WPI_VictorSPX(Constants.CAN.kLeftFollowerID);
 
-  private DifferentialDrive drive = new DifferentialDrive(rightLeader, leftLeader);
+  MotorControllerGroup m_right = new MotorControllerGroup(rightFront, rightRear);
+  MotorControllerGroup m_left = new MotorControllerGroup(leftFront, leftRear);
+
+  private DifferentialDrive drive = new DifferentialDrive(m_right, m_left);
 
   public DriveSubsystem() {
-    rightFollower.follow(rightLeader);
-    leftFollower.follow(leftLeader);
-
     getLeftEncoderDistance();
     getRightEncoderDistance();
 
@@ -69,12 +70,12 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void runLeftMotor(double speed) {
-    leftLeader.set(speed);
+    m_left.set(speed);
     ;
   }
 
   public void runRightMotor(double speed) {
-    rightLeader.set(speed);
+    m_right.set(speed);
   }
 
   public void resetEncoders() {

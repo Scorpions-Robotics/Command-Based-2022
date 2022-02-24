@@ -76,8 +76,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
       return Math.max(min_rpm, result);
     } else {
-      // this is just for testing.
-      return 0.5;
+      return 0.7;
     }
   }
 
