@@ -29,15 +29,14 @@ public class ShooterTurn extends PIDCommand {
             m_shooter.calculateShooterSpeed(
                 m_vision.getHoopD(), m_vision.getHoopB(), 200, 600, 3000, 5000),
         output -> {
-          if(m_vision.getHoopB() == 1){
+          if (m_vision.getHoopB() == 1) {
             motorOutput =
-              output
-                  + m_shooterFeedForward.calculate(
-                      m_shooter.calculateShooterSpeed(
-                          m_vision.getHoopD(), m_vision.getHoopB(), 200, 600, 3000, 5000));
+                output
+                    + m_shooterFeedForward.calculate(
+                        m_shooter.calculateShooterSpeed(
+                            m_vision.getHoopD(), m_vision.getHoopB(), 200, 600, 3000, 5000));
             m_shooter.runShooterVoltage(motorOutput);
-          }
-          else{
+          } else {
             m_shooter.runShooter(0.7);
           }
         },

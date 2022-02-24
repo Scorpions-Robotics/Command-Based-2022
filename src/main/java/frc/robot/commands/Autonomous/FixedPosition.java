@@ -1,16 +1,16 @@
 package frc.robot.commands.Autonomous;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.DriveSubsystem;
+import java.util.function.DoubleSupplier;
 
 public class FixedPosition extends PIDCommand {
   DriveSubsystem m_drive;
   static double throttle;
 
-  public FixedPosition(DriveSubsystem m_drive, DoubleSupplier speedSupplier, DoubleSupplier throttleSupplier) {
+  public FixedPosition(
+      DriveSubsystem m_drive, DoubleSupplier speedSupplier, DoubleSupplier throttleSupplier) {
     super(
         new PIDController(0.04, 0.0015, 0.005),
         () -> m_drive.getGyroAngle(),
@@ -22,10 +22,10 @@ public class FixedPosition extends PIDCommand {
         m_drive);
     this.m_drive = m_drive;
   }
-  
+
   @Override
   public void initialize() {
-      m_drive.resetGyro();
+    m_drive.resetGyro();
   }
 
   @Override

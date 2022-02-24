@@ -15,10 +15,9 @@ public class AutoAngleTurn extends PIDCommand {
         () -> m_drive.getGyroAngle(),
         () -> angle,
         output -> {
-          if(m_drive.getGyroAngle() > angle){
+          if (m_drive.getGyroAngle() > angle) {
             m_drive.arcadeDrive(Math.max(-output, 0.34), 0);
-          }
-          else{
+          } else {
             m_drive.arcadeDrive(Math.min(-output, -0.34), 0);
           }
           SmartDashboard.putNumber("Output", -output);
@@ -31,7 +30,7 @@ public class AutoAngleTurn extends PIDCommand {
 
   @Override
   public void initialize() {
-      m_drive.resetGyro();
+    m_drive.resetGyro();
   }
 
   @Override

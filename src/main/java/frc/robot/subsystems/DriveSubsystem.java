@@ -2,6 +2,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
@@ -45,6 +49,7 @@ public class DriveSubsystem extends SubsystemBase {
   MotorControllerGroup m_left = new MotorControllerGroup(leftFront, leftRear);
 
   private DifferentialDrive drive = new DifferentialDrive(m_right, m_left);
+  private DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading());
 
   public DriveSubsystem() {
     getLeftEncoderDistance();
@@ -125,8 +130,33 @@ public class DriveSubsystem extends SubsystemBase {
     return m_colorSensor.getIR();
   }
 
+  public void resetOdometry(Pose2d pose) {
+    resetEncoders();
+    odometry.resetPosition(pose, getHeading());
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(
+        leftDriveEncoder.getRate(), rightDriveEncoder.getRate());
+  }
+
+  public Rotation2d getHeading() {
+    return Rotation2d.fromDegrees(-this.imu.getAngle());
+  }
+
+  public Pose2d getPose() {
+    return odometry.getPoseMeters();
+  }
+
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    m_left.setVoltage(leftVolts);
+    m_right.setVoltage(rightVolts);
+    drive.feed();
+  }
+
   @Override
   public void periodic() {
+    odometry.update(getHeading(), leftDriveEncoder.getDistance(), rightDriveEncoder.getDistance());
     SmartDashboard.putNumber("Angle", getGyroAngle());
   }
 }

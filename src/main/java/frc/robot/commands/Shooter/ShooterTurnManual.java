@@ -4,10 +4,9 @@
 
 package frc.robot.commands.Shooter;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
+import java.util.function.DoubleSupplier;
 
 public class ShooterTurnManual extends CommandBase {
   ShooterSubsystem m_shooter;

@@ -67,4 +67,19 @@ public final class Constants {
   public class VARIABLES {
     public static final int kZero = 0;
   }
+
+  public class ODOMETRY {
+    public static final double kP = 0.0;
+
+    public static final double kRamseteB = 2.0;
+    public static final double kRamseteZeta = 0.7;
+
+    public static final double kS = 0.0;
+    public static final double kV = 0.0;
+    public static final double kA = 0.0;
+
+    // will decide these later
+    public static final double kMaxSpeedMetersPerSecond = 0;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 0;
+  }
 }
