@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -31,6 +32,8 @@ public class VisionSubsystem extends SubsystemBase {
 
   NetworkTableEntry modeEntry = table.getEntry("mode");
 
+  NetworkTableEntry allianceEntry = table.getEntry("alliance");
+
   String mode = "hoop";
 
   public VisionSubsystem() {
@@ -53,7 +56,7 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   public double getBallB() {
-    return Double.valueOf(ballBEntry.getString("0"));
+    return Double.valueOf(ballBEntry.getString("10"));
   }
 
   public double getBallR() {
@@ -65,7 +68,7 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   public double getHoopB() {
-    return Double.valueOf(hoopBEntry.getString("0"));
+    return Double.valueOf(hoopBEntry.getString("10"));
   }
 
   public double getHoopR() {
@@ -80,5 +83,7 @@ public class VisionSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Hoop D", getHoopD());
     SmartDashboard.putNumber("Hoop B", getHoopB());
     SmartDashboard.putNumber("Hoop R", getHoopR());
+    sendMode(mode);
+    allianceEntry.setString(DriverStation.getAlliance().toString().toLowerCase());
   }
 }
