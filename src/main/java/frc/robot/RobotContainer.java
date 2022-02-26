@@ -8,7 +8,9 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -23,7 +25,9 @@ import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
-import java.util.List;
+
+import java.io.IOException;
+import java.nio.file.Path;
 
 public class RobotContainer {
 
@@ -108,12 +112,15 @@ public class RobotContainer {
             .setKinematics(kinematics)
             .addConstraint(autoVoltageConstraint);
 
-    Trajectory exampleTrajectory =
-        TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 0, new Rotation2d(0)),
-            List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-            new Pose2d(3, 0, new Rotation2d(0)),
-            config);
+    String trajectoryJSON = "paths/path1.wpilib.json";
+    Trajectory trajectory = new Trajectory();
+
+    Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+    try {
+      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
     // this part is erroneous.
     // RamseteCommand ramseteCommand = new RamseteCommand(
@@ -131,7 +138,7 @@ public class RobotContainer {
     //   m_drive
     // );
 
-    m_drive.resetOdometry(exampleTrajectory.getInitialPose());
+    m_drive.resetOdometry(trajectory.getInitialPose());
 
     // return ramseteCommand.andThen(() -> m_drive.tankDriveVolts(0, 0));
 
