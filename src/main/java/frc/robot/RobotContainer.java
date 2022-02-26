@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -11,6 +13,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveTrain.TeleopDrive;
@@ -24,6 +27,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import java.util.List;
+
+import java.util.function.BiConsumer;
 
 public class RobotContainer {
 
@@ -115,27 +120,29 @@ public class RobotContainer {
             new Pose2d(3, 0, new Rotation2d(0)),
             config);
 
-    // this part is erroneous.
-    // RamseteCommand ramseteCommand = new RamseteCommand(
-    //   exampleTrajectory,
-    //   m_drive::getPose,
-    //   new RamseteController(Constants.ODOMETRY.kRamseteB, Constants.ODOMETRY.kRamseteZeta),
-    //   new SimpleMotorFeedforward(Constants.ODOMETRY.kS,
-    //                             Constants.ODOMETRY.kV,
-    //                             Constants.ODOMETRY.kA),
-    //   kinematics,
-    //   m_drive.getWheelSpeeds(),
-    //   new PIDController(Constants.ODOMETRY.kP, 0, 0),
-    //   new PIDController(Constants.ODOMETRY.kP, 0, 0),
-    //   m_drive::tankDriveVolts,
-    //   m_drive
-    // );
+    BiConsumer<Double, Double> consumer = (leftVolts, rightVolts) -> {
+      m_drive.tankDriveVolts(leftVolts, rightVolts);
+    };
+
+
+    RamseteCommand ramseteCommand = new RamseteCommand(
+      exampleTrajectory,
+      m_drive::getPose,
+      new RamseteController(Constants.ODOMETRY.kRamseteB, Constants.ODOMETRY.kRamseteZeta),
+      new SimpleMotorFeedforward(Constants.ODOMETRY.kS,
+                                Constants.ODOMETRY.kV,
+                                Constants.ODOMETRY.kA),
+      kinematics,
+      m_drive::getWheelSpeeds,
+      new PIDController(Constants.ODOMETRY.kP, 0, 0),
+      new PIDController(Constants.ODOMETRY.kP, 0, 0),
+      consumer,
+      m_drive
+    );
 
     m_drive.resetOdometry(exampleTrajectory.getInitialPose());
 
-    // return ramseteCommand.andThen(() -> m_drive.tankDriveVolts(0, 0));
-
-    return null;
+    return ramseteCommand.andThen(() -> m_drive.tankDriveVolts(0, 0));
   }
 }
 
