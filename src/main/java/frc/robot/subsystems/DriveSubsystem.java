@@ -58,6 +58,9 @@ public class DriveSubsystem extends SubsystemBase {
     this.imu = new ADIS16470_IMU();
     this.imu.setYawAxis(IMUAxis.kY);
     this.calibrate();
+    
+    this.resetGyro();
+    this.resetEncoders();
   }
 
   public double getLeftEncoderDistance() {

@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -13,8 +15,21 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commandgroups.Autonomous.FiveBalls.Blue51;
+import frc.robot.commandgroups.Autonomous.FiveBalls.Red51;
+import frc.robot.commandgroups.Autonomous.ThreeBalls.Blue31;
+import frc.robot.commandgroups.Autonomous.ThreeBalls.Blue32;
+import frc.robot.commandgroups.Autonomous.ThreeBalls.Red31;
+import frc.robot.commandgroups.Autonomous.ThreeBalls.Red32;
+import frc.robot.commandgroups.Autonomous.TwoBalls.Blue21;
+import frc.robot.commandgroups.Autonomous.TwoBalls.Blue22;
+import frc.robot.commandgroups.Autonomous.TwoBalls.Blue23;
+import frc.robot.commandgroups.Autonomous.TwoBalls.Red21;
+import frc.robot.commandgroups.Autonomous.TwoBalls.Red22;
+import frc.robot.commandgroups.Autonomous.TwoBalls.Red23;
 import frc.robot.commands.DriveTrain.TeleopDrive;
 import frc.robot.commands.Feeder.FeederTurn;
 import frc.robot.commands.Intake.IntakePneumaticPull;
@@ -26,20 +41,18 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
 public class RobotContainer {
 
   public static final Joystick stick = new Joystick(Constants.OI.kStickId);
   public static final Joystick panel = new Joystick(Constants.OI.kPanelId);
 
-  private final DriveSubsystem m_drive = new DriveSubsystem();
-  private final VisionSubsystem m_vision = new VisionSubsystem();
-  private final FeederSubsystem m_feeder = new FeederSubsystem();
-  private final ShooterSubsystem m_shooter = new ShooterSubsystem();
-  private final IntakeSubsystem m_intake = new IntakeSubsystem();
-  // private final ClimbSubsystem m_climb = new ClimbSubsystem();
+  public final DriveSubsystem m_drive = new DriveSubsystem();
+  public final VisionSubsystem m_vision = new VisionSubsystem();
+  public final FeederSubsystem m_feeder = new FeederSubsystem();
+  public final ShooterSubsystem m_shooter = new ShooterSubsystem();
+  public final IntakeSubsystem m_intake = new IntakeSubsystem();
+  // public final ClimbSubsystem m_climb = new ClimbSubsystem();
+  public final ScorpTrajectory m_trajectory = new ScorpTrajectory(m_drive);
 
   private final JoystickButton stickButton1 = new JoystickButton(stick, Constants.OI.kButton1);
   private final JoystickButton stickButton2 = new JoystickButton(stick, Constants.OI.kButton2);
@@ -95,54 +108,55 @@ public class RobotContainer {
     // stick.getThrottle()));
   }
 
-  public Command getAutonomousCommand(boolean go_to_terminal, int position, int ball_count) {
-    final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(0.7);
-
-    var autoVoltageConstraint =
-        new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(
-                Constants.ODOMETRY.kS, Constants.ODOMETRY.kV, Constants.ODOMETRY.kA),
-            kinematics,
-            10);
-
-    TrajectoryConfig config =
-        new TrajectoryConfig(
-                Constants.ODOMETRY.kMaxSpeedMetersPerSecond,
-                Constants.ODOMETRY.kMaxAccelerationMetersPerSecondSquared)
-            .setKinematics(kinematics)
-            .addConstraint(autoVoltageConstraint);
-
-    String trajectoryJSON = "paths/path1.wpilib.json";
-    Trajectory trajectory = new Trajectory();
-
-    Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-    try {
-      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-    } catch (IOException e) {
-      e.printStackTrace();
+  public Command getAutonomousCommand(String alliance, int position, int ball_count) {
+    if(alliance == "blue"){
+      if(ball_count==5){
+        return new Blue51();
+      }
+      else if(ball_count == 3){
+        if(position == 1){
+          return new Blue31(); 
+        }
+        else{
+          return new Blue32();
+        }
+      }
+      else{
+        if(position == 1){
+          return new Blue21();
+        }
+        else if(position == 2){
+          return new Blue22();
+        }
+        else{
+          return new Blue23();
+        }
+      }
     }
-
-    // this part is erroneous.
-    // RamseteCommand ramseteCommand = new RamseteCommand(
-    //   exampleTrajectory,
-    //   m_drive::getPose,
-    //   new RamseteController(Constants.ODOMETRY.kRamseteB, Constants.ODOMETRY.kRamseteZeta),
-    //   new SimpleMotorFeedforward(Constants.ODOMETRY.kS,
-    //                             Constants.ODOMETRY.kV,
-    //                             Constants.ODOMETRY.kA),
-    //   kinematics,
-    //   m_drive.getWheelSpeeds(),
-    //   new PIDController(Constants.ODOMETRY.kP, 0, 0),
-    //   new PIDController(Constants.ODOMETRY.kP, 0, 0),
-    //   m_drive::tankDriveVolts,
-    //   m_drive
-    // );
-
-    m_drive.resetOdometry(trajectory.getInitialPose());
-
-    // return ramseteCommand.andThen(() -> m_drive.tankDriveVolts(0, 0));
-
-    return null;
+    else{
+      if(ball_count==5){
+        return new Red51();
+      }
+      else if(ball_count == 3){
+        if(position == 1){
+          return new Red31(); 
+        }
+        else{
+          return new Red32();
+        }
+      }
+      else{
+        if(position == 1){
+          return new Red21();
+        }
+        else if(position == 2){
+          return new Red22();
+        }
+        else{
+          return new Red23();
+        }
+      }
+    }
   }
 }
 
@@ -154,4 +168,14 @@ public class RobotContainer {
 //   } else if (ball_count == 3) {
 //     return new Autonomous3Balls(position);
 //   }
+// }
+
+// String trajectoryJSON = "paths/path1.wpilib.json";
+// Trajectory trajectory = new Trajectory();
+
+// Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+// try {
+//   trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+// } catch (IOException e) {
+//   e.printStackTrace();
 // }

@@ -11,7 +11,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  public static SendableChooser<Boolean> terminal_chooser = new SendableChooser<>();
+  public static SendableChooser<String> alliance_chooser = new SendableChooser<>();
   public static SendableChooser<Integer> position_chooser = new SendableChooser<>();
   public static SendableChooser<Integer> ball_chooser = new SendableChooser<>();
 
@@ -19,8 +19,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_robotContainer = new RobotContainer();
 
-    terminal_chooser.setDefaultOption("Go to terminal", true);
-    terminal_chooser.addOption("Don't go to terminal", false);
+    alliance_chooser.setDefaultOption("Blue", "blue");
+    alliance_chooser.addOption("Red", "red");
 
     position_chooser.setDefaultOption("1", 1);
     position_chooser.addOption("2", 2);
@@ -28,8 +28,9 @@ public class Robot extends TimedRobot {
 
     ball_chooser.setDefaultOption("2", 2);
     ball_chooser.addOption("3", 3);
+    ball_chooser.addOption("5", 5);
 
-    SmartDashboard.putData(terminal_chooser);
+    SmartDashboard.putData(alliance_chooser);
     SmartDashboard.putData(position_chooser);
     SmartDashboard.putData(ball_chooser);
   }
@@ -47,9 +48,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    m_robotContainer.m_drive.resetEncoders();
+    m_robotContainer.m_drive.resetGyro();
     m_autonomousCommand =
         m_robotContainer.getAutonomousCommand(
-            terminal_chooser.getSelected(),
+            alliance_chooser.getSelected(),
             position_chooser.getSelected(),
             ball_chooser.getSelected());
 
