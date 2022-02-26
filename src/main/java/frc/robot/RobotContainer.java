@@ -120,11 +120,6 @@ public class RobotContainer {
             new Pose2d(3, 0, new Rotation2d(0)),
             config);
 
-    BiConsumer<Double, Double> consumer = (leftVolts, rightVolts) -> {
-      m_drive.tankDriveVolts(leftVolts, rightVolts);
-    };
-
-
     RamseteCommand ramseteCommand = new RamseteCommand(
       exampleTrajectory,
       m_drive::getPose,
@@ -136,7 +131,7 @@ public class RobotContainer {
       m_drive::getWheelSpeeds,
       new PIDController(Constants.ODOMETRY.kP, 0, 0),
       new PIDController(Constants.ODOMETRY.kP, 0, 0),
-      consumer,
+      m_drive::tankDriveVolts,
       m_drive
     );
 
