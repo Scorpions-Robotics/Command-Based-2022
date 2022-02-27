@@ -28,8 +28,6 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import java.util.List;
 
-import java.util.function.BiConsumer;
-
 public class RobotContainer {
 
   public static final Joystick stick = new Joystick(Constants.OI.kStickId);
@@ -120,20 +118,19 @@ public class RobotContainer {
             new Pose2d(3, 0, new Rotation2d(0)),
             config);
 
-    RamseteCommand ramseteCommand = new RamseteCommand(
-      exampleTrajectory,
-      m_drive::getPose,
-      new RamseteController(Constants.ODOMETRY.kRamseteB, Constants.ODOMETRY.kRamseteZeta),
-      new SimpleMotorFeedforward(Constants.ODOMETRY.kS,
-                                Constants.ODOMETRY.kV,
-                                Constants.ODOMETRY.kA),
-      kinematics,
-      m_drive::getWheelSpeeds,
-      new PIDController(Constants.ODOMETRY.kP, 0, 0),
-      new PIDController(Constants.ODOMETRY.kP, 0, 0),
-      m_drive::tankDriveVolts,
-      m_drive
-    );
+    RamseteCommand ramseteCommand =
+        new RamseteCommand(
+            exampleTrajectory,
+            m_drive::getPose,
+            new RamseteController(Constants.ODOMETRY.kRamseteB, Constants.ODOMETRY.kRamseteZeta),
+            new SimpleMotorFeedforward(
+                Constants.ODOMETRY.kS, Constants.ODOMETRY.kV, Constants.ODOMETRY.kA),
+            kinematics,
+            m_drive::getWheelSpeeds,
+            new PIDController(Constants.ODOMETRY.kP, 0, 0),
+            new PIDController(Constants.ODOMETRY.kP, 0, 0),
+            m_drive::tankDriveVolts,
+            m_drive);
 
     m_drive.resetOdometry(exampleTrajectory.getInitialPose());
 
