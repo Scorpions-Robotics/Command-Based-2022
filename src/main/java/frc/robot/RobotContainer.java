@@ -12,6 +12,7 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -108,53 +109,38 @@ public class RobotContainer {
     // stick.getThrottle()));
   }
 
-  public Command getAutonomousCommand(String alliance, int position, int ball_count) {
-    if(alliance == "blue"){
-      if(ball_count==5){
-        return new Blue51();
-      }
-      else if(ball_count == 3){
-        if(position == 1){
-          return new Blue31(); 
-        }
-        else{
-          return new Blue32();
-        }
-      }
-      else{
-        if(position == 1){
+  public Command getAutonomousCommand(int mode) {
+    String alliance = DriverStation.getAlliance().toString();
+    if(alliance=="Blue"){
+      switch(mode){
+        case 1:
           return new Blue21();
-        }
-        else if(position == 2){
+        case 2:
           return new Blue22();
-        }
-        else{
+        case 3:
           return new Blue23();
-        }
+        case 4:
+          return new Blue31();
+        case 5:
+          return new Blue32();
+        default:
+          return new Blue51();
       }
     }
     else{
-      if(ball_count==5){
-        return new Red51();
-      }
-      else if(ball_count == 3){
-        if(position == 1){
-          return new Red31(); 
-        }
-        else{
-          return new Red32();
-        }
-      }
-      else{
-        if(position == 1){
+      switch(mode){
+        case 1:
           return new Red21();
-        }
-        else if(position == 2){
+        case 2:
           return new Red22();
-        }
-        else{
+        case 3:
           return new Red23();
-        }
+        case 4:
+          return new Red31();
+        case 5:
+          return new Red32();
+        default:
+          return new Red51();
       }
     }
   }
@@ -170,12 +156,4 @@ public class RobotContainer {
 //   }
 // }
 
-// String trajectoryJSON = "paths/path1.wpilib.json";
-// Trajectory trajectory = new Trajectory();
 
-// Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-// try {
-//   trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-// } catch (IOException e) {
-//   e.printStackTrace();
-// }

@@ -11,28 +11,22 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  public static SendableChooser<String> alliance_chooser = new SendableChooser<>();
-  public static SendableChooser<Integer> position_chooser = new SendableChooser<>();
-  public static SendableChooser<Integer> ball_chooser = new SendableChooser<>();
+  public static SendableChooser<Integer> auto_chooser = new SendableChooser<>();
+  
 
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
+    
+    auto_chooser.setDefaultOption("1", 1);
+    auto_chooser.addOption("2", 2);
+    auto_chooser.addOption("3", 3);
+    auto_chooser.addOption("4", 4);
+    auto_chooser.addOption("5", 5);
+    auto_chooser.addOption("6", 6);
+    
 
-    alliance_chooser.setDefaultOption("Blue", "blue");
-    alliance_chooser.addOption("Red", "red");
-
-    position_chooser.setDefaultOption("1", 1);
-    position_chooser.addOption("2", 2);
-    position_chooser.addOption("3", 3);
-
-    ball_chooser.setDefaultOption("2", 2);
-    ball_chooser.addOption("3", 3);
-    ball_chooser.addOption("5", 5);
-
-    SmartDashboard.putData(alliance_chooser);
-    SmartDashboard.putData(position_chooser);
-    SmartDashboard.putData(ball_chooser);
+    SmartDashboard.putData(auto_chooser);
   }
 
   @Override
@@ -52,9 +46,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.m_drive.resetGyro();
     m_autonomousCommand =
         m_robotContainer.getAutonomousCommand(
-            alliance_chooser.getSelected(),
-            position_chooser.getSelected(),
-            ball_chooser.getSelected());
+            auto_chooser.getSelected());
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
