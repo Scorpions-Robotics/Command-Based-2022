@@ -5,13 +5,14 @@
 package frc.robot.commandgroups.Autonomous.ThreeBalls;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.ScorpTrajectory;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Blue32 extends SequentialCommandGroup {
   /** Creates a new Blue32. */
-  public Blue32() {
+  public Blue32(ScorpTrajectory s_trajectory) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands();

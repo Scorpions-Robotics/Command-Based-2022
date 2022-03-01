@@ -53,7 +53,7 @@ public class RobotContainer {
   public final ShooterSubsystem m_shooter = new ShooterSubsystem();
   public final IntakeSubsystem m_intake = new IntakeSubsystem();
   // public final ClimbSubsystem m_climb = new ClimbSubsystem();
-  public final ScorpTrajectory m_trajectory = new ScorpTrajectory(m_drive);
+  public final ScorpTrajectory s_trajectory = new ScorpTrajectory(m_drive);
 
   private final JoystickButton stickButton1 = new JoystickButton(stick, Constants.OI.kButton1);
   private final JoystickButton stickButton2 = new JoystickButton(stick, Constants.OI.kButton2);
@@ -114,33 +114,33 @@ public class RobotContainer {
     if(alliance=="Blue"){
       switch(mode){
         case 1:
-          return new Blue21();
+          return new Blue21(s_trajectory);
         case 2:
-          return new Blue22();
+          return new Blue22(s_trajectory);
         case 3:
-          return new Blue23();
+          return new Blue23(s_trajectory);
         case 4:
-          return new Blue31();
+          return new Blue31(s_trajectory);
         case 5:
-          return new Blue32();
+          return new Blue32(s_trajectory);
         default:
-          return new Blue51();
+          return new Blue51(s_trajectory);
       }
     }
     else{
       switch(mode){
         case 1:
-          return new Red21();
+          return new Red21(s_trajectory);
         case 2:
-          return new Red22();
+          return new Red22(s_trajectory);
         case 3:
-          return new Red23();
+          return new Red23(s_trajectory);
         case 4:
-          return new Red31();
+          return new Red31(s_trajectory);
         case 5:
-          return new Red32();
+          return new Red32(s_trajectory);
         default:
-          return new Red51();
+          return new Red51(s_trajectory);
       }
     }
   }
