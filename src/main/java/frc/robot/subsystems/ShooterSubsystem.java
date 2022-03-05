@@ -59,25 +59,21 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public double calculateShooterSpeed(
       double distance,
-      double isHoopInVision,
       double min_distance,
       double max_distance,
       double min_rpm,
       double max_rpm) {
-    if (isHoopInVision == 1) {
-      max_min_distance_diff = max_distance - min_distance;
-      current_min_distance_diff = distance - min_distance;
 
-      result = current_min_distance_diff / max_min_distance_diff;
+    max_min_distance_diff = max_distance - min_distance;
+    current_min_distance_diff = distance - min_distance;
 
-      max_min_rpm_diff = max_rpm - min_rpm;
+    result = current_min_distance_diff / max_min_distance_diff;
 
-      result = max_min_rpm_diff * result + min_rpm;
+    max_min_rpm_diff = max_rpm - min_rpm;
 
-      return Math.max(min_rpm, result);
-    } else {
-      return 0.7;
-    }
+    result = max_min_rpm_diff * result + min_rpm;
+
+    return Math.max(min_rpm, result);
   }
 
   public void runShooterVoltage(double voltage) {
@@ -85,7 +81,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double getShooterEncoderRPM() {
-    return shooterEncoder.getRate() * 60;
+    return shooterEncoder.getRate();
   }
 
   public void stopShooter() {

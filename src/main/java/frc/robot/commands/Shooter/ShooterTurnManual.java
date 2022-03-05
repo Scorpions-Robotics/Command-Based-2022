@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Shooter;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 import java.util.function.DoubleSupplier;
@@ -28,7 +29,8 @@ public class ShooterTurnManual extends CommandBase {
   @Override
   public void execute() {
     speed = (speedSupplier.getAsDouble() * -1 + 1) / 2;
-    m_shooter.runShooter(speed);
+    m_shooter.runShooter(-speed);
+    SmartDashboard.putNumber("RPM", m_shooter.getShooterEncoderRPM());
   }
 
   // Called once the command ends or is interrupted.

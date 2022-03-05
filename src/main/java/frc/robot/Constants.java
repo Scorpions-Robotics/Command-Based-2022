@@ -22,13 +22,13 @@ public final class Constants {
   }
 
   public static class FEEDER {
-    public static final int limitPort = 9;
+    public static final int limitPort = 0;
   }
 
   public static class SHOOTER {
-    public static final double kV = 0.0;
-    public static final double kS = 0.0;
-    public static final double kA = 0.0;
+    public static final double kV = 0.065552;
+    public static final double kS = 1.5299;
+    public static final double kA = 0.03379;
     public static final int kServoPWM = 1;
   }
 
@@ -39,20 +39,20 @@ public final class Constants {
     public static final int kLeftFollowerID = 7;
 
     public static final int kClimbMotorID = 0;
-    public static final int kFeederMotorID = 2;
+    public static final int kFeederMotorID = 7;
 
-    public static final int kShooterRightMotorID = 3;
-    public static final int kShooterLeftMotorID = 9;
+    public static final int kShooterRightMotorID = 2;
+    public static final int kShooterLeftMotorID = 8;
 
     public static final int kIntakeMotorID = 8;
   }
 
   public static class PNEUMATICS {
-    public static final int kIntakeSolenoidForwardChannel = 4;
-    public static final int kIntakeSolenoidReverseChannel = 5;
+    public static final int kIntakeSolenoidForwardChannel = 2;
+    public static final int kIntakeSolenoidReverseChannel = 3;
 
-    public static final int kShooterSolenoidForwardChannel = 6;
-    public static final int kShooterSolenoidReverseChannel = 7;
+    public static final int kShooterSolenoidForwardChannel = 0;
+    public static final int kShooterSolenoidReverseChannel = 1;
   }
 
   public static class ENCODERS {
@@ -62,8 +62,8 @@ public final class Constants {
     public static final int kRightDriveEncoderChannelA = 2;
     public static final int kRightDriveEncoderChannelB = 3;
 
-    public static final int kShooterEncoderChannelA = 4;
-    public static final int kShooterEncoderChannelB = 5;
+    public static final int kShooterEncoderChannelA = 8;
+    public static final int kShooterEncoderChannelB = 9;
   }
 
   public static class VARIABLES {
@@ -82,7 +82,8 @@ public final class Constants {
 
     // gon' modify track width value
     public static final double kTrackwidthMeters = 0.7;
-    public static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
+    public static final DifferentialDriveKinematics kinematics =
+        new DifferentialDriveKinematics(kTrackwidthMeters);
 
     // will decide these later
     public static final double kMaxSpeedMetersPerSecond = 0;

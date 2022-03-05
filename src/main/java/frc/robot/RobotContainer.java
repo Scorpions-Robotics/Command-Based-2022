@@ -1,22 +1,8 @@
 package frc.robot;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commandgroups.Autonomous.FiveBalls.Blue51;
@@ -36,6 +22,7 @@ import frc.robot.commands.Feeder.FeederTurn;
 import frc.robot.commands.Intake.IntakePneumaticPull;
 import frc.robot.commands.Intake.IntakePneumaticPush;
 import frc.robot.commands.Shooter.ShooterTurnManual;
+import frc.robot.commands.Shooter.ShooterTurnNew;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -47,13 +34,13 @@ public class RobotContainer {
   public static final Joystick stick = new Joystick(Constants.OI.kStickId);
   public static final Joystick panel = new Joystick(Constants.OI.kPanelId);
 
-  public final DriveSubsystem m_drive = new DriveSubsystem();
+  // public final DriveSubsystem m_drive = new DriveSubsystem();
   public final VisionSubsystem m_vision = new VisionSubsystem();
   public final FeederSubsystem m_feeder = new FeederSubsystem();
   public final ShooterSubsystem m_shooter = new ShooterSubsystem();
-  public final IntakeSubsystem m_intake = new IntakeSubsystem();
+  // public final IntakeSubsystem m_intake = new IntakeSubsystem();
   // public final ClimbSubsystem m_climb = new ClimbSubsystem();
-  public final ScorpTrajectory s_trajectory = new ScorpTrajectory(m_drive);
+  // public final ScorpTrajectory s_trajectory = new ScorpTrajectory(m_drive);
 
   private final JoystickButton stickButton1 = new JoystickButton(stick, Constants.OI.kButton1);
   private final JoystickButton stickButton2 = new JoystickButton(stick, Constants.OI.kButton2);
@@ -69,12 +56,12 @@ public class RobotContainer {
   private final JoystickButton stickButton12 = new JoystickButton(stick, Constants.OI.kButton12);
 
   public RobotContainer() {
-    m_drive.setDefaultCommand(
-        new TeleopDrive(
-            m_drive,
-            () -> stick.getRawAxis(0),
-            () -> stick.getRawAxis(1),
-            () -> stick.getThrottle()));
+    // m_drive.setDefaultCommand(
+    //     new TeleopDrive(
+    //         m_drive,
+    //         () -> stick.getRawAxis(0),
+    //         () -> stick.getRawAxis(1),
+    //         () -> stick.getThrottle()));
 
     configureButtonBindings();
   }
@@ -84,25 +71,24 @@ public class RobotContainer {
     // stickButton1.whenInactive(new RunCommand(() -> m_vision.sendMode("ball")));
     // stickButton12.whenActive(new RunCommand(() -> m_drive.resetGyro(), m_drive));
 
-    stickButton1.whileHeld(new ShooterTurnManual(m_shooter, () -> stick.getThrottle()));
+    stickButton1.whileHeld(new ShooterTurnNew(m_shooter, m_vision));
 
-    // stickButton2.whileHeld(new FeederTurn(m_feeder, 1));
+    stickButton2.whileHeld(new FeederTurn(m_feeder, 1));
 
     // stickButton3.whileHeld(new IntakeTurn(m_intake, -1));
 
-    // stickButton4.whileHeld(new FeederTurn(m_feeder, -1));
+    stickButton4.whileHeld(new FeederTurn(m_feeder, -1));
 
     // stickButton5.whenActive(new AutoAngleTurn(m_drive, -60));
     // stickButton6.whenActive(new AutoAngleTurn(m_drive, 60));
 
-    // sensör için trigger
     new Trigger(() -> stick.getRawButton(3))
         .whileActiveContinuous(
-            new FeederTurn(m_feeder, 0.8).withInterrupt(() -> m_feeder.getSwitchValue()));
-    stickButton4.whileHeld(new FeederTurn(m_feeder, 1));
-    stickButton5.whileHeld(new FeederTurn(m_feeder, -1));
-    stickButton7.whenActive(new IntakePneumaticPush(m_intake));
-    stickButton8.whenActive(new IntakePneumaticPull(m_intake));
+            new FeederTurn(m_feeder, 0.7).withInterrupt(() -> m_feeder.getSwitchValue()));
+    // stickButton4.whileHeld(new FeederTurn(m_feeder, 1));
+    // stickButton5.whileHeld(new FeederTurn(m_feeder, -1));
+    // stickButton7.whenActive(new IntakePneumaticPush(m_intake));
+    // stickButton8.whenActive(new IntakePneumaticPull(m_intake));
     // stickButton10.whenActive(new SetServoAngle(m_shooter, 50));
     // stickButton11.whenActive(new SetServoAngle(m_shooter, 95));
     // stickButton1.whileHeld(new FixedPosition(m_drive, () -> stick.getRawAxis(1), () ->
@@ -110,50 +96,39 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand(int mode) {
-    String alliance = DriverStation.getAlliance().toString();
-    if(alliance=="Blue"){
-      switch(mode){
-        case 1:
-          return new Blue21(s_trajectory);
-        case 2:
-          return new Blue22(s_trajectory);
-        case 3:
-          return new Blue23(s_trajectory);
-        case 4:
-          return new Blue31(s_trajectory);
-        case 5:
-          return new Blue32(s_trajectory);
-        default:
-          return new Blue51(s_trajectory);
-      }
-    }
-    else{
-      switch(mode){
-        case 1:
-          return new Red21(s_trajectory);
-        case 2:
-          return new Red22(s_trajectory);
-        case 3:
-          return new Red23(s_trajectory);
-        case 4:
-          return new Red31(s_trajectory);
-        case 5:
-          return new Red32(s_trajectory);
-        default:
-          return new Red51(s_trajectory);
-      }
-    }
+  //   String alliance = DriverStation.getAlliance().toString();
+  //   if (alliance == "Blue") {
+  //     switch (mode) {
+  //       case 1:
+  //         return new Blue21(s_trajectory);
+  //       case 2:
+  //         return new Blue22(s_trajectory);
+  //       case 3:
+  //         return new Blue23(s_trajectory);
+  //       case 4:
+  //         return new Blue31(s_trajectory);
+  //       case 5:
+  //         return new Blue32(s_trajectory);
+  //       default:
+  //         return new Blue51(s_trajectory);
+  //     }
+  //   } else {
+  //     switch (mode) {
+  //       case 1:
+  //         return new Red21(s_trajectory);
+  //       case 2:
+  //         return new Red22(s_trajectory);
+  //       case 3:
+  //         return new Red23(s_trajectory);
+  //       case 4:
+  //         return new Red31(s_trajectory);
+  //       case 5:
+  //         return new Red32(s_trajectory);
+  //       default:
+  //         return new Red51(s_trajectory);
+  //     }
+  //   }
+  // }
+  return null;
   }
 }
-
-// if (go_to_terminal) {
-//   return new Autonomous5Balls(position);
-// } else {
-//   if (ball_count == 2) {
-//     return new Autonomous2Balls();
-//   } else if (ball_count == 3) {
-//     return new Autonomous3Balls(position);
-//   }
-// }
-
-
