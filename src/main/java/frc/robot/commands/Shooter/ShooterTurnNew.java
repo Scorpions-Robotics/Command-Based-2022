@@ -50,7 +50,7 @@ public class ShooterTurnNew extends CommandBase {
             m_shooter.runShooterVoltage(-motorOutput);
     }
     else{
-      m_shooter.runShooter(1);
+      m_shooter.runShooter(0.7);
     }
     SmartDashboard.putNumber("RPM", m_shooter.getShooterEncoderRPM());
     SmartDashboard.putNumber("Vision", m_vision.getHoopB());

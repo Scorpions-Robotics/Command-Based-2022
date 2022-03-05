@@ -56,8 +56,8 @@ public final class Constants {
   }
 
   public static class ENCODERS {
-    public static final int kLeftDriveEncoderChannelA = 0;
-    public static final int kLeftDriveEncoderChannelB = 1;
+    public static final int kLeftDriveEncoderChannelA = 4;
+    public static final int kLeftDriveEncoderChannelB = 5;
 
     public static final int kRightDriveEncoderChannelA = 2;
     public static final int kRightDriveEncoderChannelB = 3;

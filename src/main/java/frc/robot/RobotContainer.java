@@ -34,7 +34,7 @@ public class RobotContainer {
   public static final Joystick stick = new Joystick(Constants.OI.kStickId);
   public static final Joystick panel = new Joystick(Constants.OI.kPanelId);
 
-  // public final DriveSubsystem m_drive = new DriveSubsystem();
+  public final DriveSubsystem m_drive = new DriveSubsystem();
   public final VisionSubsystem m_vision = new VisionSubsystem();
   public final FeederSubsystem m_feeder = new FeederSubsystem();
   public final ShooterSubsystem m_shooter = new ShooterSubsystem();

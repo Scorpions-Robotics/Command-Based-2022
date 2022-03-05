@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DriveSubsystem extends SubsystemBase {
-  private ADIS16470_IMU imu;
+  private ADIS16470_IMU imu = new ADIS16470_IMU();
   private double startTime;
   private double driftPerSecond;
 
@@ -55,7 +55,6 @@ public class DriveSubsystem extends SubsystemBase {
     getLeftEncoderDistance();
     getRightEncoderDistance();
 
-    this.imu = new ADIS16470_IMU();
     this.imu.setYawAxis(IMUAxis.kY);
     this.calibrate();
     
