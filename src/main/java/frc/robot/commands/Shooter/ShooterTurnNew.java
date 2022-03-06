@@ -36,23 +36,31 @@ public class ShooterTurnNew extends CommandBase {
   @Override
   public void execute() {
     distance = m_vision.getHoopD();
-    if (distance > 500) {
-      m_shooter.pushPneumatic();
-    } else {
-      m_shooter.pullPneumatic();
-    }
-    output =
+    if (m_vision.getHoopB() == 1) {
+      if(m_shooter.pneumatic_mode==false){
+        output =
         controller.calculate(
             m_shooter.getShooterEncoderRPM(),
-            m_shooter.calculateShooterSpeed(distance, 140, 750, 820, 1450));
-    if (m_vision.getHoopB() == 1) {
-      double motorOutput =
+            m_shooter.calculateShooterSpeed(distance, 140, 500, 800, 1370));
+            double motorOutput =
           output
               + feedforward.calculate(
-                  m_shooter.calculateShooterSpeed(distance, 140, 750, 820, 1450));
+                  m_shooter.calculateShooterSpeed(distance, 140, 500, 800, 1370));
       m_shooter.runShooterVoltage(-motorOutput);
+      }
+      else{
+        output =
+        controller.calculate(
+            m_shooter.getShooterEncoderRPM(),
+            m_shooter.calculateShooterSpeed(distance, 500, 850, 1100, 1450));
+            double motorOutput =
+          output
+              + feedforward.calculate(
+                  m_shooter.calculateShooterSpeed(distance, 500, 850, 1100, 1450));
+      m_shooter.runShooterVoltage(-motorOutput);
+      }
     } else {
-      m_shooter.runShooter(0.7);
+      m_shooter.runShooter(0.0);
     }
     SmartDashboard.putNumber("RPM", m_shooter.getShooterEncoderRPM());
     SmartDashboard.putNumber("Vision", m_vision.getHoopB());

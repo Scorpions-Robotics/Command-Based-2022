@@ -44,7 +44,7 @@ public final class Constants {
     public static final int kShooterRightMotorID = 2;
     public static final int kShooterLeftMotorID = 8;
 
-    public static final int kIntakeMotorID = 8;
+    public static final int kIntakeMotorID = 5;
   }
 
   public static class PNEUMATICS {

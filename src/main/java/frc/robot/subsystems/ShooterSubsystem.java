@@ -32,6 +32,8 @@ public class ShooterSubsystem extends SubsystemBase {
   double max_min_distance_diff;
   double current_min_distance_diff;
   double max_min_rpm_diff;
+  
+  public boolean pneumatic_mode;
 
   public ShooterSubsystem() {
     shooterLeftMotor.follow(shooterRightMotor);
@@ -47,6 +49,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void pushPneumatic() {
     anglePneumatic.set(DoubleSolenoid.Value.kForward);
+    pneumatic_mode = true;
   }
 
   public void SetServoAngle(double angle) {
@@ -55,6 +58,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void pullPneumatic() {
     anglePneumatic.set(DoubleSolenoid.Value.kReverse);
+    pneumatic_mode = false;
   }
 
   public double calculateShooterSpeed(

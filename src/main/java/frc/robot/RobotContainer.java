@@ -4,11 +4,14 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commandgroups.Shoot;
 import frc.robot.commands.DriveTrain.TeleopDrive;
 import frc.robot.commands.Feeder.FeederTurn;
+import frc.robot.commands.Intake.IntakeTurn;
 import frc.robot.commands.Shooter.ShooterTurnNew;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
@@ -21,7 +24,7 @@ public class RobotContainer {
   public final VisionSubsystem m_vision = new VisionSubsystem();
   public final FeederSubsystem m_feeder = new FeederSubsystem();
   public final ShooterSubsystem m_shooter = new ShooterSubsystem();
-  // public final IntakeSubsystem m_intake = new IntakeSubsystem();
+  public final IntakeSubsystem m_intake = new IntakeSubsystem();
   // public final ClimbSubsystem m_climb = new ClimbSubsystem();
   // public final ScorpTrajectory s_trajectory = new ScorpTrajectory(m_drive);
 
@@ -54,20 +57,20 @@ public class RobotContainer {
     // stickButton1.whenInactive(new RunCommand(() -> m_vision.sendMode("ball")));
     // stickButton12.whenActive(new RunCommand(() -> m_drive.resetGyro(), m_drive));
 
-    stickButton1.whileHeld(new ShooterTurnNew(m_shooter, m_vision));
+    stickButton1.whileHeld(new Shoot(m_shooter, m_vision));
 
     stickButton2.whileHeld(new FeederTurn(m_feeder, 1));
 
-    // stickButton3.whileHeld(new IntakeTurn(m_intake, -1));
+    stickButton3.whileHeld(new IntakeTurn(m_intake, -1));
 
     stickButton4.whileHeld(new FeederTurn(m_feeder, -1));
 
     // stickButton5.whenActive(new AutoAngleTurn(m_drive, -60));
     // stickButton6.whenActive(new AutoAngleTurn(m_drive, 60));
 
-    new Trigger(() -> stick.getRawButton(3))
-        .whileActiveContinuous(
-            new FeederTurn(m_feeder, 0.7).withInterrupt(() -> m_feeder.getSwitchValue()));
+    // new Trigger(() -> stick.getRawButton(3))
+    //     .whileActiveContinuous(
+    //         new FeederTurn(m_feeder, 0.7).withInterrupt(() -> m_feeder.getSwitchValue()));
     // stickButton4.whileHeld(new FeederTurn(m_feeder, 1));
     // stickButton5.whileHeld(new FeederTurn(m_feeder, -1));
     // stickButton7.whenActive(new IntakePneumaticPush(m_intake));
