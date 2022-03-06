@@ -7,7 +7,9 @@ import frc.robot.Constants;
 
 public class FeederSubsystem extends SubsystemBase {
   private WPI_VictorSPX feederMotor = new WPI_VictorSPX(Constants.CAN.kFeederMotorID);
+
   DigitalInput limitSwitch = new DigitalInput(Constants.FEEDER.limitPort);
+  DigitalInput distanceSensor = new DigitalInput(Constants.FEEDER.distanceSensorPort);
 
   public FeederSubsystem() {}
 
@@ -20,6 +22,10 @@ public class FeederSubsystem extends SubsystemBase {
 
   public void stopFeeder() {
     feederMotor.set(Constants.VARIABLES.kZero);
+  }
+
+  public boolean isBallIn(){
+    return distanceSensor.get();
   }
 
   public boolean getSwitchValue() {

@@ -23,6 +23,7 @@ public final class Constants {
 
   public static class FEEDER {
     public static final int limitPort = 0;
+    public static final int distanceSensorPort = 2;
   }
 
   public static class SHOOTER {

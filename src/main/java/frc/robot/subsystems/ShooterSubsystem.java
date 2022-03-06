@@ -47,13 +47,13 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterRightMotor.set(speed * -1);
   } 
 
+  public void SetServoAngle(double angle) {
+    servo.setAngle(angle);
+  }
+
   public void pushPneumatic() {
     anglePneumatic.set(DoubleSolenoid.Value.kForward);
     pneumatic_mode = true;
-  }
-
-  public void SetServoAngle(double angle) {
-    servo.setAngle(angle);
   }
 
   public void pullPneumatic() {

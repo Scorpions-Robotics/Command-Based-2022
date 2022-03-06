@@ -68,9 +68,9 @@ public class RobotContainer {
     // stickButton5.whenActive(new AutoAngleTurn(m_drive, -60));
     // stickButton6.whenActive(new AutoAngleTurn(m_drive, 60));
 
-    // new Trigger(() -> stick.getRawButton(3))
-    //     .whileActiveContinuous(
-    //         new FeederTurn(m_feeder, 0.7).withInterrupt(() -> m_feeder.getSwitchValue()));
+    new Trigger(() -> m_feeder.isBallIn())
+        .whileActiveContinuous(
+            new FeederTurn(m_feeder, 0.7).withInterrupt(() -> m_feeder.getSwitchValue()));
     // stickButton4.whileHeld(new FeederTurn(m_feeder, 1));
     // stickButton5.whileHeld(new FeederTurn(m_feeder, -1));
     // stickButton7.whenActive(new IntakePneumaticPush(m_intake));
