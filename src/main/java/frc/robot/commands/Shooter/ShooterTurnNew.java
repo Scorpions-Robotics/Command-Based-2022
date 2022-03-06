@@ -17,6 +17,11 @@ public class ShooterTurnNew extends CommandBase {
   VisionSubsystem m_vision;
   double output;
   double distance;
+  double min_distance;
+  double max_distance;
+  double min_rpm;
+  double max_rpm;
+  double motorOutput;
   PIDController controller = new PIDController(1.5143, 0, 0);
   SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(Constants.SHOOTER.kS, Constants.SHOOTER.kV, Constants.SHOOTER.kA);
@@ -36,29 +41,28 @@ public class ShooterTurnNew extends CommandBase {
   @Override
   public void execute() {
     distance = m_vision.getHoopD();
+    if(m_shooter.pneumatic_mode){
+      min_distance = 500;
+      max_distance = 850;
+      min_rpm = 1100;
+      max_rpm = 1450; 
+    }
+    else{
+      min_distance = 140;
+      max_distance = 500;
+      min_rpm = 800;
+      max_rpm = 1370;
+    }
     if (m_vision.getHoopB() == 1) {
-      if(m_shooter.pneumatic_mode==false){
-        output =
-        controller.calculate(
-            m_shooter.getShooterEncoderRPM(),
-            m_shooter.calculateShooterSpeed(distance, 140, 500, 800, 1370));
-            double motorOutput =
-          output
-              + feedforward.calculate(
-                  m_shooter.calculateShooterSpeed(distance, 140, 500, 800, 1370));
+      output =
+      controller.calculate(
+          m_shooter.getShooterEncoderRPM(),
+          m_shooter.calculateShooterSpeed(distance, min_distance, max_distance, min_rpm, max_rpm));
+          motorOutput =
+        output
+            + feedforward.calculate(
+                m_shooter.calculateShooterSpeed(distance, min_distance, max_distance, min_rpm, max_rpm));
       m_shooter.runShooterVoltage(-motorOutput);
-      }
-      else{
-        output =
-        controller.calculate(
-            m_shooter.getShooterEncoderRPM(),
-            m_shooter.calculateShooterSpeed(distance, 500, 850, 1100, 1450));
-            double motorOutput =
-          output
-              + feedforward.calculate(
-                  m_shooter.calculateShooterSpeed(distance, 500, 850, 1100, 1450));
-      m_shooter.runShooterVoltage(-motorOutput);
-      }
     } else {
       m_shooter.runShooter(0.0);
     }
