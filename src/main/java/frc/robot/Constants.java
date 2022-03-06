@@ -33,10 +33,10 @@ public final class Constants {
   }
 
   public static class CAN {
-    public static final int kRightLeaderID = 5;
-    public static final int kRightFollowerID = 6;
-    public static final int kLeftLeaderID = 1;
-    public static final int kLeftFollowerID = 7;
+    public static final int kRightLeaderID = 9;
+    public static final int kRightFollowerID = 11;
+    public static final int kLeftLeaderID = 6;
+    public static final int kLeftFollowerID = 10;
 
     public static final int kClimbMotorID = 0;
     public static final int kFeederMotorID = 7;

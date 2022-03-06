@@ -42,8 +42,8 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {}
 
   public void runShooter(double speed) {
-    shooterRightMotor.set(speed);
-  }
+    shooterRightMotor.set(speed * -1);
+  } 
 
   public void pushPneumatic() {
     anglePneumatic.set(DoubleSolenoid.Value.kForward);
@@ -58,11 +58,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double calculateShooterSpeed(
-      double distance,
-      double min_distance,
-      double max_distance,
-      double min_rpm,
-      double max_rpm) {
+      double distance, double min_distance, double max_distance, double min_rpm, double max_rpm) {
 
     max_min_distance_diff = max_distance - min_distance;
     current_min_distance_diff = distance - min_distance;

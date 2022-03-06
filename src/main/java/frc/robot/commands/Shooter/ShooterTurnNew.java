@@ -18,7 +18,8 @@ public class ShooterTurnNew extends CommandBase {
   double output;
   double distance;
   PIDController controller = new PIDController(1.5143, 0, 0);
-  SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.SHOOTER.kS, Constants.SHOOTER.kV, Constants.SHOOTER.kA);
+  SimpleMotorFeedforward feedforward =
+      new SimpleMotorFeedforward(Constants.SHOOTER.kS, Constants.SHOOTER.kV, Constants.SHOOTER.kA);
   /** Creates a new ShooterTurnNew. */
   public ShooterTurnNew(ShooterSubsystem m_shooter, VisionSubsystem m_vision) {
     this.m_shooter = m_shooter;
@@ -35,21 +36,22 @@ public class ShooterTurnNew extends CommandBase {
   @Override
   public void execute() {
     distance = m_vision.getHoopD();
-    if (distance > 300) {
+    if (distance > 500) {
       m_shooter.pushPneumatic();
     } else {
       m_shooter.pullPneumatic();
     }
-    output = controller.calculate(m_shooter.getShooterEncoderRPM(), m_shooter.calculateShooterSpeed(distance, 140, 750, 820, 1400));
-    if(m_vision.getHoopB() == 1){
+    output =
+        controller.calculate(
+            m_shooter.getShooterEncoderRPM(),
+            m_shooter.calculateShooterSpeed(distance, 140, 750, 820, 1450));
+    if (m_vision.getHoopB() == 1) {
       double motorOutput =
-                output
-                    + feedforward.calculate(
-                        m_shooter.calculateShooterSpeed(
-                            distance, 140, 750, 820, 1400));
-            m_shooter.runShooterVoltage(-motorOutput);
-    }
-    else{
+          output
+              + feedforward.calculate(
+                  m_shooter.calculateShooterSpeed(distance, 140, 750, 820, 1450));
+      m_shooter.runShooterVoltage(-motorOutput);
+    } else {
       m_shooter.runShooter(0.7);
     }
     SmartDashboard.putNumber("RPM", m_shooter.getShooterEncoderRPM());

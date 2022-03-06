@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -39,11 +40,13 @@ public class DriveSubsystem extends SubsystemBase {
           false,
           EncodingType.k4X);
 
-  private WPI_VictorSPX rightFront = new WPI_VictorSPX(Constants.CAN.kRightLeaderID);
-  private WPI_VictorSPX rightRear = new WPI_VictorSPX(Constants.CAN.kRightFollowerID);
+  private CANSparkMax rightFront =
+      new CANSparkMax(Constants.CAN.kRightLeaderID, MotorType.kBrushed);
+  private CANSparkMax rightRear =
+      new CANSparkMax(Constants.CAN.kRightFollowerID, MotorType.kBrushed);
 
-  private WPI_VictorSPX leftFront = new WPI_VictorSPX(Constants.CAN.kLeftLeaderID);
-  private WPI_VictorSPX leftRear = new WPI_VictorSPX(Constants.CAN.kLeftFollowerID);
+  private CANSparkMax leftFront = new CANSparkMax(Constants.CAN.kLeftLeaderID, MotorType.kBrushed);
+  private CANSparkMax leftRear = new CANSparkMax(Constants.CAN.kLeftFollowerID, MotorType.kBrushed);
 
   MotorControllerGroup m_right = new MotorControllerGroup(rightFront, rightRear);
   MotorControllerGroup m_left = new MotorControllerGroup(leftFront, leftRear);
@@ -57,7 +60,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     this.imu.setYawAxis(IMUAxis.kY);
     this.calibrate();
-    
+
     this.resetGyro();
     this.resetEncoders();
   }
@@ -91,7 +94,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void arcadeDrive(double speed, double rotation) {
-    drive.arcadeDrive(speed, rotation);
+    drive.arcadeDrive(speed * -1, rotation * -1);
   }
 
   public void stopMotors() {
