@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+
 public final class Constants {
   public class OI {
     public static final int kStickId = 0;
@@ -31,10 +33,10 @@ public final class Constants {
   }
 
   public class CAN {
-    public static final int kRightLeaderID = 5;
-    public static final int kRightFollowerID = 6;
-    public static final int kLeftLeaderID = 1;
-    public static final int kLeftFollowerID = 7;
+    public static final int kRightLeaderID = 9;
+    public static final int kRightFollowerID = 11;
+    public static final int kLeftLeaderID = 6;
+    public static final int kLeftFollowerID = 10;
 
     public static final int kClimbMotorID = 0;
     public static final int kFeederMotorID = 2;
@@ -54,11 +56,11 @@ public final class Constants {
   }
 
   public class ENCODERS {
-    public static final int kLeftDriveEncoderChannelA = 0;
-    public static final int kLeftDriveEncoderChannelB = 1;
+    public static final int kLeftDriveEncoderChannelA = 4;
+    public static final int kLeftDriveEncoderChannelB = 5;
 
-    public static final int kRightDriveEncoderChannelA = 2;
-    public static final int kRightDriveEncoderChannelB = 3;
+    public static final int kRightDriveEncoderChannelA = 6;
+    public static final int kRightDriveEncoderChannelB = 7;
 
     public static final int kShooterEncoderChannelA = 4;
     public static final int kShooterEncoderChannelB = 5;
@@ -68,18 +70,23 @@ public final class Constants {
     public static final int kZero = 0;
   }
 
-  public class ODOMETRY {
-    public static final double kP = 0.0;
+  public static class ODOMETRY {
+    public static final double kP = 0.9822;
 
     public static final double kRamseteB = 2.0;
     public static final double kRamseteZeta = 0.7;
 
-    public static final double kS = 0.0;
-    public static final double kV = 0.0;
-    public static final double kA = 0.0;
+    public static final double kS = 0.56711;
+    public static final double kV = 0.75556;
+    public static final double kA = 0.14701;
+
+    // gon' modify track width value
+    public static final double kTrackwidthMeters = 0.56;
+    public static final DifferentialDriveKinematics kinematics =
+        new DifferentialDriveKinematics(kTrackwidthMeters);
 
     // will decide these later
-    public static final double kMaxSpeedMetersPerSecond = 0;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 0;
+    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
   }
 }
