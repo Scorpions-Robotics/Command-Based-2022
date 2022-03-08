@@ -49,19 +49,19 @@ public final class Constants {
   }
 
   public static class PNEUMATICS {
-    public static final int kIntakeSolenoidForwardChannel = 2;
-    public static final int kIntakeSolenoidReverseChannel = 3;
+    public static final int kIntakeSolenoidForwardChannel = 4;
+    public static final int kIntakeSolenoidReverseChannel = 5;
 
-    public static final int kShooterSolenoidForwardChannel = 0;
-    public static final int kShooterSolenoidReverseChannel = 1;
+    public static final int kShooterSolenoidForwardChannel = 6;
+    public static final int kShooterSolenoidReverseChannel = 7;
   }
 
   public static class ENCODERS {
     public static final int kLeftDriveEncoderChannelA = 4;
     public static final int kLeftDriveEncoderChannelB = 5;
 
-    public static final int kRightDriveEncoderChannelA = 2;
-    public static final int kRightDriveEncoderChannelB = 3;
+    public static final int kRightDriveEncoderChannelA = 6;
+    public static final int kRightDriveEncoderChannelB = 7;
 
     public static final int kShooterEncoderChannelA = 8;
     public static final int kShooterEncoderChannelB = 9;
