@@ -59,7 +59,7 @@ public class DriveSubsystem extends SubsystemBase {
     getRightEncoderDistance();
 
     m_right.setInverted(true);
-    m_left.setInverted(true);
+    m_left.setInverted(false);
 
     this.imu.setYawAxis(IMUAxis.kY);
     this.calibrate();

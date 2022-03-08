@@ -15,8 +15,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.Autonomous.TakeAim;
 import frc.robot.commands.DriveTrain.TeleopDrive;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
+
 import java.util.List;
 
 public class RobotContainer {
@@ -25,7 +28,7 @@ public class RobotContainer {
   public static final Joystick panel = new Joystick(Constants.OI.kPanelId);
 
   private final DriveSubsystem m_drive = new DriveSubsystem();
-  // private final VisionSubsystem m_vision = new VisionSubsystem();
+  private final VisionSubsystem m_vision = new VisionSubsystem();
   // private final FeederSubsystem m_feeder = new FeederSubsystem();
   // private final ShooterSubsystem m_shooter = new ShooterSubsystem();
   // private final IntakeSubsystem m_intake = new IntakeSubsystem();
@@ -56,7 +59,7 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    stickButton12.whenPressed(new RunCommand(() -> m_drive.resetEncoders()));
+    stickButton12.whileHeld(new TakeAim(m_drive, m_vision));
     // stickButton1.whileActiveContinuous(new RunCommand(() -> m_vision.sendMode("hoop")));
     // stickButton1.whenInactive(new RunCommand(() -> m_vision.sendMode("ball")));
     // stickButton12.whenActive(new RunCommand(() -> m_drive.resetGyro(), m_drive));
