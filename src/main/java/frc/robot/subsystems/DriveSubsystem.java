@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ColorSensorV3;
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -20,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DriveSubsystem extends SubsystemBase {
+  
   private ADIS16470_IMU imu = new ADIS16470_IMU();
   private double startTime;
   private double driftPerSecond;
@@ -40,6 +43,8 @@ public class DriveSubsystem extends SubsystemBase {
           false,
           EncodingType.k4X);
 
+
+
   private CANSparkMax rightFront =
       new CANSparkMax(Constants.CAN.kRightLeaderID, MotorType.kBrushed);
   private CANSparkMax rightRear =
@@ -59,20 +64,20 @@ public class DriveSubsystem extends SubsystemBase {
     getRightEncoderDistance();
 
     m_right.setInverted(true);
-    m_left.setInverted(true);
+    m_left.setInverted(false);
 
     this.imu.setYawAxis(IMUAxis.kY);
     this.calibrate();
   }
 
   public double getLeftEncoderDistance() {
-    leftDriveEncoder.setDistancePerPulse(Math.PI * 6.0 / 5.0);
-    return leftDriveEncoder.getDistance();
+    leftDriveEncoder.setDistancePerPulse(1.0 / 20.0 * Math.PI * 6 * (1/10.71));
+    return leftDriveEncoder.getDistance() * 2.54;
   }
 
   public double getRightEncoderDistance() {
-    rightDriveEncoder.setDistancePerPulse(Math.PI * 6.0 / 5.0);
-    return rightDriveEncoder.getDistance();
+    rightDriveEncoder.setDistancePerPulse(1.0 / 20.0 * Math.PI * 6 * (1/10.71));
+    return rightDriveEncoder.getDistance() * 2.54 * -1;
   }
 
   public double getStraightDriveDistance() {
@@ -140,9 +145,16 @@ public class DriveSubsystem extends SubsystemBase {
     odometry.resetPosition(pose, getHeading());
   }
 
+  public void modeBrake(){
+    rightFront.setIdleMode(IdleMode.kBrake);
+    rightRear.setIdleMode(IdleMode.kBrake);
+    leftFront.setIdleMode(IdleMode.kBrake);
+    leftRear.setIdleMode(IdleMode.kBrake);
+  }
+
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(
-        leftDriveEncoder.getRate(), rightDriveEncoder.getRate());
+        leftDriveEncoder.getRate(), rightDriveEncoder.getRate() * -1);
   }
 
   public Rotation2d getHeading() {
@@ -161,9 +173,10 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    odometry.update(getHeading(), leftDriveEncoder.getDistance(), rightDriveEncoder.getDistance());
+    odometry.update(getHeading(), getLeftEncoderDistance(), getRightEncoderDistance());
     SmartDashboard.putNumber("Angle", getGyroAngle());
     SmartDashboard.putNumber("Left Distance", getLeftEncoderDistance());
     SmartDashboard.putNumber("Right Distance", getRightEncoderDistance());
+    SmartDashboard.putString("Rotation 2d", getHeading().toString());
   }
 }

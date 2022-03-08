@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.io.IOException;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -47,11 +49,18 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    m_autonomousCommand =
-        m_robotContainer.getAutonomousCommand(
-            terminal_chooser.getSelected(),
-            position_chooser.getSelected(),
-            ball_chooser.getSelected());
+    m_robotContainer.m_drive.resetEncoders();
+    m_robotContainer.m_drive.resetGyro();
+    try {
+      m_autonomousCommand =
+          m_robotContainer.getAutonomousCommand(
+              terminal_chooser.getSelected(),
+              position_chooser.getSelected(),
+              ball_chooser.getSelected());
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -63,6 +72,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    m_robotContainer.m_drive.modeBrake();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

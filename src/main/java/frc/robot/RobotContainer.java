@@ -9,14 +9,25 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.Autonomous.AutoAngleTurn;
+import frc.robot.commands.Autonomous.AutoStraightDrive;
 import frc.robot.commands.DriveTrain.TeleopDrive;
+import frc.robot.commands.Feeder.FeederTurn;
+import frc.robot.commands.Shooter.ShooterTurnManual;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.FeederSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 public class RobotContainer {
@@ -24,7 +35,7 @@ public class RobotContainer {
   public static final Joystick stick = new Joystick(Constants.OI.kStickId);
   public static final Joystick panel = new Joystick(Constants.OI.kPanelId);
 
-  private final DriveSubsystem m_drive = new DriveSubsystem();
+  public final DriveSubsystem m_drive = new DriveSubsystem();
   // private final VisionSubsystem m_vision = new VisionSubsystem();
   // private final FeederSubsystem m_feeder = new FeederSubsystem();
   // private final ShooterSubsystem m_shooter = new ShooterSubsystem();
@@ -56,6 +67,8 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
+    stickButton2.whenPressed(new AutoStraightDrive(m_drive, 3, true));
+    stickButton1.whenPressed(new AutoAngleTurn(m_drive, 90));
     stickButton12.whenPressed(new RunCommand(() -> m_drive.resetEncoders()));
     // stickButton1.whileActiveContinuous(new RunCommand(() -> m_vision.sendMode("hoop")));
     // stickButton1.whenInactive(new RunCommand(() -> m_vision.sendMode("ball")));
@@ -86,28 +99,14 @@ public class RobotContainer {
     // stick.getThrottle()));
   }
 
-  public Command getAutonomousCommand(boolean go_to_terminal, int position, int ball_count) {
+  public Command getAutonomousCommand(boolean go_to_terminal, int position, int ball_count) throws IOException {
+    Path Blue3BallsPosition1 =
+        Filesystem.getDeployDirectory().toPath().resolve("paths/Unnamed.wpilib.json");
 
-    var autoVoltageConstraint =
-        new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(
-                Constants.ODOMETRY.kS, Constants.ODOMETRY.kV, Constants.ODOMETRY.kA),
-            Constants.ODOMETRY.kinematics,
-            10);
+    Trajectory exampleTrajectory;
 
-    TrajectoryConfig config =
-        new TrajectoryConfig(
-                Constants.ODOMETRY.kMaxSpeedMetersPerSecond,
-                Constants.ODOMETRY.kMaxAccelerationMetersPerSecondSquared)
-            .setKinematics(Constants.ODOMETRY.kinematics)
-            .addConstraint(autoVoltageConstraint);
-
-    Trajectory exampleTrajectory =
-        TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 0, new Rotation2d(0)),
-            List.of(new Translation2d(1, 1), new Translation2d(-1, 2)),
-            new Pose2d(0, 3, new Rotation2d(0)),
-            config);
+    exampleTrajectory = TrajectoryUtil.fromPathweaverJson(Blue3BallsPosition1);
+    
 
     RamseteCommand ramseteCommand =
         new RamseteCommand(
