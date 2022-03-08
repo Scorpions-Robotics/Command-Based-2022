@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ColorSensorV3;
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -55,6 +57,9 @@ public class DriveSubsystem extends SubsystemBase {
   private DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading());
 
   public DriveSubsystem() {
+    m_right.setInverted(true);
+    m_left.setInverted(false);
+
     getLeftEncoderDistance();
     getRightEncoderDistance();
 
@@ -65,14 +70,21 @@ public class DriveSubsystem extends SubsystemBase {
     this.resetEncoders();
   }
 
+  public void modeBrake(){
+    rightFront.setIdleMode(IdleMode.kBrake);
+    rightRear.setIdleMode(IdleMode.kBrake);
+    leftFront.setIdleMode(IdleMode.kBrake);
+    leftRear.setIdleMode(IdleMode.kBrake);
+  }
+
   public double getLeftEncoderDistance() {
-    leftDriveEncoder.setDistancePerPulse(1.0 / 400.0 * 2.0 * Math.PI * 3.0);
-    return leftDriveEncoder.getDistance();
+    leftDriveEncoder.setDistancePerPulse(1.0 / 20.0 * Math.PI * 6 * (1/10.71));
+    return leftDriveEncoder.getDistance() * 2.54;
   }
 
   public double getRightEncoderDistance() {
-    rightDriveEncoder.setDistancePerPulse(1.0 / 400.0 * 2.0 * Math.PI * 3.0);
-    return rightDriveEncoder.getDistance();
+    rightDriveEncoder.setDistancePerPulse(1.0 / 20.0 * Math.PI * 6 * (1/10.71));
+    return rightDriveEncoder.getDistance() * 2.54 * -1;
   }
 
   public double getStraightDriveDistance() {
@@ -142,7 +154,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(
-        leftDriveEncoder.getRate(), rightDriveEncoder.getRate());
+        leftDriveEncoder.getRate(), rightDriveEncoder.getRate() * -1);
   }
 
   public Rotation2d getHeading() {
@@ -161,7 +173,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    odometry.update(getHeading(), leftDriveEncoder.getDistance(), rightDriveEncoder.getDistance());
-    SmartDashboard.putNumber("Angle", getGyroAngle());
+    odometry.update(getHeading(), getLeftEncoderDistance(), getRightEncoderDistance());
+    SmartDashboard.putNumber("Left Distance", getLeftEncoderDistance());
+    SmartDashboard.putNumber("Right Distance", getRightEncoderDistance());
+    SmartDashboard.putString("Rotation 2d", getHeading().toString());
   }
 }
