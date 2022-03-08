@@ -1,11 +1,8 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ColorSensorV3;
-import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -43,8 +40,10 @@ public class DriveSubsystem extends SubsystemBase {
           false,
           EncodingType.k4X);
 
-  private CANSparkMax rightFront = new CANSparkMax(Constants.CAN.kRightLeaderID, MotorType.kBrushed);
-  private CANSparkMax rightRear = new CANSparkMax(Constants.CAN.kRightFollowerID, MotorType.kBrushed);
+  private CANSparkMax rightFront =
+      new CANSparkMax(Constants.CAN.kRightLeaderID, MotorType.kBrushed);
+  private CANSparkMax rightRear =
+      new CANSparkMax(Constants.CAN.kRightFollowerID, MotorType.kBrushed);
 
   private CANSparkMax leftFront = new CANSparkMax(Constants.CAN.kLeftLeaderID, MotorType.kBrushed);
   private CANSparkMax leftRear = new CANSparkMax(Constants.CAN.kLeftFollowerID, MotorType.kBrushed);

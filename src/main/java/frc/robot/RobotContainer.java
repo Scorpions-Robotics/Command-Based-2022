@@ -6,7 +6,6 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
@@ -16,17 +15,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveTrain.TeleopDrive;
-import frc.robot.commands.Feeder.FeederTurn;
-import frc.robot.commands.Intake.IntakePneumaticPull;
-import frc.robot.commands.Intake.IntakePneumaticPush;
-import frc.robot.commands.Shooter.ShooterTurnManual;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.FeederSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.VisionSubsystem;
 import java.util.List;
 
 public class RobotContainer {
@@ -97,7 +87,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand(boolean go_to_terminal, int position, int ball_count) {
-    
 
     var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
