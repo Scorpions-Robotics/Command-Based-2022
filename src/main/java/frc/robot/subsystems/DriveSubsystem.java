@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ColorSensorV3;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -66,12 +67,12 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public double getLeftEncoderDistance() {
-    leftDriveEncoder.setDistancePerPulse(1.0 / 40.0 * 2.0 * Math.PI * 3.0);
+    leftDriveEncoder.setDistancePerPulse(Math.PI * 6.0 / 5.0);
     return leftDriveEncoder.getDistance();
   }
 
   public double getRightEncoderDistance() {
-    rightDriveEncoder.setDistancePerPulse(1.0 / 40.0 * 2.0 * Math.PI * 3.0);
+    rightDriveEncoder.setDistancePerPulse(Math.PI * 6.0 / 5.0);
     return rightDriveEncoder.getDistance();
   }
 
