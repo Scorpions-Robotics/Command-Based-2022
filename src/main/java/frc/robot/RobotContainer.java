@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autonomous.AutoAngleTurn;
 import frc.robot.commands.Autonomous.AutoStraightDrive;
+import frc.robot.commands.Autonomous.TakeAim;
 import frc.robot.commands.DriveTrain.TeleopDrive;
 import frc.robot.commands.Feeder.FeederTurn;
 import frc.robot.commands.Shooter.ShooterTurnManual;
@@ -28,6 +29,8 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import frc.robot.subsystems.VisionSubsystem;
+
 import java.util.List;
 
 public class RobotContainer {
@@ -36,7 +39,7 @@ public class RobotContainer {
   public static final Joystick panel = new Joystick(Constants.OI.kPanelId);
 
   public final DriveSubsystem m_drive = new DriveSubsystem();
-  // private final VisionSubsystem m_vision = new VisionSubsystem();
+  private final VisionSubsystem m_vision = new VisionSubsystem();
   // private final FeederSubsystem m_feeder = new FeederSubsystem();
   // private final ShooterSubsystem m_shooter = new ShooterSubsystem();
   // private final IntakeSubsystem m_intake = new IntakeSubsystem();
