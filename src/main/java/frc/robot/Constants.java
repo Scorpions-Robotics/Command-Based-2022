@@ -72,22 +72,20 @@ public final class Constants {
   }
 
   public static class ODOMETRY {
-    public static final double kP = 0.0;
+    public static final double kP = 0.9822;
 
     public static final double kRamseteB = 2.0;
     public static final double kRamseteZeta = 0.7;
 
-    public static final double kS = 0.0;
-    public static final double kV = 0.0;
-    public static final double kA = 0.0;
+    public static final double kS = 0.56711;
+    public static final double kV = 0.75556;
+    public static final double kA = 0.14701;
 
-    // gon' modify track width value
-    public static final double kTrackwidthMeters = 0.7;
+    public static final double kTrackwidthMeters = 0.56;
     public static final DifferentialDriveKinematics kinematics =
         new DifferentialDriveKinematics(kTrackwidthMeters);
 
-    // will decide these later
-    public static final double kMaxSpeedMetersPerSecond = 0;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 0;
+    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
   }
 }

@@ -42,6 +42,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_robotContainer.m_drive.resetEncoders();
     m_robotContainer.m_drive.resetGyro();
+    m_robotContainer.m_drive.modeBrake();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand(auto_chooser.getSelected());
 
     if (m_autonomousCommand != null) {
