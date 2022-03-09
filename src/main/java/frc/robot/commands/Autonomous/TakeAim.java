@@ -27,29 +27,27 @@ public class TakeAim extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_vision.getHoopB() == 1){
+    if (m_vision.getHoopB() == 1) {
       rotation = m_vision.getHoopR();
       error = rotation;
-      if(error < 0){
+      if (error < 0) {
         m_drive.runLeftMotor(0.1);
         m_drive.runRightMotor(-0.1);
-        if(error < -25){
+        if (error < -25) {
           m_drive.runLeftMotor(0.15);
           m_drive.runRightMotor(-0.15);
         }
-      }
-      else if(error > 0){
+      } else if (error > 0) {
         m_drive.runLeftMotor(0.1);
         m_drive.runRightMotor(-0.1);
-        if(error > 25){
+        if (error > 25) {
           m_drive.runLeftMotor(0.15);
           m_drive.runRightMotor(-0.15);
         }
-      }
-      else{
+      } else {
         m_drive.stopMotors();
       }
-      if(error >= -5 && error <= 5){
+      if (error >= -5 && error <= 5) {
         m_drive.stopMotors();
       }
     }
@@ -64,7 +62,7 @@ public class TakeAim extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_vision.getHoopB() == 1 && error >= -5 && error <= 5){
+    if (m_vision.getHoopB() == 1 && error >= -5 && error <= 5) {
       return true;
     }
     return false;

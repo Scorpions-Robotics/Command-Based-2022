@@ -3,14 +3,8 @@ package frc.robot;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -19,19 +13,11 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autonomous.AutoAngleTurn;
 import frc.robot.commands.Autonomous.AutoStraightDrive;
-import frc.robot.commands.Autonomous.TakeAim;
 import frc.robot.commands.DriveTrain.TeleopDrive;
-import frc.robot.commands.Feeder.FeederTurn;
-import frc.robot.commands.Shooter.ShooterTurnManual;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.FeederSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
-
+import frc.robot.subsystems.VisionSubsystem;
 import java.io.IOException;
 import java.nio.file.Path;
-import frc.robot.subsystems.VisionSubsystem;
-
-import java.util.List;
 
 public class RobotContainer {
 
@@ -102,14 +88,14 @@ public class RobotContainer {
     // stick.getThrottle()));
   }
 
-  public Command getAutonomousCommand(boolean go_to_terminal, int position, int ball_count) throws IOException {
+  public Command getAutonomousCommand(boolean go_to_terminal, int position, int ball_count)
+      throws IOException {
     Path Blue3BallsPosition1 =
         Filesystem.getDeployDirectory().toPath().resolve("paths/Unnamed.wpilib.json");
 
     Trajectory exampleTrajectory;
 
     exampleTrajectory = TrajectoryUtil.fromPathweaverJson(Blue3BallsPosition1);
-    
 
     RamseteCommand ramseteCommand =
         new RamseteCommand(

@@ -1,10 +1,9 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ColorSensorV3;
-import com.revrobotics.CANSparkMax.IdleMode;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -22,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DriveSubsystem extends SubsystemBase {
-  
+
   private ADIS16470_IMU imu = new ADIS16470_IMU();
   private double startTime;
   private double driftPerSecond;
@@ -42,8 +41,6 @@ public class DriveSubsystem extends SubsystemBase {
           Constants.ENCODERS.kRightDriveEncoderChannelB,
           false,
           EncodingType.k4X);
-
-
 
   private CANSparkMax rightFront =
       new CANSparkMax(Constants.CAN.kRightLeaderID, MotorType.kBrushed);
@@ -71,12 +68,12 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public double getLeftEncoderDistance() {
-    leftDriveEncoder.setDistancePerPulse(1.0 / 20.0 * Math.PI * 6 * (1/10.71));
+    leftDriveEncoder.setDistancePerPulse(1.0 / 20.0 * Math.PI * 6 * (1 / 10.71));
     return leftDriveEncoder.getDistance() * 2.54;
   }
 
   public double getRightEncoderDistance() {
-    rightDriveEncoder.setDistancePerPulse(1.0 / 20.0 * Math.PI * 6 * (1/10.71));
+    rightDriveEncoder.setDistancePerPulse(1.0 / 20.0 * Math.PI * 6 * (1 / 10.71));
     return rightDriveEncoder.getDistance() * 2.54 * -1;
   }
 
@@ -145,7 +142,7 @@ public class DriveSubsystem extends SubsystemBase {
     odometry.resetPosition(pose, getHeading());
   }
 
-  public void modeBrake(){
+  public void modeBrake() {
     rightFront.setIdleMode(IdleMode.kBrake);
     rightRear.setIdleMode(IdleMode.kBrake);
     leftFront.setIdleMode(IdleMode.kBrake);
