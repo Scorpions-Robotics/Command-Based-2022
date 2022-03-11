@@ -39,11 +39,15 @@ public final class Constants {
     public static final int kLeftLeaderID = 6;
     public static final int kLeftFollowerID = 10;
 
-    public static final int kClimbMotorID = 0;
+    public static final int kClimbMotorLeft1ID = 12;
+    public static final int kClimbMotorLeft2ID = 8;
+    public static final int kClimbMotorRight1ID = 14;
+    public static final int kClimbMotorRight2ID = 2;
+
     public static final int kFeederMotorID = 7;
 
-    public static final int kShooterRightMotorID = 2;
-    public static final int kShooterLeftMotorID = 8;
+    public static final int kShooterRightMotorID = 1;
+    public static final int kShooterLeftMotorID = 3;
 
     public static final int kIntakeMotorID = 5;
   }

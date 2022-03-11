@@ -22,35 +22,37 @@ public class TakeAim extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_drive.modeBrake();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_vision.getHoopB() == 1){
+    if (m_vision.getHoopB() == 1) {
       rotation = m_vision.getHoopR();
       error = rotation;
-      if(error < 0){
-        m_drive.runLeftMotor(0.1);
-        m_drive.runRightMotor(-0.1);
-        if(error < -25){
-          m_drive.runLeftMotor(0.15);
-          m_drive.runRightMotor(-0.15);
+      if (error < -20) {
+        m_drive.runLeftMotor(-0.15);
+        m_drive.runRightMotor(0.15);
+        if (error < -50) {
+          m_drive.runLeftMotor(-0.17);
+          m_drive.runRightMotor(0.17);
         }
-      }
-      else if(error > 0){
-        m_drive.runLeftMotor(0.1);
-        m_drive.runRightMotor(-0.1);
-        if(error > 25){
-          m_drive.runLeftMotor(0.15);
-          m_drive.runRightMotor(-0.15);
+      } else if (error > 20) {
+        m_drive.runLeftMotor(0.15);
+        m_drive.runRightMotor(-0.15);
+        if (error > 10) {
+          m_drive.runLeftMotor(0.17);
+          m_drive.runRightMotor(-0.17);
         }
+      } else {
+        m_drive.runLeftMotor(0);
+        m_drive.runRightMotor(0);
       }
-      else{
-        m_drive.stopMotors();
-      }
-      if(error >= -5 && error <= 5){
-        m_drive.stopMotors();
+      if (error >= -10 && error <= 10) {
+        m_drive.runLeftMotor(0);
+        m_drive.runRightMotor(0);
       }
     }
   }
@@ -58,13 +60,14 @@ public class TakeAim extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drive.stopMotors();
+    m_drive.runLeftMotor(0);
+    m_drive.runRightMotor(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_vision.getHoopB() == 1 && error >= -5 && error <= 5){
+    if (m_vision.getHoopB() == 1 && error >= -10 && error <= 10) {
       return true;
     }
     return false;

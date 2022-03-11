@@ -32,7 +32,7 @@ public class ShooterSubsystem extends SubsystemBase {
   double max_min_distance_diff;
   double current_min_distance_diff;
   double max_min_rpm_diff;
-  
+
   public boolean pneumatic_mode;
 
   public ShooterSubsystem() {
@@ -45,7 +45,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void runShooter(double speed) {
     shooterRightMotor.set(speed * -1);
-  } 
+  }
 
   public void SetServoAngle(double angle) {
     servo.setAngle(angle);

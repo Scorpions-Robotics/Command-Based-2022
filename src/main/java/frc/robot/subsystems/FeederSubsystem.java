@@ -24,7 +24,7 @@ public class FeederSubsystem extends SubsystemBase {
     feederMotor.set(Constants.VARIABLES.kZero);
   }
 
-  public boolean isBallIn(){
+  public boolean isBallIn() {
     return distanceSensor.get();
   }
 

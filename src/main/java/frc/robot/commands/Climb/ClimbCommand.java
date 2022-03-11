@@ -2,14 +2,15 @@ package frc.robot.commands.Climb;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimbSubsystem;
+import java.util.function.DoubleSupplier;
 
 public class ClimbCommand extends CommandBase {
   ClimbSubsystem m_climb;
-  double speed;
+  DoubleSupplier speedSupplier;
 
-  public ClimbCommand(ClimbSubsystem m_climb, double speed) {
+  public ClimbCommand(ClimbSubsystem m_climb, DoubleSupplier speedSupplier) {
     this.m_climb = m_climb;
-    this.speed = speed;
+    this.speedSupplier = speedSupplier;
 
     addRequirements(m_climb);
   }
@@ -19,7 +20,7 @@ public class ClimbCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_climb.runClimb(speed);
+    m_climb.runClimb(speedSupplier.getAsDouble());
   }
 
   @Override

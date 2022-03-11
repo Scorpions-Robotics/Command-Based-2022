@@ -1,10 +1,9 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ColorSensorV3;
-import com.revrobotics.CANSparkMax.IdleMode;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -57,8 +56,8 @@ public class DriveSubsystem extends SubsystemBase {
   private DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading());
 
   public DriveSubsystem() {
-    m_right.setInverted(true);
-    m_left.setInverted(false);
+    m_right.setInverted(false);
+    m_left.setInverted(true);
 
     getLeftEncoderDistance();
     getRightEncoderDistance();
@@ -70,7 +69,14 @@ public class DriveSubsystem extends SubsystemBase {
     this.resetEncoders();
   }
 
-  public void modeBrake(){
+  public void modeCoast() {
+    rightFront.setIdleMode(IdleMode.kCoast);
+    rightRear.setIdleMode(IdleMode.kCoast);
+    leftFront.setIdleMode(IdleMode.kCoast);
+    leftRear.setIdleMode(IdleMode.kCoast);
+  }
+
+  public void modeBrake() {
     rightFront.setIdleMode(IdleMode.kBrake);
     rightRear.setIdleMode(IdleMode.kBrake);
     leftFront.setIdleMode(IdleMode.kBrake);
@@ -78,12 +84,12 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public double getLeftEncoderDistance() {
-    leftDriveEncoder.setDistancePerPulse(1.0 / 20.0 * Math.PI * 6 * (1/10.71));
+    leftDriveEncoder.setDistancePerPulse(1.0 / 20.0 * Math.PI * 6 * (1 / 10.71));
     return leftDriveEncoder.getDistance() * 2.54;
   }
 
   public double getRightEncoderDistance() {
-    rightDriveEncoder.setDistancePerPulse(1.0 / 20.0 * Math.PI * 6 * (1/10.71));
+    rightDriveEncoder.setDistancePerPulse(1.0 / 20.0 * Math.PI * 6 * (1 / 10.71));
     return rightDriveEncoder.getDistance() * 2.54 * -1;
   }
 
@@ -177,5 +183,6 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Left Distance", getLeftEncoderDistance());
     SmartDashboard.putNumber("Right Distance", getRightEncoderDistance());
     SmartDashboard.putString("Rotation 2d", getHeading().toString());
+    SmartDashboard.putString("Pose 2d", getPose().toString());
   }
 }

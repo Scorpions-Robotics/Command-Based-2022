@@ -12,7 +12,9 @@ public class GoTillBlack extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_drive.modeBrake();
+  }
 
   @Override
   public void execute() {
@@ -20,12 +22,13 @@ public class GoTillBlack extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_drive.modeCoast();
+  }
 
   @Override
   public boolean isFinished() {
     if (m_drive.getIR() < 12) {
-      m_drive.resetEncoders();
       return true;
     }
     return false;

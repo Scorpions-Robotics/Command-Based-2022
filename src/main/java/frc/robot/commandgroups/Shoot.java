@@ -16,6 +16,8 @@ import frc.robot.subsystems.VisionSubsystem;
 public class Shoot extends SequentialCommandGroup {
   /** Creates a new Shoot. */
   public Shoot(ShooterSubsystem m_shooter, VisionSubsystem m_vision) {
-    addCommands(new AdjustShooterAngle(m_shooter, m_vision).andThen(new ShooterTurnNew(m_shooter, m_vision)));
+    addCommands(
+        new AdjustShooterAngle(m_shooter, m_vision)
+            .andThen(new ShooterTurnNew(m_shooter, m_vision)));
   }
 }
