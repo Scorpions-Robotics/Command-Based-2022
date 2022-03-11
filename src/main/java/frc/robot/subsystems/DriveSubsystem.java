@@ -180,9 +180,9 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     odometry.update(getHeading(), getLeftEncoderDistance(), getRightEncoderDistance());
-    SmartDashboard.putNumber("Left Distance", getLeftEncoderDistance());
-    SmartDashboard.putNumber("Right Distance", getRightEncoderDistance());
-    SmartDashboard.putString("Rotation 2d", getHeading().toString());
-    SmartDashboard.putString("Pose 2d", getPose().toString());
+    // SmartDashboard.putNumber("Left Distance", getLeftEncoderDistance());
+    // SmartDashboard.putNumber("Right Distance", getRightEncoderDistance());
+    // SmartDashboard.putString("Rotation 2d", getHeading().toString());
+    // SmartDashboard.putString("Pose 2d", getPose().toString());
   }
 }

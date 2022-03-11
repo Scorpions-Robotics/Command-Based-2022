@@ -13,6 +13,7 @@ public class TakeAim extends CommandBase {
   private VisionSubsystem m_vision;
   double error;
   double rotation;
+  double last_value;
 
   public TakeAim(DriveSubsystem m_drive, VisionSubsystem m_vision) {
     this.m_drive = m_drive;
@@ -24,14 +25,18 @@ public class TakeAim extends CommandBase {
   @Override
   public void initialize() {
     m_drive.modeBrake();
+    last_value = m_vision.getHoopR();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (m_vision.getHoopB() == 1) {
-      rotation = m_vision.getHoopR();
-      error = rotation;
+      if(!(Math.abs(m_vision.getHoopR() - last_value) > 10)){
+        last_value = m_vision.getHoopR();
+      }
+      error = last_value;
+
       if (error < -20) {
         m_drive.runLeftMotor(-0.15);
         m_drive.runRightMotor(0.15);
@@ -67,7 +72,7 @@ public class TakeAim extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (m_vision.getHoopB() == 1 && error >= -10 && error <= 10) {
+    if (error >= -10 && error <= 10) {
       return true;
     }
     return false;

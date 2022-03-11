@@ -52,27 +52,51 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   public double getBallD() {
-    return getBallB() == 1 ? Double.valueOf(ballDEntry.getString("")) : 0.0;
+    try{
+      return getBallB() == 1 ? Double.valueOf(ballDEntry.getString("")) : 0.0;
+    }
+    catch(Exception e){
+      e.printStackTrace();
+      return 0.0;
+    }
   }
 
   public double getBallB() {
-    return Double.valueOf(ballBEntry.getString("10"));
+    return Double.valueOf(ballBEntry.getString("0"));
   }
 
   public double getBallR() {
-    return getBallB() == 1 ? Double.valueOf(ballREntry.getString("")) : 0.0;
+    try{
+      return getBallB() == 1 ? Double.valueOf(ballREntry.getString("")) : 0.0;
+    }
+    catch(Exception e){
+      e.printStackTrace();
+      return 0.0;
+    }
   }
 
   public double getHoopD() {
-    return getHoopB() == 1 ? Double.valueOf(hoopDEntry.getString("")) : 0.0;
+    try{
+      return getHoopB() == 1 ? Double.valueOf(hoopDEntry.getString("")) : 0.0;
+    }
+    catch(Exception e){
+      e.printStackTrace();
+      return 0.0;
+    }
   }
 
   public double getHoopB() {
-    return Double.valueOf(hoopBEntry.getString("10"));
+    return Double.valueOf(hoopBEntry.getString("0"));
   }
 
   public double getHoopR() {
-    return getHoopB() == 1 ? Double.valueOf(hoopREntry.getString("")) : 0.0;
+    try{
+      return getHoopB() == 1 ? Double.valueOf(hoopREntry.getString("")) : 0.0;
+    }
+    catch(Exception e){
+      e.printStackTrace();
+      return 0.0;
+    }
   }
 
   public void showDatas() {
