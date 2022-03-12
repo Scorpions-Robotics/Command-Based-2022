@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Autonomous;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
@@ -32,24 +33,25 @@ public class TakeAim extends CommandBase {
   @Override
   public void execute() {
     if (m_vision.getHoopB() == 1) {
-      if(!(Math.abs(m_vision.getHoopR() - last_value) > 10)){
+      if(!(Math.abs(m_vision.getHoopR() - last_value) > 40)){
         last_value = m_vision.getHoopR();
       }
       error = last_value;
+      SmartDashboard.putNumber("error", error);
 
-      if (error < -20) {
-        m_drive.runLeftMotor(-0.15);
-        m_drive.runRightMotor(0.15);
+      if (error < -10) {
+        m_drive.runLeftMotorVoltage(-1.6);
+        m_drive.runRightMotorVoltage(1.6);
         if (error < -50) {
-          m_drive.runLeftMotor(-0.17);
-          m_drive.runRightMotor(0.17);
+          m_drive.runLeftMotorVoltage(-1.95);
+          m_drive.runRightMotorVoltage(1.95);
         }
-      } else if (error > 20) {
-        m_drive.runLeftMotor(0.15);
-        m_drive.runRightMotor(-0.15);
-        if (error > 10) {
-          m_drive.runLeftMotor(0.17);
-          m_drive.runRightMotor(-0.17);
+      } else if (error > 10) {
+        m_drive.runLeftMotorVoltage(1.6);
+        m_drive.runRightMotorVoltage(-1.6);
+        if (error > 50) {
+          m_drive.runLeftMotorVoltage(1.95);
+          m_drive.runRightMotorVoltage(-1.95);
         }
       } else {
         m_drive.runLeftMotor(0);

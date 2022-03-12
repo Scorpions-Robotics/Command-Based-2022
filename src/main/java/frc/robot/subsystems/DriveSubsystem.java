@@ -106,6 +106,14 @@ public class DriveSubsystem extends SubsystemBase {
     m_right.set(speed);
   }
 
+  public void runLeftMotorVoltage(double voltage){
+    m_left.setVoltage(voltage);
+  }
+
+  public void runRightMotorVoltage(double voltage){
+    m_right.setVoltage(voltage);
+  }
+
   public void resetEncoders() {
     leftDriveEncoder.reset();
     rightDriveEncoder.reset();
