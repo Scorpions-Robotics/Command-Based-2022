@@ -23,6 +23,7 @@ public class GoTillBlack extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+    m_drive.stopMotors();
     m_drive.modeCoast();
   }
 

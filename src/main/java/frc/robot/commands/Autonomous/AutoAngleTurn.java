@@ -30,12 +30,14 @@ public class AutoAngleTurn extends PIDCommand {
 
   @Override
   public void initialize() {
+    m_drive.modeBrake();
     m_drive.resetGyro();
   }
 
   @Override
   public void end(boolean interrupted) {
     m_drive.stopMotors();
+    m_drive.modeCoast();
   }
 
   @Override
