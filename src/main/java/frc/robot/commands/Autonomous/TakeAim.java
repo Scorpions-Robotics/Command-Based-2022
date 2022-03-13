@@ -74,6 +74,9 @@ public class TakeAim extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if (m_vision.getHoopB() == 0) {
+      return true;
+    }
     if (error >= -10 && error <= 10) {
       return true;
     }

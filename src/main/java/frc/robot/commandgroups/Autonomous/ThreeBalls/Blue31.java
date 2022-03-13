@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commandgroups.AutoDriveWithHeading;
+import frc.robot.commandgroups.Shoot;
 import frc.robot.commands.Autonomous.AutoAngleTurn;
 import frc.robot.commands.Autonomous.TakeAim;
 import frc.robot.commands.Shooter.ShooterTurnNew;
@@ -26,17 +27,24 @@ public class Blue31 extends SequentialCommandGroup {
                 new WaitCommand(0.3)
                     .andThen(new RunCommand(() -> m_feeder.runFeeder(1)))
                     .andThen(new WaitCommand(0.5))
-                    .andThen(new RunCommand(new Runnable() {
-                      @Override
-                      public void run() {
-                        m_feeder.stopFeeder();
-                        m_shooter.stopShooter();
-                      }
-                    })
-                    .andThen(new RunCommand(() -> m_intake.runIntake(1)).alongWith(new AutoDriveWithHeading(m_drive, 180, 1, false)))
-                    .andThen(new AutoDriveWithHeading(m_drive, 90, 2.5, false))
+                    .andThen(
+                        new RunCommand(
+                            new Runnable() {
+                              @Override
+                              public void run() {
+                                m_feeder.stopFeeder();
+                                m_shooter.stopShooter();
+                              }
+                            }))
+                    .andThen(
+                        new RunCommand(() -> m_intake.runIntake(1))
+                            .alongWith(new AutoDriveWithHeading(m_drive, 1, 180, false)))
+                    .andThen(new AutoDriveWithHeading(m_drive, 2.5, 90, false))
                     .andThen(new AutoAngleTurn(m_drive, 60))
                     .andThen(new TakeAim(m_drive, m_vision))
-                    .andThen(new ShooterTurnNew(m_shooter, m_vision)))));
+                    .andThen(new Shoot(m_shooter, m_vision))
+                    .alongWith(
+                        new WaitCommand(0.5)
+                            .andThen(new RunCommand(() -> m_feeder.runFeeder(1))))));
   }
 }
