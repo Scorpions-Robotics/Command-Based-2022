@@ -25,8 +25,8 @@ public class DriveSubsystem extends SubsystemBase {
   private double startTime;
   private double driftPerSecond;
 
-  private final I2C.Port i2cPort = I2C.Port.kOnboard;
-  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+  private final ColorSensorV3 m_colorSensor1 = new ColorSensorV3(I2C.Port.kOnboard);
+  private final ColorSensorV3 m_colorSensor2 = new ColorSensorV3(I2C.Port.kMXP);
 
   private Encoder leftDriveEncoder =
       new Encoder(
@@ -106,11 +106,11 @@ public class DriveSubsystem extends SubsystemBase {
     m_right.set(speed);
   }
 
-  public void runLeftMotorVoltage(double voltage){
+  public void runLeftMotorVoltage(double voltage) {
     m_left.setVoltage(voltage);
   }
 
-  public void runRightMotorVoltage(double voltage){
+  public void runRightMotorVoltage(double voltage) {
     m_right.setVoltage(voltage);
   }
 
@@ -157,8 +157,12 @@ public class DriveSubsystem extends SubsystemBase {
     this.driftPerSecond = (imu.getAngle() - startAngle) / (Timer.getFPGATimestamp() - startTime);
   }
 
-  public double getIR() {
-    return m_colorSensor.getIR();
+  public double getSensor1IR() {
+    return m_colorSensor1.getIR();
+  }
+
+  public double getSensor2IR() {
+    return m_colorSensor2.getIR();
   }
 
   public void resetOdometry(Pose2d pose) {

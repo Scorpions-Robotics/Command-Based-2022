@@ -33,11 +33,10 @@ public class TakeAimNew extends CommandBase {
   public void execute() {
     if (m_vision.getHoopB() == 1) {
       error = m_vision.getHoopR();
-      if(Math.signum(increase) == 1){
-        error -= Math.abs(increase)/4;
-      }
-      else if(Math.signum(increase) == -1){
-        error += Math.abs(increase)/4;
+      if (Math.signum(increase) == 1) {
+        error -= Math.abs(increase) / 4;
+      } else if (Math.signum(increase) == -1) {
+        error += Math.abs(increase) / 4;
       }
 
       if (error < -20) {

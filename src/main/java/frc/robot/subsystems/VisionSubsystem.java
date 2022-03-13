@@ -52,10 +52,9 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   public double getBallD() {
-    try{
+    try {
       return getBallB() == 1 ? Double.valueOf(ballDEntry.getString("")) : 0.0;
-    }
-    catch(Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
       return 0.0;
     }
@@ -66,20 +65,18 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   public double getBallR() {
-    try{
+    try {
       return getBallB() == 1 ? Double.valueOf(ballREntry.getString("")) : 0.0;
-    }
-    catch(Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
       return 0.0;
     }
   }
 
   public double getHoopD() {
-    try{
+    try {
       return getHoopB() == 1 ? Double.valueOf(hoopDEntry.getString("")) : 0.0;
-    }
-    catch(Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
       return 0.0;
     }
@@ -90,10 +87,9 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   public double getHoopR() {
-    try{
+    try {
       return getHoopB() == 1 ? Double.valueOf(hoopREntry.getString("")) : 0.0;
-    }
-    catch(Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
       return 0.0;
     }

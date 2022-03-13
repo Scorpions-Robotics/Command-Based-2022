@@ -18,7 +18,15 @@ public class GoTillBlack extends CommandBase {
 
   @Override
   public void execute() {
-    m_drive.arcadeDrive(0.5, 0);
+    if (m_drive.getSensor1IR() > 12 && m_drive.getSensor2IR() > 12) {
+      m_drive.arcadeDrive(0.5, 0);
+    } else if (m_drive.getSensor1IR() < 12 && m_drive.getSensor2IR() > 12) {
+      m_drive.runRightMotor(0.4);
+    } else if (m_drive.getSensor1IR() > 12 && m_drive.getSensor2IR() < 12) {
+      m_drive.runLeftMotor(0.4);
+    } else {
+      m_drive.stopMotors();
+    }
   }
 
   @Override
@@ -29,7 +37,7 @@ public class GoTillBlack extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    if (m_drive.getIR() < 12) {
+    if (m_drive.getSensor1IR() < 12 && m_drive.getSensor2IR() < 12) {
       return true;
     }
     return false;

@@ -1,20 +1,34 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commandgroups.Autonomous.TwoBalls;
 
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.ScorpTrajectory;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commandgroups.Shoot;
+import frc.robot.commands.Autonomous.AutoAngleTurn;
+import frc.robot.commands.Autonomous.AutoStraightDrive;
+import frc.robot.commands.Autonomous.TakeAim;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.FeederSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Blue22 extends SequentialCommandGroup {
-  /** Creates a new Blue22. */
-  public Blue22(ScorpTrajectory s_trajectory) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    addCommands();
+  public Blue22(
+      DriveSubsystem m_drive,
+      FeederSubsystem m_feeder,
+      IntakeSubsystem m_intake,
+      ShooterSubsystem m_shooter,
+      VisionSubsystem m_vision) {
+    addCommands(
+        new RunCommand(() -> m_intake.runIntake(1))
+            .andThen(new AutoStraightDrive(m_drive, 1, false))
+            .andThen(new WaitCommand(0.2))
+            .andThen(new AutoAngleTurn(m_drive, 180))
+            .andThen(new TakeAim(m_drive, m_vision))
+            .andThen(
+                new Shoot(m_shooter, m_vision)
+                    .alongWith(
+                        new WaitCommand(1).andThen(new RunCommand(() -> m_feeder.runFeeder(1))))));
   }
 }

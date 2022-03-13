@@ -33,7 +33,7 @@ public class TakeAim extends CommandBase {
   @Override
   public void execute() {
     if (m_vision.getHoopB() == 1) {
-      if(!(Math.abs(m_vision.getHoopR() - last_value) > 40)){
+      if (!(Math.abs(m_vision.getHoopR() - last_value) > 40)) {
         last_value = m_vision.getHoopR();
       }
       error = last_value;
