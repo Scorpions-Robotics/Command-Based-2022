@@ -22,7 +22,9 @@ public class GoTillBlack extends CommandBase {
       m_drive.arcadeDrive(0.5, 0);
     } else if (m_drive.getSensor1IR() < 12 && m_drive.getSensor2IR() > 12) {
       m_drive.runRightMotor(0.4);
+      m_drive.runLeftMotor(0);
     } else if (m_drive.getSensor1IR() > 12 && m_drive.getSensor2IR() < 12) {
+      m_drive.runRightMotor(0);
       m_drive.runLeftMotor(0.4);
     } else {
       m_drive.stopMotors();
