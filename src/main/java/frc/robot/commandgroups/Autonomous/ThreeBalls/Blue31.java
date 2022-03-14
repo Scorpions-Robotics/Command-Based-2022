@@ -7,6 +7,7 @@ import frc.robot.commandgroups.AutoDriveWithHeading;
 import frc.robot.commandgroups.Shoot;
 import frc.robot.commands.Autonomous.AutoAngleTurn;
 import frc.robot.commands.Autonomous.TakeAim;
+import frc.robot.commands.Feeder.FeederTurn;
 import frc.robot.commands.Shooter.ShooterTurnNew;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
@@ -40,6 +41,7 @@ public class Blue31 extends SequentialCommandGroup {
                         new RunCommand(() -> m_intake.runIntake(1))
                             .alongWith(new AutoDriveWithHeading(m_drive, 1, 180, false)))
                     .andThen(new AutoDriveWithHeading(m_drive, 2.5, 90, false))
+                    .alongWith(new FeederTurn(m_feeder, 1).withInterrupt(() -> m_feeder.getSwitchValue()))
                     .andThen(new AutoAngleTurn(m_drive, 60))
                     .andThen(new TakeAim(m_drive, m_vision))
                     .andThen(new Shoot(m_shooter, m_vision))
