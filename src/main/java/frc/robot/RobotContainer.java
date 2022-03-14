@@ -22,6 +22,7 @@ import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
@@ -36,6 +37,7 @@ public class RobotContainer {
   public final ShooterSubsystem m_shooter = new ShooterSubsystem();
   public final IntakeSubsystem m_intake = new IntakeSubsystem();
   public final ClimbSubsystem m_climb = new ClimbSubsystem();
+  public final LEDSubsystem m_led = new LEDSubsystem();
   // public final ScorpTrajectory s_trajectory = new ScorpTrajectory(m_drive);
 
   private final JoystickButton stickButton1 = new JoystickButton(stick, Constants.OI.kButton1);
