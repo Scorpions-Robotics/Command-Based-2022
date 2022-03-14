@@ -15,6 +15,12 @@ public class ClimbSubsystem extends SubsystemBase {
   MotorControllerGroup left = new MotorControllerGroup(climbMotor1, climbMotor2);
   MotorControllerGroup right = new MotorControllerGroup(climbMotor3, climbMotor4);
 
+  double result;
+  double max_min_value_diff;
+  double current_min_value_diff;
+  double out_difference;
+  double divide_value;
+
   public ClimbSubsystem() {
     climbMotor1.setNeutralMode(NeutralMode.Brake);
     climbMotor2.setNeutralMode(NeutralMode.Brake);
@@ -28,6 +34,35 @@ public class ClimbSubsystem extends SubsystemBase {
   public void runClimb(double speed) {
     left.set(speed);
     right.set(speed);
+  }
+
+  public double calculateAnalogValue(double speed, double in_max, double in_min, double out_max, double out_min){
+    result = speed - in_min;
+    max_min_value_diff = in_max - in_min;
+
+    if(result != 0){
+      divide_value = max_min_value_diff / result;
+    }
+
+    else{
+      return out_min;
+    }
+
+    out_difference = out_max - out_min;
+    result = out_difference / divide_value;
+
+    return result + out_min;
+  }
+
+  public double calculateAnalogValueNew(double speed, double in_max, double in_min){
+    if(Math.signum(speed) == 1){
+      result = speed / in_max;
+    }
+    else{
+      result = speed / in_min * -1;
+    }
+
+    return result;
   }
 
   public void stopClimb() {

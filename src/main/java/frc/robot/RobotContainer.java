@@ -2,7 +2,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commandgroups.Autonomous.FourBalls.Blue41;
 import frc.robot.commandgroups.Autonomous.FourBalls.Red41;
@@ -17,6 +19,7 @@ import frc.robot.commandgroups.Autonomous.TwoBalls.Red21;
 import frc.robot.commandgroups.Autonomous.TwoBalls.Red22;
 import frc.robot.commandgroups.Autonomous.TwoBalls.Red23;
 import frc.robot.commands.Autonomous.TakeAim;
+import frc.robot.commands.Climb.ClimbCommand;
 import frc.robot.commands.DriveTrain.TeleopDrive;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -61,7 +64,7 @@ public class RobotContainer {
             () -> stick.getRawAxis(0),
             () -> stick.getThrottle()));
 
-    // m_climb.setDefaultCommand(new ClimbCommand(m_climb, () -> stick.getRawAxis(2)));
+    // m_climb.setDefaultCommand(new ClimbCommand(m_climb, () -> panel.getRawAxis(31)));
     configureButtonBindings();
   }
 
@@ -82,6 +85,13 @@ public class RobotContainer {
     // stickButton6.whenActive(new AutoAngleTurn(m_drive, 60));
 
     stickButton2.whenPressed(new TakeAim(m_drive, m_vision));
+
+    stickButton3.whileHeld(new RunCommand(new Runnable() {
+      @Override
+      public void run() {
+          SmartDashboard.putNumber("value", stick.getThrottle());
+      }
+    }));
 
     // new Trigger(() -> m_feeder.isBallIn())
     //     .whileActiveContinuous(

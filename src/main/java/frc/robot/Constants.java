@@ -19,6 +19,7 @@ public final class Constants {
     public static final int kButton10 = 10;
     public static final int kButton11 = 11;
     public static final int kButton12 = 12;
+    public static final int kButton13 = 13;
   }
 
   public static class FEEDER {
