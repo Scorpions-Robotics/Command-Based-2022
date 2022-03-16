@@ -1,9 +1,9 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -14,18 +14,14 @@ public class Robot extends TimedRobot {
 
   public static SendableChooser<Integer> auto_chooser = new SendableChooser<>();
 
-  DigitalInput input = new DigitalInput(1);
-
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
 
-    auto_chooser.setDefaultOption("1", 1);
-    auto_chooser.addOption("2", 2);
-    auto_chooser.addOption("3", 3);
-    auto_chooser.addOption("4", 4);
-    auto_chooser.addOption("5", 5);
-    auto_chooser.addOption("6", 6);
+    auto_chooser.setDefaultOption("2 top", 1);
+    auto_chooser.addOption("3 top pozisyon 1", 2);
+    auto_chooser.addOption("3 top pozisyon 2", 3);
+    auto_chooser.addOption("4 top", 4);
 
     SmartDashboard.putData(auto_chooser);
   }
@@ -60,6 +56,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    m_robotContainer.m_led.setAll(Color.kRed);
+    m_robotContainer.m_climb.pullPneumatic();
     m_robotContainer.m_drive.modeCoast();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
@@ -75,7 +73,5 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void testPeriodic() {
-    SmartDashboard.putBoolean("test", input.get());
-  }
+  public void testPeriodic() {}
 }

@@ -5,20 +5,25 @@
 package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.commands.LED.LEDCommand;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
 public class TakeAim extends CommandBase {
   private DriveSubsystem m_drive;
   private VisionSubsystem m_vision;
+  private LEDSubsystem m_led;
   double error;
   double rotation;
   double last_value;
 
-  public TakeAim(DriveSubsystem m_drive, VisionSubsystem m_vision) {
+  public TakeAim(DriveSubsystem m_drive, VisionSubsystem m_vision, LEDSubsystem m_led) {
     this.m_drive = m_drive;
     this.m_vision = m_vision;
+    this.m_led = m_led;
     addRequirements(m_drive);
   }
 
@@ -40,17 +45,17 @@ public class TakeAim extends CommandBase {
       SmartDashboard.putNumber("error", error);
 
       if (error < -10) {
-        m_drive.runLeftMotorVoltage(-1.6);
-        m_drive.runRightMotorVoltage(1.6);
+        m_drive.runLeftMotorVoltage(1.4);
+        m_drive.runRightMotorVoltage(1.4);
         if (error < -50) {
-          m_drive.runLeftMotorVoltage(-1.95);
+          m_drive.runLeftMotorVoltage(1.95);
           m_drive.runRightMotorVoltage(1.95);
         }
       } else if (error > 10) {
-        m_drive.runLeftMotorVoltage(1.6);
-        m_drive.runRightMotorVoltage(-1.6);
+        m_drive.runLeftMotorVoltage(-1.4);
+        m_drive.runRightMotorVoltage(-1.4);
         if (error > 50) {
-          m_drive.runLeftMotorVoltage(1.95);
+          m_drive.runLeftMotorVoltage(-1.95);
           m_drive.runRightMotorVoltage(-1.95);
         }
       } else {
@@ -79,6 +84,8 @@ public class TakeAim extends CommandBase {
       return true;
     }
     if (error >= -10 && error <= 10) {
+      new LEDCommand(m_led, Color.kGreen).withTimeout(5).schedule();
+      ;
       return true;
     }
     return false;

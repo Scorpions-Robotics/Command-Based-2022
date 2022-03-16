@@ -25,8 +25,8 @@ public class DriveSubsystem extends SubsystemBase {
   private double startTime;
   private double driftPerSecond;
 
-  private final ColorSensorV3 m_colorSensor1 = new ColorSensorV3(I2C.Port.kOnboard);
-  private final ColorSensorV3 m_colorSensor2 = new ColorSensorV3(I2C.Port.kMXP);
+  // private final ColorSensorV3 m_colorSensor1 = new ColorSensorV3(I2C.Port.kOnboard);
+  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(I2C.Port.kMXP);
 
   private Encoder leftDriveEncoder =
       new Encoder(
@@ -157,12 +157,12 @@ public class DriveSubsystem extends SubsystemBase {
     this.driftPerSecond = (imu.getAngle() - startAngle) / (Timer.getFPGATimestamp() - startTime);
   }
 
-  public double getSensor1IR() {
-    return m_colorSensor1.getIR();
-  }
+  // public double getSensor1IR() {
+  //  return m_colorSensor1.getIR();
+  // }
 
-  public double getSensor2IR() {
-    return m_colorSensor2.getIR();
+  public double getSensorIR() {
+    return m_colorSensor.getIR();
   }
 
   public void resetOdometry(Pose2d pose) {
@@ -192,6 +192,7 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     odometry.update(getHeading(), getLeftEncoderDistance(), getRightEncoderDistance());
+    SmartDashboard.putNumber("IR", getSensorIR());
     // SmartDashboard.putNumber("Left Distance", getLeftEncoderDistance());
     // SmartDashboard.putNumber("Right Distance", getRightEncoderDistance());
     // SmartDashboard.putString("Rotation 2d", getHeading().toString());

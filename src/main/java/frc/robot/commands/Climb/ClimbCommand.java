@@ -1,17 +1,15 @@
 package frc.robot.commands.Climb;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimbSubsystem;
-import java.util.function.DoubleSupplier;
 
 public class ClimbCommand extends CommandBase {
   ClimbSubsystem m_climb;
-  DoubleSupplier speedSupplier;
+  double speed;
 
-  public ClimbCommand(ClimbSubsystem m_climb, DoubleSupplier speedSupplier) {
+  public ClimbCommand(ClimbSubsystem m_climb, double speed) {
     this.m_climb = m_climb;
-    this.speedSupplier = speedSupplier;
+    this.speed = speed;
 
     addRequirements(m_climb);
   }
@@ -21,8 +19,10 @@ public class ClimbCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (DriverStation.getMatchTime() < 50) {
-      m_climb.runClimb(speedSupplier.getAsDouble());
+    if (speed > 0) {
+      m_climb.runClimbUpwards(speed);
+    } else {
+      m_climb.runClimbDownwards(speed);
     }
   }
 

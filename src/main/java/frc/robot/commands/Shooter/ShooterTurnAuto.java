@@ -4,8 +4,6 @@
 
 package frc.robot.commands.Shooter;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
+import java.util.function.DoubleSupplier;
 
 public class ShooterTurnAuto extends CommandBase {
   ShooterSubsystem m_shooter;
@@ -31,7 +30,7 @@ public class ShooterTurnAuto extends CommandBase {
   DoubleSupplier throttle;
   DoubleSupplier pneumatic;
   /** Creates a new ShooterTurnNew. */
-  public ShooterTurnAuto(ShooterSubsystem m_shooter, VisionSubsystem m_vision) { 
+  public ShooterTurnAuto(ShooterSubsystem m_shooter, VisionSubsystem m_vision) {
     this.m_shooter = m_shooter;
     this.m_vision = m_vision;
     this.state = state;
@@ -75,7 +74,7 @@ public class ShooterTurnAuto extends CommandBase {
     } else {
       m_shooter.runShooter(0.7);
     }
-    
+
     SmartDashboard.putNumber("RPM", m_shooter.getShooterEncoderRPM());
     SmartDashboard.putNumber("Vision", m_vision.getHoopB());
   }

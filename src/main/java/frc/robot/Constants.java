@@ -24,7 +24,7 @@ public final class Constants {
 
   public static class FEEDER {
     public static final int limitPort = 0;
-    public static final int distanceSensorPort = 2;
+    public static final int distanceSensorPort = 1;
   }
 
   public static class SHOOTER {
@@ -47,22 +47,30 @@ public final class Constants {
 
     public static final int kFeederMotorID = 7;
 
-    public static final int kShooterRightMotorID = 1;
-    public static final int kShooterLeftMotorID = 3;
+    public static final int kShooterRightMotorID = 3;
+    public static final int kShooterLeftMotorID = 1;
 
     public static final int kIntakeMotorID = 5;
   }
 
+  public static class CLIMB {
+    public static final int climbSwitchPort = 2;
+  }
+
   public static class LED {
     public static final int kLEDCount = 12;
+    public static final int kLEDPWM = 9;
   }
 
   public static class PNEUMATICS {
-    public static final int kIntakeSolenoidForwardChannel = 4;
-    public static final int kIntakeSolenoidReverseChannel = 5;
+    public static final int kClimbSolenoidForwardChannel = 0;
+    public static final int kClimbSolenoidReverseChannel = 1;
 
-    public static final int kShooterSolenoidForwardChannel = 6;
-    public static final int kShooterSolenoidReverseChannel = 7;
+    public static final int kIntakeSolenoidForwardChannel = 3;
+    public static final int kIntakeSolenoidReverseChannel = 2;
+
+    public static final int kShooterSolenoidForwardChannel = 5;
+    public static final int kShooterSolenoidReverseChannel = 4;
   }
 
   public static class ENCODERS {

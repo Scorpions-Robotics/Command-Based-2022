@@ -4,9 +4,6 @@
 
 package frc.robot.commands.Shooter;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 
 public class ShooterTurnNew extends CommandBase {
   ShooterSubsystem m_shooter;
@@ -32,7 +31,12 @@ public class ShooterTurnNew extends CommandBase {
   DoubleSupplier throttle;
   BooleanSupplier pneumatic;
   /** Creates a new ShooterTurnNew. */
-  public ShooterTurnNew(ShooterSubsystem m_shooter, VisionSubsystem m_vision, BooleanSupplier state, DoubleSupplier throttle, BooleanSupplier pneumatic) { 
+  public ShooterTurnNew(
+      ShooterSubsystem m_shooter,
+      VisionSubsystem m_vision,
+      BooleanSupplier state,
+      DoubleSupplier throttle,
+      BooleanSupplier pneumatic) {
     this.m_shooter = m_shooter;
     this.m_vision = m_vision;
     this.state = state;
@@ -49,46 +53,49 @@ public class ShooterTurnNew extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(state.getAsBoolean() == true){
-    distance = m_vision.getHoopD();
-    if (m_shooter.pneumatic_mode) {
-      min_distance = 500;
-      max_distance = 850;
-      min_rpm = 1100;
-      max_rpm = 1450;
+    if (state.getAsBoolean() == true) {
+      distance = m_vision.getHoopD();
+      if (m_shooter.pneumatic_mode) {
+        min_distance = 450;
+        max_distance = 850;
+        min_rpm = 1250;
+        max_rpm = 1500;
+      } else {
+        min_distance = 140;
+        max_distance = 450;
+        min_rpm = 800;
+        max_rpm = 1200;
+      }
+      if (m_vision.getHoopB() == 1) {
+        output =
+            controller.calculate(
+                m_shooter.getShooterEncoderRPM(),
+                m_shooter.calculateShooterSpeed(
+                    distance, min_distance, max_distance, min_rpm, max_rpm));
+        motorOutput =
+            output
+                + feedforward.calculate(
+                    m_shooter.calculateShooterSpeed(
+                        distance, min_distance, max_distance, min_rpm, max_rpm));
+        m_shooter.runShooterVoltage(-motorOutput);
+      } else {
+        m_shooter.runShooter(0.0);
+      }
     } else {
-      min_distance = 140;
-      max_distance = 500;
-      min_rpm = 800;
-      max_rpm = 1200;
+      if (pneumatic.getAsBoolean() == true) {
+        m_shooter.pushPneumatic();
+      } else {
+        m_shooter.pullPneumatic();
+      }
+      m_shooter.runShooter(m_shooter.calculateSpeed(throttle.getAsDouble(), 0.299, 0.606, 0, 1));
+      SmartDashboard.putNumber(
+          "hız", m_shooter.calculateSpeed(throttle.getAsDouble(), 0.299, 0.606, 0, 1));
     }
-    if (m_vision.getHoopB() == 1) {
-      output =
-          controller.calculate(
-              m_shooter.getShooterEncoderRPM(),
-              m_shooter.calculateShooterSpeed(
-                  distance, min_distance, max_distance, min_rpm, max_rpm));
-      motorOutput =
-          output
-              + feedforward.calculate(
-                  m_shooter.calculateShooterSpeed(
-                      distance, min_distance, max_distance, min_rpm, max_rpm));
-      m_shooter.runShooterVoltage(-motorOutput);
-    } else {
-      m_shooter.runShooter(0.7);
-    }
-  }
-  else{
-    if(pneumatic.getAsBoolean() == true){
-      m_shooter.pushPneumatic();
-    }
-    else{
-      m_shooter.pullPneumatic();
-    }
-    m_shooter.runShooter((throttle.getAsDouble() * -1 + 1) / 2);
-  }
     SmartDashboard.putNumber("RPM", m_shooter.getShooterEncoderRPM());
     SmartDashboard.putNumber("Vision", m_vision.getHoopB());
+
+    SmartDashboard.putBoolean("state", state.getAsBoolean());
+    SmartDashboard.putNumber("throttle", m_shooter.calculateSpeed(throttle.getAsDouble(), 0.299, 0.606, 0, 1));
   }
 
   // Called once the command ends or is interrupted.

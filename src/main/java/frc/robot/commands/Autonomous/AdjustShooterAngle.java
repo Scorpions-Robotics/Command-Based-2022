@@ -18,7 +18,7 @@ public class AdjustShooterAngle extends CommandBase {
 
   @Override
   public void execute() {
-    if (m_vision.getHoopD() > 500) {
+    if (m_vision.getHoopD() > 450) {
       m_shooter.pushPneumatic();
     } else {
       m_shooter.pullPneumatic();

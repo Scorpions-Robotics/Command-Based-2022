@@ -1,15 +1,17 @@
-victors
-12 - tırmanma sol 1
-2- tırmanma sağ 2
-5 - intake
 14 - tırmanma sağ 1
+2 - tırmanma sağ 2
+5 - intake
 7 - feeder
-8 - tırmanma sol 2
+12 - sol tırmanma 1
+8 - sol tırmanma 2
 
-sparks
+üsttekiler victor
+
+alttakiler spark
+
 3 - shooter sağ
 11 - sağ drivetrain rear
+10 - sol drivetrain rear
+9 - sağ drivetrain front
 1 - shooter sol
 6 - sol drivetrain front
-9 - sağ drivetrain front
-10 - sol drivetrain rear

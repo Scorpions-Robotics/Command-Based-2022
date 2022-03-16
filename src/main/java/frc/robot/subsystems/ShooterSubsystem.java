@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
@@ -10,8 +11,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ShooterSubsystem extends SubsystemBase {
-  private WPI_VictorSPX shooterLeftMotor = new WPI_VictorSPX(Constants.CAN.kShooterLeftMotorID);
-  private WPI_VictorSPX shooterRightMotor = new WPI_VictorSPX(Constants.CAN.kShooterRightMotorID);
+  private CANSparkMax shooterLeftMotor =
+      new CANSparkMax(Constants.CAN.kShooterLeftMotorID, MotorType.kBrushed);
+  private CANSparkMax shooterRightMotor =
+      new CANSparkMax(Constants.CAN.kShooterRightMotorID, MotorType.kBrushed);
 
   Servo servo = new Servo(Constants.SHOOTER.kServoPWM);
 
@@ -36,7 +39,6 @@ public class ShooterSubsystem extends SubsystemBase {
   public boolean pneumatic_mode;
 
   public ShooterSubsystem() {
-    shooterLeftMotor.follow(shooterRightMotor);
     shooterLeftMotor.setInverted(true);
   }
 
@@ -44,6 +46,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {}
 
   public void runShooter(double speed) {
+    shooterLeftMotor.set(speed * -1);
     shooterRightMotor.set(speed * -1);
   }
 
@@ -77,7 +80,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double calculateSpeed(
-    double speed, double min_in, double max_in, double min_out, double max_out) {
+      double speed, double min_in, double max_in, double min_out, double max_out) {
 
     max_min_in_diff = max_in - min_in;
     current_min_in_diff = speed - min_in;
@@ -101,5 +104,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void stopShooter() {
     shooterRightMotor.set(Constants.VARIABLES.kZero);
+    shooterLeftMotor.set(Constants.VARIABLES.kZero);
   }
 }
