@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import java.util.function.DoubleSupplier;
 
 public class ClimbSubsystem extends SubsystemBase {
   private WPI_VictorSPX climbMotor1 = new WPI_VictorSPX(Constants.CAN.kClimbMotorLeft1ID);
@@ -16,9 +17,9 @@ public class ClimbSubsystem extends SubsystemBase {
   MotorControllerGroup right = new MotorControllerGroup(climbMotor3, climbMotor4);
 
   double result;
-  double max_min_value_diff;
-  double current_min_value_diff;
-  double out_difference;
+  double max_min_in_diff;
+  double current_min_in_diff;
+  double max_min_out_diff;
   double divide_value;
 
   public ClimbSubsystem() {
@@ -36,34 +37,7 @@ public class ClimbSubsystem extends SubsystemBase {
     right.set(speed);
   }
 
-  public double calculateAnalogValue(double speed, double in_max, double in_min, double out_max, double out_min){
-    result = speed - in_min;
-    max_min_value_diff = in_max - in_min;
 
-    if(result != 0){
-      divide_value = max_min_value_diff / result;
-    }
-
-    else{
-      return out_min;
-    }
-
-    out_difference = out_max - out_min;
-    result = out_difference / divide_value;
-
-    return result + out_min;
-  }
-
-  public double calculateAnalogValueNew(double speed, double in_max, double in_min){
-    if(Math.signum(speed) == 1){
-      result = speed / in_max;
-    }
-    else{
-      result = speed / in_min * -1;
-    }
-
-    return result;
-  }
 
   public void stopClimb() {
     left.set(Constants.VARIABLES.kZero);

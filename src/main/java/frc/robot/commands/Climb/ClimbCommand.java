@@ -21,7 +21,7 @@ public class ClimbCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if(DriverStation.getMatchTime() < 50){
+    if (DriverStation.getMatchTime() < 50) {
       m_climb.runClimb(speedSupplier.getAsDouble());
     }
   }

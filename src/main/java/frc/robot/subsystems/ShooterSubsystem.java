@@ -29,9 +29,9 @@ public class ShooterSubsystem extends SubsystemBase {
           Constants.PNEUMATICS.kShooterSolenoidReverseChannel);
 
   double result;
-  double max_min_distance_diff;
-  double current_min_distance_diff;
-  double max_min_rpm_diff;
+  double max_min_in_diff;
+  double current_min_in_diff;
+  double max_min_out_diff;
 
   public boolean pneumatic_mode;
 
@@ -64,16 +64,31 @@ public class ShooterSubsystem extends SubsystemBase {
   public double calculateShooterSpeed(
       double distance, double min_distance, double max_distance, double min_rpm, double max_rpm) {
 
-    max_min_distance_diff = max_distance - min_distance;
-    current_min_distance_diff = distance - min_distance;
+    max_min_in_diff = max_distance - min_distance;
+    current_min_in_diff = distance - min_distance;
 
-    result = current_min_distance_diff / max_min_distance_diff;
+    result = current_min_in_diff / max_min_in_diff;
 
-    max_min_rpm_diff = max_rpm - min_rpm;
+    max_min_out_diff = max_rpm - min_rpm;
 
-    result = max_min_rpm_diff * result + min_rpm;
+    result = max_min_out_diff * result + min_rpm;
 
     return Math.max(min_rpm, result);
+  }
+
+  public double calculateSpeed(
+    double speed, double min_in, double max_in, double min_out, double max_out) {
+
+    max_min_in_diff = max_in - min_in;
+    current_min_in_diff = speed - min_in;
+
+    result = current_min_in_diff / max_min_in_diff;
+
+    max_min_out_diff = max_out - min_out;
+
+    result = max_min_out_diff * result + min_out;
+
+    return result;
   }
 
   public void runShooterVoltage(double voltage) {

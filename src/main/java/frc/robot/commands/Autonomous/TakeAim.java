@@ -69,6 +69,7 @@ public class TakeAim extends CommandBase {
   public void end(boolean interrupted) {
     m_drive.runLeftMotor(0);
     m_drive.runRightMotor(0);
+    m_drive.modeCoast();
   }
 
   // Returns true when the command should end.

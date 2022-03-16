@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,6 +13,8 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   public static SendableChooser<Integer> auto_chooser = new SendableChooser<>();
+
+  DigitalInput input = new DigitalInput(1);
 
   @Override
   public void robotInit() {
@@ -51,7 +54,9 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    SmartDashboard.putString("command", m_autonomousCommand.toString());
+  }
 
   @Override
   public void teleopInit() {
@@ -70,5 +75,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    SmartDashboard.putBoolean("test", input.get());
+  }
 }

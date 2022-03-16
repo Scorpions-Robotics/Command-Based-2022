@@ -1,26 +1,17 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commandgroups.Autonomous.FourBalls.Blue41;
-import frc.robot.commandgroups.Autonomous.FourBalls.Red41;
-import frc.robot.commandgroups.Autonomous.ThreeBalls.Blue31;
-import frc.robot.commandgroups.Autonomous.ThreeBalls.Blue32;
-import frc.robot.commandgroups.Autonomous.ThreeBalls.Red31;
-import frc.robot.commandgroups.Autonomous.ThreeBalls.Red32;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commandgroups.Shoot;
 import frc.robot.commandgroups.Autonomous.TwoBalls.Blue21;
-import frc.robot.commandgroups.Autonomous.TwoBalls.Blue22;
-import frc.robot.commandgroups.Autonomous.TwoBalls.Blue23;
-import frc.robot.commandgroups.Autonomous.TwoBalls.Red21;
-import frc.robot.commandgroups.Autonomous.TwoBalls.Red22;
-import frc.robot.commandgroups.Autonomous.TwoBalls.Red23;
+import frc.robot.commands.Autonomous.AutoAngleTurn;
+import frc.robot.commands.Autonomous.AutoStraightDrive;
 import frc.robot.commands.Autonomous.TakeAim;
-import frc.robot.commands.Climb.ClimbCommand;
 import frc.robot.commands.DriveTrain.TeleopDrive;
+import frc.robot.commands.Feeder.FeederTurn;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
@@ -60,84 +51,25 @@ public class RobotContainer {
     m_drive.setDefaultCommand(
         new TeleopDrive(
             m_drive,
-            () -> stick.getRawAxis(1),
             () -> stick.getRawAxis(0),
+            () -> stick.getRawAxis(1),
             () -> stick.getThrottle()));
 
-    // m_climb.setDefaultCommand(new ClimbCommand(m_climb, () -> panel.getRawAxis(31)));
+    // m_climb.setDefaultCommand(new ClimbCommand(m_climb, () -> panel.getRawAxis(3)));
     configureButtonBindings();
   }
 
   private void configureButtonBindings() {
-    // stickButton1.whileActiveContinuous(new RunCommand(() -> m_vision.sendMode("hoop")));
-    // stickButton1.whenInactive(new RunCommand(() -> m_vision.sendMode("ball")));
-    // stickButton12.whenActive(new RunCommand(() -> m_drive.resetGyro(), m_drive));
+    // stickButton1.whileHeld(new Shoot(m_drive, m_shooter, m_vision, () -> stick.getRawButton(11), () -> panel.getRawAxis(0), () -> panel.getRawButton(9), () -> stick.getThrottle(), () -> stick.getRawAxis(1)));
 
-    // stickButton1.whileHeld(new Shoot(m_shooter, m_vision));
-
-    // stickButton2.whileHeld(new FeederTurn(m_feeder, 1));
-
-    // stickButton3.whileHeld(new IntakeTurn(m_intake, -1));
-
-    // stickButton4.whileHeld(new FeederTurn(m_feeder, -1));
-
-    // stickButton5.whenActive(new AutoAngleTurn(m_drive, -60));
-    // stickButton6.whenActive(new AutoAngleTurn(m_drive, 60));
-
-    stickButton2.whenPressed(new TakeAim(m_drive, m_vision));
-
-    stickButton3.whileHeld(new RunCommand(new Runnable() {
-      @Override
-      public void run() {
-          SmartDashboard.putNumber("value", stick.getThrottle());
-      }
-    }));
-
-    // new Trigger(() -> m_feeder.isBallIn())
-    //     .whileActiveContinuous(
-    //         new FeederTurn(m_feeder, 0.7).withInterrupt(() -> m_feeder.getSwitchValue()));
-    // stickButton4.whileHeld(new FeederTurn(m_feeder, 1));
-    // stickButton5.whileHeld(new FeederTurn(m_feeder, -1));
-    // stickButton7.whenActive(new IntakePneumaticPush(m_intake));
-    // stickButton8.whenActive(new IntakePneumaticPull(m_intake));
-    // stickButton10.whenActive(new SetServoAngle(m_shooter, 50));
-    // stickButton11.whenActive(new SetServoAngle(m_shooter, 95));
-    // stickButton1.whileHeld(new FixedPosition(m_drive, () -> stick.getRawAxis(1), () ->
-    // stick.getThrottle()));
+    new Trigger(() -> m_feeder.isBallIn())
+        .whileActiveContinuous(
+            new FeederTurn(m_feeder, 0.7).withInterrupt(() -> m_feeder.getSwitchValue()));
+    stickButton1.whenPressed(new InstantCommand(() -> m_led.setAll(255, 255, 255)));
   }
 
   public Command getAutonomousCommand(int mode) {
-    String alliance = DriverStation.getAlliance().toString();
-    if (alliance == "Blue") {
-      switch (mode) {
-        case 1:
-          return new Blue21(m_drive, m_feeder, m_intake, m_shooter, m_vision);
-        case 2:
-          return new Blue22(m_drive, m_feeder, m_intake, m_shooter, m_vision);
-        case 3:
-          return new Blue23(m_drive, m_feeder, m_intake, m_shooter, m_vision);
-        case 4:
-          return new Blue31(m_drive, m_feeder, m_intake, m_shooter, m_vision);
-        case 5:
-          return new Blue32(m_drive, m_feeder, m_intake, m_shooter, m_vision);
-        default:
-          return new Blue41(m_drive, m_feeder, m_intake, m_shooter, m_vision);
-      }
-    } else {
-      switch (mode) {
-        case 1:
-          return new Red21(m_drive, m_feeder, m_intake, m_shooter, m_vision);
-        case 2:
-          return new Red22(m_drive, m_feeder, m_intake, m_shooter, m_vision);
-        case 3:
-          return new Red23(m_drive, m_feeder, m_intake, m_shooter, m_vision);
-        case 4:
-          return new Red31(m_drive, m_feeder, m_intake, m_shooter, m_vision);
-        case 5:
-          return new Red32(m_drive, m_feeder, m_intake, m_shooter, m_vision);
-        default:
-          return new Red41(m_drive, m_feeder, m_intake, m_shooter, m_vision);
-      }
-    }
+    //
+    return new Blue21(m_drive, m_feeder, m_intake, m_shooter, m_vision);
   }
 }

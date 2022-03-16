@@ -4,7 +4,6 @@
 
 package frc.robot.commands.Shooter;
 
-import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -15,7 +14,7 @@ import frc.robot.Constants;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
-public class ShooterTurnNew extends CommandBase {
+public class ShooterTurnAuto extends CommandBase {
   ShooterSubsystem m_shooter;
   VisionSubsystem m_vision;
   double output;
@@ -28,11 +27,11 @@ public class ShooterTurnNew extends CommandBase {
   PIDController controller = new PIDController(1.5143, 0, 0);
   SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(Constants.SHOOTER.kS, Constants.SHOOTER.kV, Constants.SHOOTER.kA);
-  BooleanSupplier state;
+  DoubleSupplier state;
   DoubleSupplier throttle;
-  BooleanSupplier pneumatic;
+  DoubleSupplier pneumatic;
   /** Creates a new ShooterTurnNew. */
-  public ShooterTurnNew(ShooterSubsystem m_shooter, VisionSubsystem m_vision, BooleanSupplier state, DoubleSupplier throttle, BooleanSupplier pneumatic) { 
+  public ShooterTurnAuto(ShooterSubsystem m_shooter, VisionSubsystem m_vision) { 
     this.m_shooter = m_shooter;
     this.m_vision = m_vision;
     this.state = state;
@@ -49,7 +48,6 @@ public class ShooterTurnNew extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(state.getAsBoolean() == true){
     distance = m_vision.getHoopD();
     if (m_shooter.pneumatic_mode) {
       min_distance = 500;
@@ -77,16 +75,7 @@ public class ShooterTurnNew extends CommandBase {
     } else {
       m_shooter.runShooter(0.7);
     }
-  }
-  else{
-    if(pneumatic.getAsBoolean() == true){
-      m_shooter.pushPneumatic();
-    }
-    else{
-      m_shooter.pullPneumatic();
-    }
-    m_shooter.runShooter((throttle.getAsDouble() * -1 + 1) / 2);
-  }
+    
     SmartDashboard.putNumber("RPM", m_shooter.getShooterEncoderRPM());
     SmartDashboard.putNumber("Vision", m_vision.getHoopB());
   }

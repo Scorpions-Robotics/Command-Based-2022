@@ -7,18 +7,21 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class LEDSubsystem extends SubsystemBase {
   AddressableLED m_led = new AddressableLED(9);
-  AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(12);
+  AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(Constants.LED.kLEDCount);
+  
+
   public LEDSubsystem() {
     m_led.setLength(m_ledBuffer.getLength());
     m_led.setData(m_ledBuffer);
     m_led.start();
   }
 
-  public void setAll(int r, int g, int b){
-    for(var i = 0; i < m_ledBuffer.getLength(); i++){
+  public void setAll(int r, int g, int b) {
+    for (var i = 0; i < m_ledBuffer.getLength(); i++) {
       m_ledBuffer.setRGB(i, r, g, b);
     }
     m_led.setData(m_ledBuffer);
@@ -28,6 +31,4 @@ public class LEDSubsystem extends SubsystemBase {
   public void periodic() {
     m_led.setData(m_ledBuffer);
   }
-
-
 }

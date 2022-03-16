@@ -1,9 +1,10 @@
 package frc.robot.commandgroups.Autonomous.TwoBalls;
 
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commandgroups.Shoot;
+import frc.robot.commandgroups.ShootAuto;
 import frc.robot.commands.Autonomous.AutoAngleTurn;
 import frc.robot.commands.Autonomous.AutoStraightDrive;
 import frc.robot.commands.Autonomous.TakeAim;
@@ -21,14 +22,15 @@ public class Red23 extends SequentialCommandGroup {
       ShooterSubsystem m_shooter,
       VisionSubsystem m_vision) {
     addCommands(
-        new RunCommand(() -> m_intake.runIntake(1))
+        new InstantCommand(() -> m_intake.runIntake(1))
             .andThen(new AutoStraightDrive(m_drive, 1, false))
             .andThen(new WaitCommand(0.2))
             .andThen(new AutoAngleTurn(m_drive, 180))
             .andThen(new TakeAim(m_drive, m_vision))
             .andThen(
-                new Shoot(m_shooter, m_vision)
+                new ShootAuto(m_shooter, m_vision)
                     .alongWith(
-                        new WaitCommand(1).andThen(new RunCommand(() -> m_feeder.runFeeder(1))))));
+                        new WaitCommand(1)
+                            .andThen(new InstantCommand(() -> m_feeder.runFeeder(1))))));
   }
 }

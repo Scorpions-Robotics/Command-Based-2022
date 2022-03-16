@@ -53,6 +53,10 @@ public final class Constants {
     public static final int kIntakeMotorID = 5;
   }
 
+  public static class LED {
+    public static final int kLEDCount = 12;
+  }
+
   public static class PNEUMATICS {
     public static final int kIntakeSolenoidForwardChannel = 4;
     public static final int kIntakeSolenoidReverseChannel = 5;

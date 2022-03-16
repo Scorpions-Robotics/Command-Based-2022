@@ -37,7 +37,6 @@ public class AutoAngleTurn extends PIDCommand {
   @Override
   public void end(boolean interrupted) {
     m_drive.stopMotors();
-    m_drive.modeCoast();
   }
 
   @Override

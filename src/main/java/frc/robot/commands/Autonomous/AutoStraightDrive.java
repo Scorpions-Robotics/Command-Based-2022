@@ -10,21 +10,22 @@ public class AutoStraightDrive extends PIDCommand {
 
   public AutoStraightDrive(DriveSubsystem m_drive, double meters, boolean reversed) {
     super(
-        new PIDController(0.0125, 0, 0),
+        new PIDController(0.0165, 0, 0),
         () -> m_drive.getStraightDriveDistance(),
         () -> reversed ? -meters * 100 : meters * 100,
         output -> {
-          m_drive.arcadeDrive(-output, 0);
+          m_drive.arcadeDrive(0, -output);
           SmartDashboard.putNumber("meters", m_drive.getStraightDriveDistance());
           SmartDashboard.putNumber("setpoint", reversed ? -meters * 100 : meters * 100);
         });
-    getController().setTolerance(2);
+    getController().setTolerance(4);
     this.m_drive = m_drive;
   }
 
   @Override
   public void initialize() {
     m_drive.resetEncoders();
+    m_drive.modeBrake();
   }
 
   @Override
