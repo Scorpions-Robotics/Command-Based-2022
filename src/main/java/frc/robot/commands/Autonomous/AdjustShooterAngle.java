@@ -1,5 +1,6 @@
 package frc.robot.commands.Autonomous;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
@@ -23,6 +24,7 @@ public class AdjustShooterAngle extends CommandBase {
     } else {
       m_shooter.pullPneumatic();
     }
+    SmartDashboard.putNumber("girdi", 1);
   }
 
   @Override

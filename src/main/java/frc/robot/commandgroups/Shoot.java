@@ -20,15 +20,10 @@ public class Shoot extends SequentialCommandGroup {
       BooleanSupplier pneumatic,
       DoubleSupplier chassis_speed,
       DoubleSupplier stickY) {
-    if (state.getAsBoolean() == true) {
-      addCommands(
-          new FixedPosition(m_drive, stickY, chassis_speed)
-              .alongWith(new AdjustShooterAngle(m_shooter, m_vision))
-              .andThen(new ShooterTurnNew(m_shooter, m_vision, state, throttle, pneumatic)));
-    } else {
+
       addCommands(
           new FixedPosition(m_drive, stickY, chassis_speed)
               .alongWith(new ShooterTurnNew(m_shooter, m_vision, state, throttle, pneumatic)));
-    }
+    
   }
 }

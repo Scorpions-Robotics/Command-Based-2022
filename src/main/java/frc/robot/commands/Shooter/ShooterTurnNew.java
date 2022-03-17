@@ -58,7 +58,7 @@ public class ShooterTurnNew extends CommandBase {
       if (m_shooter.pneumatic_mode) {
         min_distance = 450;
         max_distance = 850;
-        min_rpm = 1250;
+        min_rpm = 1300;
         max_rpm = 1500;
       } else {
         min_distance = 140;
@@ -77,7 +77,7 @@ public class ShooterTurnNew extends CommandBase {
                 + feedforward.calculate(
                     m_shooter.calculateShooterSpeed(
                         distance, min_distance, max_distance, min_rpm, max_rpm));
-        m_shooter.runShooterVoltage(-motorOutput);
+        m_shooter.runShooterVoltage(motorOutput);
       } else {
         m_shooter.runShooter(0.0);
       }
@@ -87,7 +87,7 @@ public class ShooterTurnNew extends CommandBase {
       } else {
         m_shooter.pullPneumatic();
       }
-      m_shooter.runShooter(m_shooter.calculateSpeed(throttle.getAsDouble(), 0.299, 0.606, 0, 1));
+      m_shooter.runShooter(m_shooter.calculateSpeed(throttle.getAsDouble(), 0.299, 0.606, 0, 1) * -1);
       SmartDashboard.putNumber(
           "hız", m_shooter.calculateSpeed(throttle.getAsDouble(), 0.299, 0.606, 0, 1));
     }

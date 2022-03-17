@@ -14,6 +14,7 @@ import frc.robot.commandgroups.Autonomous.ThreeBalls.Red32;
 import frc.robot.commandgroups.Autonomous.TwoBalls.Blue21;
 import frc.robot.commandgroups.Autonomous.TwoBalls.Red21;
 import frc.robot.commandgroups.Shoot;
+import frc.robot.commands.Autonomous.AdjustShooterAngle;
 import frc.robot.commands.Autonomous.GoTillBlack;
 import frc.robot.commands.Autonomous.TakeAim;
 import frc.robot.commands.Climb.ClimbCommand;
@@ -64,6 +65,7 @@ public class RobotContainer {
   private final JoystickButton panelButton11 = new JoystickButton(panel, Constants.OI.kButton11);
   private final JoystickButton panelButton10 = new JoystickButton(panel, Constants.OI.kButton10);
   private final JoystickButton panelButton6 = new JoystickButton(panel, Constants.OI.kButton6);
+  private final JoystickButton panelButton7 = new JoystickButton(panel, Constants.OI.kButton7);
 
   public RobotContainer() {
     m_drive.setDefaultCommand(
@@ -111,6 +113,9 @@ public class RobotContainer {
 
     panelButton11.whenPressed(new IntakePneumaticPush(m_intake));
     panelButton11.whenReleased(new IntakePneumaticPull(m_intake));
+
+    // stickButton8.whenPressed(new AdjustShooterAngle(m_shooter, m_vision));
+    panelButton7.whenPressed(new AdjustShooterAngle(m_shooter, m_vision));
   }
 
   public Command getAutonomousCommand(int mode) {
