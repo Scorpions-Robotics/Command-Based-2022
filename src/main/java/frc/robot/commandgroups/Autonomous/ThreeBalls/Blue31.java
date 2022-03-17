@@ -26,9 +26,9 @@ public class Blue31 extends SequentialCommandGroup {
     addCommands(
         new InstantCommand(() -> m_shooter.runShooter(0.7))
             .alongWith(
-                new WaitCommand(0.3)
+                new WaitCommand(1)
                     .andThen(new InstantCommand(() -> m_feeder.runFeeder(1)))
-                    .andThen(new WaitCommand(0.5))
+                    .andThen(new WaitCommand(0.7))
                     .andThen(
                         new InstantCommand(
                             new Runnable() {
@@ -46,15 +46,16 @@ public class Blue31 extends SequentialCommandGroup {
                               m_intake.runIntake(-1);
                           }
                         })
-                            .alongWith(new AutoDriveWithHeading(m_drive, 1, 180, false)))
-                    .andThen(new AutoDriveWithHeading(m_drive, 2.5, 90, false))
+                            .andThen(new WaitCommand(0.5).andThen(new AutoDriveWithHeading(m_drive, 1.5, 180, false))))
+                    .andThen(new WaitCommand(0.5).andThen(new AutoDriveWithHeading(m_drive, 2.5, 135, false)))
                     .alongWith(
                         new FeederTurn(m_feeder, 1).withInterrupt(() -> m_feeder.getSwitchValue()))
-                    .andThen(new AutoAngleTurn(m_drive, 60))
+                    .andThen(new AutoAngleTurn(m_drive, 90))
                     .andThen(new TakeAim(m_drive, m_vision, m_led))
                     .andThen(new ShootAuto(m_shooter, m_vision))
                     .alongWith(
                         new WaitCommand(0.5)
-                            .andThen(new InstantCommand(() -> m_feeder.runFeeder(1))))));
+                            .andThen(new InstantCommand(() -> m_feeder.runFeeder(1)))
+                            .andThen(new WaitCommand(2).andThen(new AutoDriveWithHeading(m_drive, 1.5, -135, false))))));
   }
 }

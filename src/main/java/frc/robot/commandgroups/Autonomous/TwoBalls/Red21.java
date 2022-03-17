@@ -24,8 +24,8 @@ public class Red21 extends SequentialCommandGroup {
       LEDSubsystem m_led) {
     addCommands(
         new InstantCommand(() -> m_intake.runIntake(1))
-            .andThen(new AutoStraightDrive(m_drive, 1, false))
-            .andThen(new WaitCommand(0.2))
+            .andThen(new AutoStraightDrive(m_drive, 1.5, false))
+            .andThen(new WaitCommand(3))
             .andThen(new AutoAngleTurn(m_drive, 180))
             .andThen(new TakeAim(m_drive, m_vision, m_led))
             .andThen(

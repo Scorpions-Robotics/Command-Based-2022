@@ -19,9 +19,7 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     auto_chooser.setDefaultOption("2 top", 1);
-    auto_chooser.addOption("3 top pozisyon 1", 2);
-    auto_chooser.addOption("3 top pozisyon 2", 3);
-    auto_chooser.addOption("4 top", 4);
+    auto_chooser.addOption("3 top", 2);
 
     SmartDashboard.putData(auto_chooser);
   }

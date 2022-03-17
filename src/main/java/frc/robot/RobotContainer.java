@@ -5,12 +5,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commandgroups.Autonomous.FourBalls.Blue41;
-import frc.robot.commandgroups.Autonomous.FourBalls.Red41;
 import frc.robot.commandgroups.Autonomous.ThreeBalls.Blue31;
-import frc.robot.commandgroups.Autonomous.ThreeBalls.Blue32;
 import frc.robot.commandgroups.Autonomous.ThreeBalls.Red31;
-import frc.robot.commandgroups.Autonomous.ThreeBalls.Red32;
 import frc.robot.commandgroups.Autonomous.TwoBalls.Blue21;
 import frc.robot.commandgroups.Autonomous.TwoBalls.Red21;
 import frc.robot.commandgroups.Shoot;
@@ -51,12 +47,6 @@ public class RobotContainer {
   private final JoystickButton stickButton2 = new JoystickButton(stick, Constants.OI.kButton2);
   private final JoystickButton stickButton3 = new JoystickButton(stick, Constants.OI.kButton3);
   private final JoystickButton stickButton4 = new JoystickButton(stick, Constants.OI.kButton4);
-  private final JoystickButton stickButton5 = new JoystickButton(stick, Constants.OI.kButton5);
-  private final JoystickButton stickButton6 = new JoystickButton(stick, Constants.OI.kButton6);
-  private final JoystickButton stickButton7 = new JoystickButton(stick, Constants.OI.kButton7);
-  private final JoystickButton stickButton8 = new JoystickButton(stick, Constants.OI.kButton8);
-  private final JoystickButton stickButton9 = new JoystickButton(stick, Constants.OI.kButton9);
-  private final JoystickButton stickButton10 = new JoystickButton(stick, Constants.OI.kButton10);
   private final JoystickButton stickButton11 = new JoystickButton(stick, Constants.OI.kButton11);
   private final JoystickButton stickButton12 = new JoystickButton(stick, Constants.OI.kButton12);
 
@@ -126,21 +116,17 @@ public class RobotContainer {
           return new Blue21(m_drive, m_feeder, m_intake, m_shooter, m_vision, m_led);
         case 2:
           return new Blue31(m_drive, m_feeder, m_intake, m_shooter, m_vision, m_led);
-        case 3:
-          return new Blue32(m_drive, m_feeder, m_intake, m_shooter, m_vision);
         default:
-          return new Blue41(m_drive, m_feeder, m_intake, m_shooter, m_vision, m_led);
+          return new Blue21(m_drive, m_feeder, m_intake, m_shooter, m_vision, m_led);
       }
     } else {
       switch (mode) {
         case 1:
           return new Red21(m_drive, m_feeder, m_intake, m_shooter, m_vision, m_led);
         case 2:
-          return new Red31(m_drive, m_feeder, m_intake, m_shooter, m_vision);
-        case 3:
-          return new Red32(m_drive, m_feeder, m_intake, m_shooter, m_vision);
+          return new Red31(m_drive, m_feeder, m_intake, m_shooter, m_vision, m_led);
         default:
-          return new Red41(m_drive, m_feeder, m_intake, m_shooter, m_vision);
+          return new Blue21(m_drive, m_feeder, m_intake, m_shooter, m_vision, m_led);
       }
     }
   }

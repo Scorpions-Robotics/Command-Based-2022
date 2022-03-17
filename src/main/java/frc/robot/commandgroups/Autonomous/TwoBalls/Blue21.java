@@ -24,14 +24,14 @@ public class Blue21 extends SequentialCommandGroup {
       LEDSubsystem m_led) {
     addCommands(
         new InstantCommand(() -> m_intake.runIntake(1))
-            .andThen(new AutoStraightDrive(m_drive, 2, false))
-            .andThen(new WaitCommand(1))
+            .andThen(new AutoStraightDrive(m_drive, 1.5, false))
+            .andThen(new WaitCommand(3))
             .andThen(new AutoAngleTurn(m_drive, 180))
             .andThen(new TakeAim(m_drive, m_vision, m_led))
             .andThen(
                 new ShootAuto(m_shooter, m_vision)
                     .alongWith(
-                        new WaitCommand(1)
+                        new WaitCommand(2)
                             .andThen(new InstantCommand(() -> m_feeder.runFeeder(1))))));
   }
 }

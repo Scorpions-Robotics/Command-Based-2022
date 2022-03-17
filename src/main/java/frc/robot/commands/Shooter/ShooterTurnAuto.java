@@ -26,16 +26,10 @@ public class ShooterTurnAuto extends CommandBase {
   PIDController controller = new PIDController(1.5143, 0, 0);
   SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(Constants.SHOOTER.kS, Constants.SHOOTER.kV, Constants.SHOOTER.kA);
-  DoubleSupplier state;
-  DoubleSupplier throttle;
-  DoubleSupplier pneumatic;
   /** Creates a new ShooterTurnNew. */
   public ShooterTurnAuto(ShooterSubsystem m_shooter, VisionSubsystem m_vision) {
     this.m_shooter = m_shooter;
     this.m_vision = m_vision;
-    this.state = state;
-    this.throttle = throttle;
-    this.pneumatic = pneumatic;
     addRequirements(this.m_shooter);
     // Use addRequirements() here to declare subsystem dependencies.
   }
