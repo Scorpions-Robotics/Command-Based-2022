@@ -53,7 +53,7 @@ public class RobotContainer {
   private final JoystickButton panelButton8 = new JoystickButton(panel, Constants.OI.kButton8);
   private final JoystickButton panelButton3 = new JoystickButton(panel, Constants.OI.kButton3);
   private final JoystickButton panelButton11 = new JoystickButton(panel, Constants.OI.kButton11);
-  private final JoystickButton panelButton10 = new JoystickButton(panel, Constants.OI.kButton10);
+  private final JoystickButton panelButton5 = new JoystickButton(panel, Constants.OI.kButton5);
   private final JoystickButton panelButton6 = new JoystickButton(panel, Constants.OI.kButton6);
   private final JoystickButton panelButton7 = new JoystickButton(panel, Constants.OI.kButton7);
 
@@ -73,7 +73,7 @@ public class RobotContainer {
     new Trigger(() -> !m_feeder.isBallIn() && m_intake.pneumaticMode)
         .whenActive(
             new FeederTurn(m_feeder, 1)
-                .withInterrupt(() -> m_feeder.getSwitchValue() || panel.getRawButton(5)));
+                .withInterrupt(() -> m_feeder.getSwitchValue() || panel.getRawButton(10)));
 
     stickButton1.whileHeld(
         new Shoot(
@@ -99,7 +99,7 @@ public class RobotContainer {
 
     panelButton8.whenPressed(new ModeChange(m_climb));
 
-    panelButton10.whenPressed(new ToggleClimbPneumatic(m_climb));
+    panelButton5.whenPressed(new ToggleClimbPneumatic(m_climb));
 
     panelButton11.whenPressed(new IntakePneumaticPush(m_intake));
     panelButton11.whenReleased(new IntakePneumaticPull(m_intake));

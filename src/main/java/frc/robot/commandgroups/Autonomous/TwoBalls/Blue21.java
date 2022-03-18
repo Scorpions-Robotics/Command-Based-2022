@@ -33,8 +33,8 @@ public class Blue21 extends SequentialCommandGroup {
             .andThen(new AutoStraightDrive(m_drive, 1.5, false))
             .andThen(new WaitCommand(1.5))
             .andThen(new AutoAngleTurn(m_drive, 180))
-            .andThen(
-                new ShootAuto(m_shooter, m_vision)
+            .andThen(new TakeAim(m_drive, m_vision, m_led))
+            .andThen(new ShootAuto(m_shooter, m_vision)
                     .alongWith(
                         new WaitCommand(2)
                             .andThen(new InstantCommand(() -> m_feeder.runFeeder(1))))));
