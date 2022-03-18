@@ -4,8 +4,8 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 
 public final class Constants {
   public static class OI {
-    public static final int kStickId = 1;
-    public static final int kPanelId = 0;
+    public static final int kStickId = 0;
+    public static final int kPanelId = 1;
 
     public static final int kButton1 = 1;
     public static final int kButton2 = 2;

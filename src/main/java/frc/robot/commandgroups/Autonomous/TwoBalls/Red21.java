@@ -23,7 +23,13 @@ public class Red21 extends SequentialCommandGroup {
       VisionSubsystem m_vision,
       LEDSubsystem m_led) {
     addCommands(
-        new InstantCommand(() -> m_intake.runIntake(1))
+        new InstantCommand(new Runnable() {
+            @Override
+            public void run() {
+                m_intake.pushPneumatic();
+                m_intake.runIntake(-1);
+            }
+        })
             .andThen(new AutoStraightDrive(m_drive, 1.5, false))
             .andThen(new WaitCommand(3))
             .andThen(new AutoAngleTurn(m_drive, 180))
@@ -31,7 +37,7 @@ public class Red21 extends SequentialCommandGroup {
             .andThen(
                 new ShootAuto(m_shooter, m_vision)
                     .alongWith(
-                        new WaitCommand(1)
+                        new WaitCommand(2)
                             .andThen(new InstantCommand(() -> m_feeder.runFeeder(1))))));
   }
 }
