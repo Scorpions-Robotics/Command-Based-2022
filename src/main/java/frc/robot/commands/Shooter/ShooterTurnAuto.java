@@ -43,15 +43,15 @@ public class ShooterTurnAuto extends CommandBase {
   public void execute() {
     distance = m_vision.getHoopD();
     if (m_shooter.pneumatic_mode) {
-      min_distance = 500;
+      min_distance = 450;
       max_distance = 850;
-      min_rpm = 1100;
+      min_rpm = 1300;
       max_rpm = 1450;
     } else {
       min_distance = 140;
-      max_distance = 500;
+      max_distance = 450;
       min_rpm = 800;
-      max_rpm = 1200;
+      max_rpm = 1125;
     }
     if (m_vision.getHoopB() == 1) {
       output =
@@ -64,7 +64,7 @@ public class ShooterTurnAuto extends CommandBase {
               + feedforward.calculate(
                   m_shooter.calculateShooterSpeed(
                       distance, min_distance, max_distance, min_rpm, max_rpm));
-      m_shooter.runShooterVoltage(-motorOutput);
+      m_shooter.runShooterVoltage(motorOutput);
     } else {
       m_shooter.runShooter(-0.7);
     }

@@ -59,7 +59,7 @@ public class ShooterTurnNew extends CommandBase {
         min_distance = 450;
         max_distance = 850;
         min_rpm = 1300;
-        max_rpm = 1425;
+        max_rpm = 1450;
       } else {
         min_distance = 140;
         max_distance = 450;

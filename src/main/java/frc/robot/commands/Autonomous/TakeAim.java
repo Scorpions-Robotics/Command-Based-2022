@@ -45,18 +45,18 @@ public class TakeAim extends CommandBase {
       SmartDashboard.putNumber("error", error);
 
       if (error < -10) {
-        m_drive.runLeftMotorVoltage(1.4);
-        m_drive.runRightMotorVoltage(1.4);
+        m_drive.runLeftMotorVoltage(1);
+        m_drive.runRightMotorVoltage(1);
         if (error < -50) {
-          m_drive.runLeftMotorVoltage(1.95);
-          m_drive.runRightMotorVoltage(1.95);
+          m_drive.runLeftMotorVoltage(1.5);
+          m_drive.runRightMotorVoltage(1.5);
         }
       } else if (error > 10) {
-        m_drive.runLeftMotorVoltage(-1.4);
-        m_drive.runRightMotorVoltage(-1.4);
+        m_drive.runLeftMotorVoltage(-1);
+        m_drive.runRightMotorVoltage(-1);
         if (error > 50) {
-          m_drive.runLeftMotorVoltage(-1.95);
-          m_drive.runRightMotorVoltage(-1.95);
+          m_drive.runLeftMotorVoltage(-1.5);
+          m_drive.runRightMotorVoltage(-1.5);
         }
       } else {
         m_drive.runLeftMotor(0);
