@@ -16,12 +16,11 @@ public class Shoot extends SequentialCommandGroup {
       DriveSubsystem m_drive,
       ShooterSubsystem m_shooter,
       VisionSubsystem m_vision,
-      LEDSubsystem m_led,
       BooleanSupplier state,
       DoubleSupplier throttle,
       BooleanSupplier pneumatic) {
 
-      addCommands(new ShooterTurnNew(m_shooter, m_vision, m_led, state, throttle, pneumatic));
+      addCommands(new ShooterTurnNew(m_shooter, m_vision, state, throttle, pneumatic));
     
   }
 }

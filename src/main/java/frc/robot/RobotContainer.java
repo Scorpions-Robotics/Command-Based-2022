@@ -81,7 +81,6 @@ public class RobotContainer {
             m_drive,
             m_shooter,
             m_vision,
-            m_led,
             () -> panel.getRawButton(12),
             () -> panel.getRawAxis(0),
             () -> panel.getRawButton(13)));
@@ -103,7 +102,7 @@ public class RobotContainer {
 
     panelButton11.whenPressed(new IntakePneumaticPush(m_intake));
     panelButton11.whenReleased(new IntakePneumaticPull(m_intake));
-    new JoystickButton(stick, 8).whenPressed(new AutoAngleTurn(m_drive, 90));
+
     // stickButton8.whenPressed(new AdjustShooterAngle(m_shooter, m_vision));
     panelButton7.whenPressed(new AdjustShooterAngle(m_shooter, m_vision));
   }

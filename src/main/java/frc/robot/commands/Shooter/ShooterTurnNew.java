@@ -20,7 +20,6 @@ import java.util.function.DoubleSupplier;
 public class ShooterTurnNew extends CommandBase {
   ShooterSubsystem m_shooter;
   VisionSubsystem m_vision;
-  LEDSubsystem m_led;
   double output;
   double distance;
   double min_distance;
@@ -38,13 +37,11 @@ public class ShooterTurnNew extends CommandBase {
   public ShooterTurnNew(
       ShooterSubsystem m_shooter,
       VisionSubsystem m_vision,
-      LEDSubsystem m_led,
       BooleanSupplier state,
       DoubleSupplier throttle,
       BooleanSupplier pneumatic) {
     this.m_shooter = m_shooter;
     this.m_vision = m_vision;
-    this.m_led = m_led;
     this.state = state;
     this.throttle = throttle;
     this.pneumatic = pneumatic;
