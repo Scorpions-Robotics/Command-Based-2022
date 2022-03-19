@@ -7,8 +7,11 @@ package frc.robot.commands.Shooter;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.commands.LED.LEDCommand;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import java.util.function.BooleanSupplier;
@@ -17,6 +20,7 @@ import java.util.function.DoubleSupplier;
 public class ShooterTurnNew extends CommandBase {
   ShooterSubsystem m_shooter;
   VisionSubsystem m_vision;
+  LEDSubsystem m_led;
   double output;
   double distance;
   double min_distance;
@@ -34,11 +38,13 @@ public class ShooterTurnNew extends CommandBase {
   public ShooterTurnNew(
       ShooterSubsystem m_shooter,
       VisionSubsystem m_vision,
+      LEDSubsystem m_led,
       BooleanSupplier state,
       DoubleSupplier throttle,
       BooleanSupplier pneumatic) {
     this.m_shooter = m_shooter;
     this.m_vision = m_vision;
+    this.m_led = m_led;
     this.state = state;
     this.throttle = throttle;
     this.pneumatic = pneumatic;
@@ -58,8 +64,8 @@ public class ShooterTurnNew extends CommandBase {
       if (m_shooter.pneumatic_mode) {
         min_distance = 450;
         max_distance = 850;
-        min_rpm = 1300;
-        max_rpm = 1450;
+        min_rpm = 1125;
+        max_rpm = 1575;
       } else {
         min_distance = 140;
         max_distance = 450;
@@ -91,11 +97,12 @@ public class ShooterTurnNew extends CommandBase {
       SmartDashboard.putNumber(
           "hız", -m_shooter.calculateSpeed(throttle.getAsDouble(), 0.299, 0.606, 0, 1));
     }
-    SmartDashboard.putNumber("RPM", m_shooter.getShooterEncoderRPM());
-    SmartDashboard.putNumber("Vision", m_vision.getHoopB());
 
-    SmartDashboard.putBoolean("state", state.getAsBoolean());
-    SmartDashboard.putNumber("throttle", m_shooter.calculateSpeed(throttle.getAsDouble(), 0.299, 0.606, 0, 1));
+    // if(controller.getSetpoint() - 50 < m_shooter.getShooterEncoderRPM() && controller.getSetpoint() + 50 > m_shooter.getShooterEncoderRPM()){
+    //   new LEDCommand(m_led, Color.kAliceBlue).withTimeout(3).schedule();
+    // }
+    SmartDashboard.putNumber("RPM", m_shooter.getShooterEncoderRPM());
+    SmartDashboard.putNumber("Setpoint", controller.getSetpoint());
   }
 
   // Called once the command ends or is interrupted.

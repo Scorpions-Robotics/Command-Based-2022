@@ -5,6 +5,7 @@ import frc.robot.commands.Autonomous.AdjustShooterAngle;
 import frc.robot.commands.Autonomous.FixedPosition;
 import frc.robot.commands.Shooter.ShooterTurnNew;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import java.util.function.BooleanSupplier;
@@ -15,15 +16,12 @@ public class Shoot extends SequentialCommandGroup {
       DriveSubsystem m_drive,
       ShooterSubsystem m_shooter,
       VisionSubsystem m_vision,
+      LEDSubsystem m_led,
       BooleanSupplier state,
       DoubleSupplier throttle,
-      BooleanSupplier pneumatic,
-      DoubleSupplier chassis_speed,
-      DoubleSupplier stickY) {
+      BooleanSupplier pneumatic) {
 
-      addCommands(
-          new FixedPosition(m_drive, stickY, chassis_speed)
-              .alongWith(new ShooterTurnNew(m_shooter, m_vision, state, throttle, pneumatic)));
+      addCommands(new ShooterTurnNew(m_shooter, m_vision, m_led, state, throttle, pneumatic));
     
   }
 }

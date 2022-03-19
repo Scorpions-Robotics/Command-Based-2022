@@ -11,6 +11,7 @@ import frc.robot.commandgroups.Autonomous.TwoBalls.Blue21;
 import frc.robot.commandgroups.Autonomous.TwoBalls.Red21;
 import frc.robot.commandgroups.Shoot;
 import frc.robot.commands.Autonomous.AdjustShooterAngle;
+import frc.robot.commands.Autonomous.AutoAngleTurn;
 import frc.robot.commands.Autonomous.GoTillBlack;
 import frc.robot.commands.Autonomous.TakeAim;
 import frc.robot.commands.Climb.ClimbCommand;
@@ -80,11 +81,10 @@ public class RobotContainer {
             m_drive,
             m_shooter,
             m_vision,
+            m_led,
             () -> panel.getRawButton(12),
             () -> panel.getRawAxis(0),
-            () -> panel.getRawButton(13),
-            () -> stick.getThrottle(),
-            () -> stick.getRawAxis(1)));
+            () -> panel.getRawButton(13)));
 
     stickButton2.whileHeld(new IntakeTurn(m_intake, -1));
     stickButton3.whileHeld(new FeederTurn(m_feeder, 1));
@@ -103,7 +103,7 @@ public class RobotContainer {
 
     panelButton11.whenPressed(new IntakePneumaticPush(m_intake));
     panelButton11.whenReleased(new IntakePneumaticPull(m_intake));
-
+    new JoystickButton(stick, 8).whenPressed(new AutoAngleTurn(m_drive, 90));
     // stickButton8.whenPressed(new AdjustShooterAngle(m_shooter, m_vision));
     panelButton7.whenPressed(new AdjustShooterAngle(m_shooter, m_vision));
   }
