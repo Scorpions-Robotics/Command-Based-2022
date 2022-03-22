@@ -44,10 +44,7 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-    SmartDashboard.putBoolean("reverse", reverse_mode);
-    SmartDashboard.putBoolean("switch", climbSwitch.get());
-  }
+  public void periodic() {}
 
   public void runClimbUpwards(double speed) {
     if (!reverse_mode) {

@@ -22,9 +22,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-    SmartDashboard.putBoolean("intake pneumatic", pneumaticMode);
-  }
+  public void periodic() {}
 
   public void runIntake(double speed) {
     intakeMotor.set(speed);

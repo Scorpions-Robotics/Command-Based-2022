@@ -11,16 +11,7 @@ public class VisionSubsystem extends SubsystemBase {
 
   NetworkTableInstance inst = NetworkTableInstance.create();
   NetworkTable table = inst.getTable("vision");
-  NetworkTable ballTable = table.getSubTable("ball");
   NetworkTable hoopTable = table.getSubTable("hoop");
-
-  NetworkTableEntry ballXEntry = ballTable.getEntry("ball_X");
-  NetworkTableEntry ballYEntry = ballTable.getEntry("ball_Y");
-  NetworkTableEntry ballWEntry = ballTable.getEntry("ball_W");
-  NetworkTableEntry ballHEntry = ballTable.getEntry("ball_H");
-  NetworkTableEntry ballDEntry = ballTable.getEntry("ball_D");
-  NetworkTableEntry ballBEntry = ballTable.getEntry("ball_B");
-  NetworkTableEntry ballREntry = ballTable.getEntry("ball_R");
 
   NetworkTableEntry hoopXEntry = hoopTable.getEntry("hoop_X");
   NetworkTableEntry hoopYEntry = hoopTable.getEntry("hoop_Y");
@@ -51,28 +42,6 @@ public class VisionSubsystem extends SubsystemBase {
     showDatas();
   }
 
-  public double getBallD() {
-    try {
-      return getBallB() == 1 ? Double.valueOf(ballDEntry.getString("")) : 0.0;
-    } catch (Exception e) {
-      e.printStackTrace();
-      return 0.0;
-    }
-  }
-
-  public double getBallB() {
-    return Double.valueOf(ballBEntry.getString("0"));
-  }
-
-  public double getBallR() {
-    try {
-      return getBallB() == 1 ? Double.valueOf(ballREntry.getString("")) : 0.0;
-    } catch (Exception e) {
-      e.printStackTrace();
-      return 0.0;
-    }
-  }
-
   public double getHoopD() {
     try {
       return getHoopB() == 1 ? Double.valueOf(hoopDEntry.getString("")) : 0.0;
@@ -96,13 +65,6 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   public void showDatas() {
-    SmartDashboard.putNumber("Ball D", getBallD());
-    SmartDashboard.putNumber("Ball B", getBallB());
-    SmartDashboard.putNumber("Ball R", getBallR());
-
-    SmartDashboard.putNumber("Hoop D", getHoopD());
-    SmartDashboard.putNumber("Hoop B", getHoopB());
-    SmartDashboard.putNumber("Hoop R", getHoopR());
     sendMode(mode);
     allianceEntry.setString(DriverStation.getAlliance().toString().toLowerCase());
   }

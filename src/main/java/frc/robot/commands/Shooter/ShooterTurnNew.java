@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands.Shooter;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -33,7 +29,7 @@ public class ShooterTurnNew extends CommandBase {
   BooleanSupplier state;
   DoubleSupplier throttle;
   BooleanSupplier pneumatic;
-  /** Creates a new ShooterTurnNew. */
+
   public ShooterTurnNew(
       ShooterSubsystem m_shooter,
       VisionSubsystem m_vision,
@@ -46,14 +42,11 @@ public class ShooterTurnNew extends CommandBase {
     this.throttle = throttle;
     this.pneumatic = pneumatic;
     addRequirements(this.m_shooter);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (state.getAsBoolean() == true) {
@@ -91,24 +84,18 @@ public class ShooterTurnNew extends CommandBase {
         m_shooter.pullPneumatic();
       }
       m_shooter.runShooter(-m_shooter.calculateSpeed(throttle.getAsDouble(), 0.299, 0.606, 0, 1));
-      SmartDashboard.putNumber(
-          "hız", -m_shooter.calculateSpeed(throttle.getAsDouble(), 0.299, 0.606, 0, 1));
     }
 
     // if(controller.getSetpoint() - 50 < m_shooter.getShooterEncoderRPM() && controller.getSetpoint() + 50 > m_shooter.getShooterEncoderRPM()){
     //   new LEDCommand(m_led, Color.kAliceBlue).withTimeout(3).schedule();
     // }
-    SmartDashboard.putNumber("RPM", m_shooter.getShooterEncoderRPM());
-    SmartDashboard.putNumber("Setpoint", controller.getSetpoint());
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_shooter.stopShooter();
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

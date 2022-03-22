@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands.Shooter;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -26,19 +22,16 @@ public class ShooterTurnAuto extends CommandBase {
   PIDController controller = new PIDController(1.5143, 0, 0);
   SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(Constants.SHOOTER.kS, Constants.SHOOTER.kV, Constants.SHOOTER.kA);
-  /** Creates a new ShooterTurnNew. */
+
   public ShooterTurnAuto(ShooterSubsystem m_shooter, VisionSubsystem m_vision) {
     this.m_shooter = m_shooter;
     this.m_vision = m_vision;
     addRequirements(this.m_shooter);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     distance = m_vision.getHoopD();
@@ -68,18 +61,13 @@ public class ShooterTurnAuto extends CommandBase {
     } else {
       m_shooter.runShooter(-0.7);
     }
-
-    SmartDashboard.putNumber("RPM", m_shooter.getShooterEncoderRPM());
-    SmartDashboard.putNumber("Vision", m_vision.getHoopB());
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_shooter.stopShooter();
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

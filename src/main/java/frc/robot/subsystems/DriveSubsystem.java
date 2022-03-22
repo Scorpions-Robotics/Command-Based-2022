@@ -130,10 +130,6 @@ public class DriveSubsystem extends SubsystemBase {
   public double getGyroAngle() {
     double runTime = Timer.getFPGATimestamp() - startTime;
     double drift = runTime * driftPerSecond;
-    SmartDashboard.putNumber("Drift", drift);
-    SmartDashboard.putNumber("runTime", runTime);
-    SmartDashboard.putNumber("driftPerSecond", driftPerSecond);
-    SmartDashboard.putNumber("Angle", this.imu.getAngle() - drift);
     return this.imu.getAngle() - drift;
   }
 
@@ -156,10 +152,6 @@ public class DriveSubsystem extends SubsystemBase {
     }
     this.driftPerSecond = (imu.getAngle() - startAngle) / (Timer.getFPGATimestamp() - startTime);
   }
-
-  // public double getSensor1IR() {
-  //  return m_colorSensor1.getIR();
-  // }
 
   public double getSensorIR() {
     return m_colorSensor.getIR();
@@ -192,7 +184,6 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     odometry.update(getHeading(), getLeftEncoderDistance(), getRightEncoderDistance());
-    SmartDashboard.putNumber("IR", getSensorIR());
     // SmartDashboard.putNumber("Left Distance", getLeftEncoderDistance());
     // SmartDashboard.putNumber("Right Distance", getRightEncoderDistance());
     // SmartDashboard.putString("Rotation 2d", getHeading().toString());
