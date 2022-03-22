@@ -9,7 +9,6 @@ import frc.robot.commandgroups.Autonomous.ThreeBalls.Blue31;
 import frc.robot.commandgroups.Autonomous.ThreeBalls.Red31;
 import frc.robot.commandgroups.Autonomous.TwoBalls.Blue21;
 import frc.robot.commandgroups.Autonomous.TwoBalls.Red21;
-import frc.robot.commandgroups.Shoot;
 import frc.robot.commands.Autonomous.AdjustShooterAngle;
 import frc.robot.commands.Autonomous.AutoAngleTurn;
 import frc.robot.commands.Autonomous.GoTillBlack;
@@ -22,6 +21,7 @@ import frc.robot.commands.Feeder.FeederTurn;
 import frc.robot.commands.Intake.IntakePneumaticPull;
 import frc.robot.commands.Intake.IntakePneumaticPush;
 import frc.robot.commands.Intake.IntakeTurn;
+import frc.robot.commands.Shooter.ShooterTurnNew;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
@@ -77,8 +77,7 @@ public class RobotContainer {
                 .withInterrupt(() -> m_feeder.getSwitchValue() || panel.getRawButton(10)));
 
     stickButton1.whileHeld(
-        new Shoot(
-            m_drive,
+        new ShooterTurnNew(
             m_shooter,
             m_vision,
             () -> panel.getRawButton(12),
