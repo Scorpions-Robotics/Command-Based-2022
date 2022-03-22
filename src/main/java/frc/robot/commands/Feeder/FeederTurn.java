@@ -2,15 +2,17 @@ package frc.robot.commands.Feeder;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.FeederSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class FeederTurn extends CommandBase {
+  ShooterSubsystem m_shooter;
   FeederSubsystem m_feeder;
   double speed;
 
-  public FeederTurn(FeederSubsystem m_feeder, double speed) {
+  public FeederTurn(ShooterSubsystem m_shooter, FeederSubsystem m_feeder, double speed) {
     this.m_feeder = m_feeder;
     this.speed = speed;
-
+    this.m_shooter = m_shooter;
     // addRequirements(m_feeder);
   }
 
@@ -19,7 +21,10 @@ public class FeederTurn extends CommandBase {
 
   @Override
   public void execute() {
-    m_feeder.runFeeder(speed);
+    if(m_shooter.is_at_right_rpm){
+      m_feeder.runFeeder(speed);
+    }
+    
   }
 
   @Override
