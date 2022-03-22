@@ -73,7 +73,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new Trigger(() -> !m_feeder.isBallIn() && m_intake.pneumaticMode)
         .whenActive(
-            new FeederTurn(m_feeder, 1)
+            new FeederTurn(m_shooter, m_feeder, 1)
                 .withInterrupt(() -> m_feeder.getSwitchValue() || panel.getRawButton(10)));
 
     stickButton1.whileHeld(
@@ -85,8 +85,8 @@ public class RobotContainer {
             () -> panel.getRawButton(13)));
 
     stickButton2.whileHeld(new IntakeTurn(m_intake, -1));
-    stickButton3.whileHeld(new FeederTurn(m_feeder, 1));
-    stickButton4.whileHeld(new FeederTurn(m_feeder, -1));
+    stickButton3.whileHeld(new FeederTurn(m_shooter, m_feeder, 1));
+    stickButton4.whileHeld(new FeederTurn(m_shooter, m_feeder, -1));
 
     stickButton11.whileHeld(new ClimbCommand(m_climb, 1));
     stickButton12.whileHeld(new ClimbCommand(m_climb, -1));
