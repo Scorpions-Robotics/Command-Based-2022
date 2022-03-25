@@ -40,16 +40,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public boolean pneumatic_mode;
 
-  public ShooterSubsystem() {
-    shooterLeftMotor.setInverted(true);
-  }
+  public ShooterSubsystem() {}
 
   @Override
   public void periodic() {}
 
   public void runShooter(double speed) {
-    shooterLeftMotor.set(speed * -1);
-    shooterRightMotor.set(speed * -1);
+    shooterLeftMotor.set(-speed);
+    shooterRightMotor.set(speed);
   }
 
   public void SetServoAngle(double angle) {
@@ -97,6 +95,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void runShooterVoltage(double voltage) {
+    shooterLeftMotor.setVoltage(-voltage);
     shooterRightMotor.setVoltage(voltage);
   }
 

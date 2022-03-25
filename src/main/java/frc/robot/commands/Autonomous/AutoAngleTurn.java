@@ -11,18 +11,18 @@ public class AutoAngleTurn extends PIDCommand {
 
   public AutoAngleTurn(DriveSubsystem m_drive, double angle) {
     super(
-        new PIDController(0.015, 0.0005, 0.0040),
+        new PIDController(0.012, 0.0005, 0.0040),
         () -> m_drive.getGyroAngle(),
         () -> angle,
         output -> {
           if (m_drive.getGyroAngle() > angle) {
-            m_drive.arcadeDrive(Math.max(-output, 0.4), 0);
+            m_drive.arcadeDrive(Math.max(-output, 0.25), 0);
           } else {
-            m_drive.arcadeDrive(Math.min(-output, -0.4), 0);
+            m_drive.arcadeDrive(Math.min(-output, -0.25), 0);
           }
           SmartDashboard.putNumber("Output", -output);
         });
-    getController().setTolerance(0.0825);
+    // getController().setTolerance(0.0825);
     this.m_drive = m_drive;
     this.angle = angle;
     addRequirements(m_drive);

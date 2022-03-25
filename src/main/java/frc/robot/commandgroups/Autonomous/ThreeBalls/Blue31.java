@@ -35,7 +35,6 @@ public class Blue31 extends SequentialCommandGroup {
                               @Override
                               public void run() {
                                 m_feeder.stopFeeder();
-                                m_shooter.stopShooter();
                               }
                             }))
                     .andThen(

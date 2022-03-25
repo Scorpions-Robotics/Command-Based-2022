@@ -75,7 +75,7 @@ public class ShooterTurnNew extends CommandBase {
                         distance, min_distance, max_distance, min_rpm, max_rpm));
         m_shooter.runShooterVoltage(motorOutput);
       } else {
-        m_shooter.runShooter(-0.7);
+        m_shooter.runShooter(0.7);
       }
     } else {
       if (pneumatic.getAsBoolean() == true) {
@@ -83,12 +83,13 @@ public class ShooterTurnNew extends CommandBase {
       } else {
         m_shooter.pullPneumatic();
       }
-      m_shooter.runShooter(-m_shooter.calculateSpeed(throttle.getAsDouble(), 0.299, 0.606, 0, 1));
+      m_shooter.runShooter(m_shooter.calculateSpeed(throttle.getAsDouble(), 0.165, 0.472, 0, 1));
     }
 
     // if(controller.getSetpoint() - 50 < m_shooter.getShooterEncoderRPM() && controller.getSetpoint() + 50 > m_shooter.getShooterEncoderRPM()){
     //   new LEDCommand(m_led, Color.kAliceBlue).withTimeout(3).schedule();
     // }
+    SmartDashboard.putNumber("rpm", m_shooter.getShooterEncoderRPM());
   }
 
   @Override

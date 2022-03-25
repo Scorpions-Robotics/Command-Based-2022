@@ -59,7 +59,7 @@ public class ShooterTurnAuto extends CommandBase {
                       distance, min_distance, max_distance, min_rpm, max_rpm));
       m_shooter.runShooterVoltage(motorOutput);
     } else {
-      m_shooter.runShooter(-0.7);
+      m_shooter.runShooter(0.7);
     }
   }
 
