@@ -9,9 +9,7 @@ import frc.robot.commandgroups.Autonomous.ThreeBalls.Blue31;
 import frc.robot.commandgroups.Autonomous.ThreeBalls.Red31;
 import frc.robot.commandgroups.Autonomous.TwoBalls.Blue21;
 import frc.robot.commandgroups.Autonomous.TwoBalls.Red21;
-
 import frc.robot.commands.Autonomous.AdjustShooterAngle;
-import frc.robot.commands.Autonomous.AutoAngleTurn;
 import frc.robot.commands.Autonomous.GoTillBlack;
 import frc.robot.commands.Autonomous.TakeAim;
 import frc.robot.commands.Climb.ClimbCommand;

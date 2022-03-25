@@ -38,15 +38,20 @@ public class Blue31 extends SequentialCommandGroup {
                               }
                             }))
                     .andThen(
-                        new InstantCommand(new Runnable() {
-                          @Override
-                          public void run() {
-                              m_intake.pushPneumatic();
-                              m_intake.runIntake(-1);
-                          }
-                        })
-                            .andThen(new WaitCommand(0.5).andThen(new AutoDriveWithHeading(m_drive, 1.5, 180, false))))
-                    .andThen(new WaitCommand(0.5).andThen(new AutoDriveWithHeading(m_drive, 2.5, 135, false)))
+                        new InstantCommand(
+                                new Runnable() {
+                                  @Override
+                                  public void run() {
+                                    m_intake.pushPneumatic();
+                                    m_intake.runIntake(-1);
+                                  }
+                                })
+                            .andThen(
+                                new WaitCommand(0.5)
+                                    .andThen(new AutoDriveWithHeading(m_drive, 1.5, 180, false))))
+                    .andThen(
+                        new WaitCommand(0.5)
+                            .andThen(new AutoDriveWithHeading(m_drive, 2.5, 135, false)))
                     .alongWith(
                         new FeederTurn(m_feeder, 1).withInterrupt(() -> m_feeder.getSwitchValue()))
                     .andThen(new AutoAngleTurn(m_drive, 90))
@@ -55,6 +60,9 @@ public class Blue31 extends SequentialCommandGroup {
                     .alongWith(
                         new WaitCommand(0.5)
                             .andThen(new InstantCommand(() -> m_feeder.runFeeder(1)))
-                            .andThen(new WaitCommand(2).andThen(new AutoDriveWithHeading(m_drive, 1.5, -135, false))))));
+                            .andThen(
+                                new WaitCommand(2)
+                                    .andThen(
+                                        new AutoDriveWithHeading(m_drive, 1.5, -135, false))))));
   }
 }

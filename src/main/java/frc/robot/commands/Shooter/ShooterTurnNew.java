@@ -3,11 +3,8 @@ package frc.robot.commands.Shooter;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.commands.LED.LEDCommand;
-import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import java.util.function.BooleanSupplier;
@@ -86,7 +83,8 @@ public class ShooterTurnNew extends CommandBase {
       m_shooter.runShooter(m_shooter.calculateSpeed(throttle.getAsDouble(), 0.165, 0.472, 0, 1));
     }
 
-    // if(controller.getSetpoint() - 50 < m_shooter.getShooterEncoderRPM() && controller.getSetpoint() + 50 > m_shooter.getShooterEncoderRPM()){
+    // if(controller.getSetpoint() - 50 < m_shooter.getShooterEncoderRPM() &&
+    // controller.getSetpoint() + 50 > m_shooter.getShooterEncoderRPM()){
     //   new LEDCommand(m_led, Color.kAliceBlue).withTimeout(3).schedule();
     // }
     SmartDashboard.putNumber("rpm", m_shooter.getShooterEncoderRPM());

@@ -13,14 +13,11 @@ public class ShooterTurnManual extends CommandBase {
     this.m_shooter = m_shooter;
     this.speedSupplier = speedSupplier;
     addRequirements(m_shooter);
-
   }
-
 
   @Override
   public void initialize() {}
 
- 
   @Override
   public void execute() {
     speed = (speedSupplier.getAsDouble() * -1 + 1) / 2;
