@@ -4,26 +4,20 @@
 
 package frc.robot.commands.Autonomous;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.commands.LED.LEDCommand;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
-public class TakeAim extends CommandBase {
+public class TakeAimNew extends CommandBase {
   private DriveSubsystem m_drive;
   private VisionSubsystem m_vision;
-  private LEDSubsystem m_led;
   double error;
   double rotation;
-  double last_value;
+  double increase;
 
-  public TakeAim(DriveSubsystem m_drive, VisionSubsystem m_vision, LEDSubsystem m_led) {
+  public TakeAimNew(DriveSubsystem m_drive, VisionSubsystem m_vision) {
     this.m_drive = m_drive;
     this.m_vision = m_vision;
-    this.m_led = m_led;
     addRequirements(m_drive);
   }
 
@@ -31,32 +25,33 @@ public class TakeAim extends CommandBase {
   @Override
   public void initialize() {
     m_drive.modeBrake();
-    last_value = m_vision.getHoopR();
+    increase = m_vision.getHoopR();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (m_vision.getHoopB() == 1) {
-      if (!(Math.abs(m_vision.getHoopR() - last_value) > 40)) {
-        last_value = m_vision.getHoopR();
+      error = m_vision.getHoopR();
+      if (Math.signum(increase) == 1) {
+        error -= Math.abs(increase) / 4;
+      } else if (Math.signum(increase) == -1) {
+        error += Math.abs(increase) / 4;
       }
-      error = last_value;
-      SmartDashboard.putNumber("error", error);
 
-      if (error < -10) {
-        m_drive.runLeftMotorVoltage(1);
-        m_drive.runRightMotorVoltage(1);
+      if (error < -20) {
+        m_drive.runLeftMotor(-0.15);
+        m_drive.runRightMotor(0.15);
         if (error < -50) {
-          m_drive.runLeftMotorVoltage(1.5);
-          m_drive.runRightMotorVoltage(1.5);
+          m_drive.runLeftMotor(-0.17);
+          m_drive.runRightMotor(0.17);
         }
-      } else if (error > 10) {
-        m_drive.runLeftMotorVoltage(-1);
-        m_drive.runRightMotorVoltage(-1);
-        if (error > 50) {
-          m_drive.runLeftMotorVoltage(-1.5);
-          m_drive.runRightMotorVoltage(-1.5);
+      } else if (error > 20) {
+        m_drive.runLeftMotor(0.15);
+        m_drive.runRightMotor(-0.15);
+        if (error > 10) {
+          m_drive.runLeftMotor(0.17);
+          m_drive.runRightMotor(-0.17);
         }
       } else {
         m_drive.runLeftMotor(0);
@@ -74,18 +69,12 @@ public class TakeAim extends CommandBase {
   public void end(boolean interrupted) {
     m_drive.runLeftMotor(0);
     m_drive.runRightMotor(0);
-    m_drive.modeCoast();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (m_vision.getHoopB() == 0) {
-      return true;
-    }
     if (error >= -10 && error <= 10) {
-      new LEDCommand(m_led, Color.kGreen).withTimeout(5).schedule();
-      ;
       return true;
     }
     return false;

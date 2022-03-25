@@ -19,7 +19,11 @@ public class ClimbCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_climb.runClimb(speed);
+    if (speed > 0) {
+      m_climb.runClimbUpwards(speed);
+    } else {
+      m_climb.runClimbDownwards(speed);
+    }
   }
 
   @Override

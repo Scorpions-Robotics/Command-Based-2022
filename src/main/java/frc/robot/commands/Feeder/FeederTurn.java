@@ -11,7 +11,7 @@ public class FeederTurn extends CommandBase {
     this.m_feeder = m_feeder;
     this.speed = speed;
 
-    addRequirements(m_feeder);
+    // addRequirements(m_feeder);
   }
 
   @Override

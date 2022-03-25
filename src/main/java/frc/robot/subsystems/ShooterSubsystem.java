@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
@@ -10,8 +11,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ShooterSubsystem extends SubsystemBase {
-  private WPI_VictorSPX shooterLeftMotor = new WPI_VictorSPX(Constants.CAN.kShooterLeftMotorID);
-  private WPI_VictorSPX shooterRightMotor = new WPI_VictorSPX(Constants.CAN.kShooterRightMotorID);
+  private CANSparkMax shooterLeftMotor =
+      new CANSparkMax(Constants.CAN.kShooterLeftMotorID, MotorType.kBrushed);
+  private CANSparkMax shooterRightMotor =
+      new CANSparkMax(Constants.CAN.kShooterRightMotorID, MotorType.kBrushed);
 
   Servo servo = new Servo(Constants.SHOOTER.kServoPWM);
 
@@ -29,12 +32,13 @@ public class ShooterSubsystem extends SubsystemBase {
           Constants.PNEUMATICS.kShooterSolenoidReverseChannel);
 
   double result;
-  double max_min_distance_diff;
-  double current_min_distance_diff;
-  double max_min_rpm_diff;
+  double max_min_in_diff;
+  double current_min_in_diff;
+  double max_min_out_diff;
+
+  public boolean pneumatic_mode;
 
   public ShooterSubsystem() {
-    shooterLeftMotor.follow(shooterRightMotor);
     shooterLeftMotor.setInverted(true);
   }
 
@@ -42,42 +46,52 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {}
 
   public void runShooter(double speed) {
-    shooterRightMotor.set(speed);
-  }
-
-  public void pushPneumatic() {
-    anglePneumatic.set(DoubleSolenoid.Value.kForward);
+    shooterLeftMotor.set(speed * -1);
+    shooterRightMotor.set(speed * -1);
   }
 
   public void SetServoAngle(double angle) {
     servo.setAngle(angle);
   }
 
+  public void pushPneumatic() {
+    anglePneumatic.set(DoubleSolenoid.Value.kForward);
+    pneumatic_mode = true;
+  }
+
   public void pullPneumatic() {
     anglePneumatic.set(DoubleSolenoid.Value.kReverse);
+    pneumatic_mode = false;
   }
 
   public double calculateShooterSpeed(
-      double distance,
-      double isHoopInVision,
-      double min_distance,
-      double max_distance,
-      double min_rpm,
-      double max_rpm) {
-    if (isHoopInVision == 1) {
-      max_min_distance_diff = max_distance - min_distance;
-      current_min_distance_diff = distance - min_distance;
+      double distance, double min_distance, double max_distance, double min_rpm, double max_rpm) {
 
-      result = current_min_distance_diff / max_min_distance_diff;
+    max_min_in_diff = max_distance - min_distance;
+    current_min_in_diff = distance - min_distance;
 
-      max_min_rpm_diff = max_rpm - min_rpm;
+    result = current_min_in_diff / max_min_in_diff;
 
-      result = max_min_rpm_diff * result + min_rpm;
+    max_min_out_diff = max_rpm - min_rpm;
 
-      return Math.max(min_rpm, result);
-    } else {
-      return 0.7;
-    }
+    result = max_min_out_diff * result + min_rpm;
+
+    return Math.max(min_rpm, result);
+  }
+
+  public double calculateSpeed(
+      double speed, double min_in, double max_in, double min_out, double max_out) {
+
+    max_min_in_diff = max_in - min_in;
+    current_min_in_diff = speed - min_in;
+
+    result = current_min_in_diff / max_min_in_diff;
+
+    max_min_out_diff = max_out - min_out;
+
+    result = max_min_out_diff * result + min_out;
+
+    return result;
   }
 
   public void runShooterVoltage(double voltage) {
@@ -85,10 +99,11 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double getShooterEncoderRPM() {
-    return shooterEncoder.getRate() * 60;
+    return shooterEncoder.getRate();
   }
 
   public void stopShooter() {
     shooterRightMotor.set(Constants.VARIABLES.kZero);
+    shooterLeftMotor.set(Constants.VARIABLES.kZero);
   }
 }

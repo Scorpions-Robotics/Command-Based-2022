@@ -28,7 +28,8 @@ public class ShooterTurnManual extends CommandBase {
   @Override
   public void execute() {
     speed = (speedSupplier.getAsDouble() * -1 + 1) / 2;
-    m_shooter.runShooter(speed);
+    m_shooter.runShooter(-speed);
+    // SmartDashboard.putNumber("RPM", m_shooter.getShooterEncoderRPM());
   }
 
   // Called once the command ends or is interrupted.

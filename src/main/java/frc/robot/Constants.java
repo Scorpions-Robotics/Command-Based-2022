@@ -19,16 +19,18 @@ public final class Constants {
     public static final int kButton10 = 10;
     public static final int kButton11 = 11;
     public static final int kButton12 = 12;
+    public static final int kButton13 = 13;
   }
 
   public static class FEEDER {
-    public static final int limitPort = 9;
+    public static final int limitPort = 0;
+    public static final int distanceSensorPort = 1;
   }
 
   public static class SHOOTER {
-    public static final double kV = 0.0;
-    public static final double kS = 0.0;
-    public static final double kA = 0.0;
+    public static final double kV = 0.065552;
+    public static final double kS = 1.5299;
+    public static final double kA = 0.03379;
     public static final int kServoPWM = 1;
   }
 
@@ -38,21 +40,37 @@ public final class Constants {
     public static final int kLeftLeaderID = 6;
     public static final int kLeftFollowerID = 10;
 
-    public static final int kClimbMotorID = 0;
-    public static final int kFeederMotorID = 2;
+    public static final int kClimbMotorLeft1ID = 12;
+    public static final int kClimbMotorLeft2ID = 8;
+    public static final int kClimbMotorRight1ID = 14;
+    public static final int kClimbMotorRight2ID = 2;
+
+    public static final int kFeederMotorID = 7;
 
     public static final int kShooterRightMotorID = 3;
-    public static final int kShooterLeftMotorID = 9;
+    public static final int kShooterLeftMotorID = 1;
 
-    public static final int kIntakeMotorID = 8;
+    public static final int kIntakeMotorID = 5;
+  }
+
+  public static class CLIMB {
+    public static final int climbSwitchPort = 2;
+  }
+
+  public static class LED {
+    public static final int kLEDCount = 12;
+    public static final int kLEDPWM = 9;
   }
 
   public static class PNEUMATICS {
-    public static final int kIntakeSolenoidForwardChannel = 4;
-    public static final int kIntakeSolenoidReverseChannel = 5;
+    public static final int kClimbSolenoidForwardChannel = 0;
+    public static final int kClimbSolenoidReverseChannel = 1;
 
-    public static final int kShooterSolenoidForwardChannel = 6;
-    public static final int kShooterSolenoidReverseChannel = 7;
+    public static final int kIntakeSolenoidForwardChannel = 3;
+    public static final int kIntakeSolenoidReverseChannel = 2;
+
+    public static final int kShooterSolenoidForwardChannel = 5;
+    public static final int kShooterSolenoidReverseChannel = 4;
   }
 
   public static class ENCODERS {
@@ -62,8 +80,8 @@ public final class Constants {
     public static final int kRightDriveEncoderChannelA = 6;
     public static final int kRightDriveEncoderChannelB = 7;
 
-    public static final int kShooterEncoderChannelA = 4;
-    public static final int kShooterEncoderChannelB = 5;
+    public static final int kShooterEncoderChannelA = 8;
+    public static final int kShooterEncoderChannelB = 9;
   }
 
   public static class VARIABLES {

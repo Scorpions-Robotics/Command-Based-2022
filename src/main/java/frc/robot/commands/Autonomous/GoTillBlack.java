@@ -12,20 +12,24 @@ public class GoTillBlack extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
-
-  @Override
-  public void execute() {
-    m_drive.arcadeDrive(0.5, 0);
+  public void initialize() {
+    m_drive.modeBrake();
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void execute() {
+    m_drive.arcadeDrive(0, 0.4);
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    m_drive.stopMotors();
+    m_drive.modeCoast();
+  }
 
   @Override
   public boolean isFinished() {
-    if (m_drive.getIR() < 12) {
-      m_drive.resetEncoders();
+    if (m_drive.getSensorIR() < 12) {
       return true;
     }
     return false;

@@ -21,13 +21,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DriveSubsystem extends SubsystemBase {
-
   private ADIS16470_IMU imu = new ADIS16470_IMU();
   private double startTime;
   private double driftPerSecond;
 
-  private final I2C.Port i2cPort = I2C.Port.kOnboard;
-  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+  // private final ColorSensorV3 m_colorSensor1 = new ColorSensorV3(I2C.Port.kOnboard);
+  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(I2C.Port.kMXP);
 
   private Encoder leftDriveEncoder =
       new Encoder(
@@ -57,14 +56,31 @@ public class DriveSubsystem extends SubsystemBase {
   private DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading());
 
   public DriveSubsystem() {
+    m_right.setInverted(false);
+    m_left.setInverted(false);
+
     getLeftEncoderDistance();
     getRightEncoderDistance();
 
-    m_right.setInverted(true);
-    m_left.setInverted(false);
-
     this.imu.setYawAxis(IMUAxis.kY);
     this.calibrate();
+
+    this.resetGyro();
+    this.resetEncoders();
+  }
+
+  public void modeCoast() {
+    rightFront.setIdleMode(IdleMode.kCoast);
+    rightRear.setIdleMode(IdleMode.kCoast);
+    leftFront.setIdleMode(IdleMode.kCoast);
+    leftRear.setIdleMode(IdleMode.kCoast);
+  }
+
+  public void modeBrake() {
+    rightFront.setIdleMode(IdleMode.kBrake);
+    rightRear.setIdleMode(IdleMode.kBrake);
+    leftFront.setIdleMode(IdleMode.kBrake);
+    leftRear.setIdleMode(IdleMode.kBrake);
   }
 
   public double getLeftEncoderDistance() {
@@ -90,13 +106,21 @@ public class DriveSubsystem extends SubsystemBase {
     m_right.set(speed);
   }
 
+  public void runLeftMotorVoltage(double voltage) {
+    m_left.setVoltage(voltage);
+  }
+
+  public void runRightMotorVoltage(double voltage) {
+    m_right.setVoltage(voltage);
+  }
+
   public void resetEncoders() {
     leftDriveEncoder.reset();
     rightDriveEncoder.reset();
   }
 
   public void arcadeDrive(double speed, double rotation) {
-    drive.arcadeDrive(speed, rotation);
+    drive.arcadeDrive(speed * -1, rotation * -1);
   }
 
   public void stopMotors() {
@@ -133,20 +157,17 @@ public class DriveSubsystem extends SubsystemBase {
     this.driftPerSecond = (imu.getAngle() - startAngle) / (Timer.getFPGATimestamp() - startTime);
   }
 
-  public double getIR() {
+  // public double getSensor1IR() {
+  //  return m_colorSensor1.getIR();
+  // }
+
+  public double getSensorIR() {
     return m_colorSensor.getIR();
   }
 
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
     odometry.resetPosition(pose, getHeading());
-  }
-
-  public void modeBrake() {
-    rightFront.setIdleMode(IdleMode.kBrake);
-    rightRear.setIdleMode(IdleMode.kBrake);
-    leftFront.setIdleMode(IdleMode.kBrake);
-    leftRear.setIdleMode(IdleMode.kBrake);
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
@@ -171,9 +192,10 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     odometry.update(getHeading(), getLeftEncoderDistance(), getRightEncoderDistance());
-    SmartDashboard.putNumber("Angle", getGyroAngle());
-    SmartDashboard.putNumber("Left Distance", getLeftEncoderDistance());
-    SmartDashboard.putNumber("Right Distance", getRightEncoderDistance());
-    SmartDashboard.putString("Rotation 2d", getHeading().toString());
+    SmartDashboard.putNumber("IR", getSensorIR());
+    // SmartDashboard.putNumber("Left Distance", getLeftEncoderDistance());
+    // SmartDashboard.putNumber("Right Distance", getRightEncoderDistance());
+    // SmartDashboard.putString("Rotation 2d", getHeading().toString());
+    // SmartDashboard.putString("Pose 2d", getPose().toString());
   }
 }
