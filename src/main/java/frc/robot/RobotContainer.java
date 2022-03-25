@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commandgroups.Autonomous.ThreeBalls.Blue31;
@@ -20,6 +21,8 @@ import frc.robot.commands.Feeder.FeederTurn;
 import frc.robot.commands.Intake.IntakePneumaticPull;
 import frc.robot.commands.Intake.IntakePneumaticPush;
 import frc.robot.commands.Intake.IntakeTurn;
+import frc.robot.commands.LED.LEDCommand;
+import frc.robot.commands.Shooter.ShooterTurnManual;
 import frc.robot.commands.Shooter.ShooterTurnNew;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -43,7 +46,6 @@ public class RobotContainer {
   public final LEDSubsystem m_led = new LEDSubsystem();
   // public final ScorpTrajectory s_trajectory = new ScorpTrajectory(m_drive);
 
-  private final JoystickButton stickButton1 = new JoystickButton(stick, Constants.OI.kButton1);
   private final JoystickButton stickButton2 = new JoystickButton(stick, Constants.OI.kButton2);
   private final JoystickButton stickButton3 = new JoystickButton(stick, Constants.OI.kButton3);
   private final JoystickButton stickButton4 = new JoystickButton(stick, Constants.OI.kButton4);
@@ -65,7 +67,10 @@ public class RobotContainer {
             () -> stick.getRawAxis(1),
             () -> stick.getThrottle()));
 
-    // m_climb.setDefaultCommand(new ClimbCommand(m_climb, () -> panel.getRawAxis(3)));
+    m_shooter.setDefaultCommand(
+        new ConditionalCommand(new ShooterTurnNew(m_shooter, m_vision), new ShooterTurnManual(m_shooter, () -> panel.getRawAxis(0), () -> panel.getRawButton(13)), () -> panel.getRawButton(12)));
+
+    m_led.setDefaultCommand(new LEDCommand(m_vision, m_shooter, m_led));
     configureButtonBindings();
   }
 
@@ -74,14 +79,6 @@ public class RobotContainer {
         .whenActive(
             new FeederTurn(m_feeder, 1)
                 .withInterrupt(() -> m_feeder.getSwitchValue() || panel.getRawButton(10)));
-
-    stickButton1.whileHeld(
-        new ShooterTurnNew(
-            m_shooter,
-            m_vision,
-            () -> panel.getRawButton(12),
-            () -> panel.getRawAxis(0),
-            () -> panel.getRawButton(13)));
 
     stickButton2.whileHeld(new IntakeTurn(m_intake, -1));
     stickButton3.whileHeld(new FeederTurn(m_feeder, 1));

@@ -5,6 +5,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import java.util.function.BooleanSupplier;
@@ -23,21 +24,12 @@ public class ShooterTurnNew extends CommandBase {
   PIDController controller = new PIDController(1.5143, 0, 0);
   SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(Constants.SHOOTER.kS, Constants.SHOOTER.kV, Constants.SHOOTER.kA);
-  BooleanSupplier state;
-  DoubleSupplier throttle;
-  BooleanSupplier pneumatic;
 
   public ShooterTurnNew(
       ShooterSubsystem m_shooter,
-      VisionSubsystem m_vision,
-      BooleanSupplier state,
-      DoubleSupplier throttle,
-      BooleanSupplier pneumatic) {
+      VisionSubsystem m_vision) {
     this.m_shooter = m_shooter;
     this.m_vision = m_vision;
-    this.state = state;
-    this.throttle = throttle;
-    this.pneumatic = pneumatic;
     addRequirements(this.m_shooter);
   }
 
@@ -46,7 +38,6 @@ public class ShooterTurnNew extends CommandBase {
 
   @Override
   public void execute() {
-    if (state.getAsBoolean() == true) {
       distance = m_vision.getHoopD();
       if (m_shooter.pneumatic_mode) {
         min_distance = 450;
@@ -71,23 +62,13 @@ public class ShooterTurnNew extends CommandBase {
                     m_shooter.calculateShooterSpeed(
                         distance, min_distance, max_distance, min_rpm, max_rpm));
         m_shooter.runShooterVoltage(motorOutput);
+        m_shooter.required_rpm = m_shooter.calculateShooterSpeed(
+          distance, min_distance, max_distance, min_rpm, max_rpm);
       } else {
-        m_shooter.runShooter(0.7);
+        m_shooter.runShooter(1);
+        m_shooter.required_rpm = 1500;
       }
-    } else {
-      if (pneumatic.getAsBoolean() == true) {
-        m_shooter.pushPneumatic();
-      } else {
-        m_shooter.pullPneumatic();
-      }
-      m_shooter.runShooter(m_shooter.calculateSpeed(throttle.getAsDouble(), 0.165, 0.472, 0, 1));
-    }
-
-    // if(controller.getSetpoint() - 50 < m_shooter.getShooterEncoderRPM() &&
-    // controller.getSetpoint() + 50 > m_shooter.getShooterEncoderRPM()){
-    //   new LEDCommand(m_led, Color.kAliceBlue).withTimeout(3).schedule();
-    // }
-    SmartDashboard.putNumber("rpm", m_shooter.getShooterEncoderRPM());
+  
   }
 
   @Override

@@ -36,7 +36,7 @@ public class ShooterSubsystem extends SubsystemBase {
   double current_min_in_diff;
   double max_min_out_diff;
 
-  public boolean is_at_right_rpm;
+  public double required_rpm;
 
   public boolean pneumatic_mode;
 

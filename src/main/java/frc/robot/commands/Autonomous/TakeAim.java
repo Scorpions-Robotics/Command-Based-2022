@@ -7,7 +7,7 @@ package frc.robot.commands.Autonomous;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.commands.LED.LEDCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
@@ -84,8 +84,7 @@ public class TakeAim extends CommandBase {
       return true;
     }
     if (error >= -10 && error <= 10) {
-      new LEDCommand(m_led, Color.kGreen).withTimeout(5).schedule();
-      ;
+      new RunCommand(() -> m_led.setAll(Color.kGreen)).withTimeout(1).schedule();;
       return true;
     }
     return false;
