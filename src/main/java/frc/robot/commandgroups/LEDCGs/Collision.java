@@ -12,17 +12,46 @@ public class Collision extends SequentialCommandGroup {
   public Collision(LEDSubsystem m_led, Color color1, Color color2, int tail) {
     this.m_led = m_led;
     addCommands(
-        new RunCommand(() -> m_led.collision(Rotation.TOP_TO_BOTTOM, 0, color1, color2, 1), m_led).withTimeout(0.2),
-        new RunCommand(() -> m_led.collision(Rotation.TOP_TO_BOTTOM, 1, color1, color2, Math.min(2, tail)), m_led).withTimeout(0.2),
-        new RunCommand(() -> m_led.collision(Rotation.TOP_TO_BOTTOM, 2, color1, color2, Math.min(3, tail)), m_led).withTimeout(0.2),
-        new RunCommand(() -> m_led.collision(Rotation.TOP_TO_BOTTOM, 3, color1, color2, Math.min(4, tail)), m_led).withTimeout(0.2),
-        new RunCommand(() -> m_led.collision(Rotation.TOP_TO_BOTTOM, 4, color1, color2, Math.min(5, tail)), m_led).withTimeout(0.2),
-        new RunCommand(() -> m_led.collision(Rotation.TOP_TO_BOTTOM, 5, color1, color2, Math.min(6, tail)), m_led).withTimeout(0.2),
-        new RunCommand(() -> m_led.collision(Rotation.BOTTOM_TO_TOP, 4, color1, color2, 1), m_led).withTimeout(0.2),
-        new RunCommand(() -> m_led.collision(Rotation.BOTTOM_TO_TOP, 3, color1, color2, Math.min(2, tail)), m_led).withTimeout(0.2),
-        new RunCommand(() -> m_led.collision(Rotation.BOTTOM_TO_TOP, 2, color1, color2, Math.min(3, tail)), m_led).withTimeout(0.2),
-        new RunCommand(() -> m_led.collision(Rotation.BOTTOM_TO_TOP, 1, color1, color2, Math.min(4, tail)), m_led).withTimeout(0.2),
-        new RunCommand(() -> m_led.collision(Rotation.BOTTOM_TO_TOP, 0, color1, color2, Math.min(5, tail)), m_led).withTimeout(0.2));
+        new RunCommand(() -> m_led.collision(Rotation.TOP_TO_BOTTOM, 0, color1, color2, 1), m_led)
+            .withTimeout(0.2),
+        new RunCommand(
+                () -> m_led.collision(Rotation.TOP_TO_BOTTOM, 1, color1, color2, Math.min(2, tail)),
+                m_led)
+            .withTimeout(0.2),
+        new RunCommand(
+                () -> m_led.collision(Rotation.TOP_TO_BOTTOM, 2, color1, color2, Math.min(3, tail)),
+                m_led)
+            .withTimeout(0.2),
+        new RunCommand(
+                () -> m_led.collision(Rotation.TOP_TO_BOTTOM, 3, color1, color2, Math.min(4, tail)),
+                m_led)
+            .withTimeout(0.2),
+        new RunCommand(
+                () -> m_led.collision(Rotation.TOP_TO_BOTTOM, 4, color1, color2, Math.min(5, tail)),
+                m_led)
+            .withTimeout(0.2),
+        new RunCommand(
+                () -> m_led.collision(Rotation.TOP_TO_BOTTOM, 5, color1, color2, Math.min(6, tail)),
+                m_led)
+            .withTimeout(0.2),
+        new RunCommand(() -> m_led.collision(Rotation.BOTTOM_TO_TOP, 4, color1, color2, 1), m_led)
+            .withTimeout(0.2),
+        new RunCommand(
+                () -> m_led.collision(Rotation.BOTTOM_TO_TOP, 3, color1, color2, Math.min(2, tail)),
+                m_led)
+            .withTimeout(0.2),
+        new RunCommand(
+                () -> m_led.collision(Rotation.BOTTOM_TO_TOP, 2, color1, color2, Math.min(3, tail)),
+                m_led)
+            .withTimeout(0.2),
+        new RunCommand(
+                () -> m_led.collision(Rotation.BOTTOM_TO_TOP, 1, color1, color2, Math.min(4, tail)),
+                m_led)
+            .withTimeout(0.2),
+        new RunCommand(
+                () -> m_led.collision(Rotation.BOTTOM_TO_TOP, 0, color1, color2, Math.min(5, tail)),
+                m_led)
+            .withTimeout(0.2));
   }
 
   @Override
