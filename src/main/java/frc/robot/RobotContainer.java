@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -23,6 +24,8 @@ import frc.robot.commands.Intake.IntakePneumaticPull;
 import frc.robot.commands.Intake.IntakePneumaticPush;
 import frc.robot.commands.Intake.IntakeTurn;
 import frc.robot.commands.LED.LEDCommand;
+import frc.robot.commands.Shooter.ShooterTurnManual;
+import frc.robot.commands.Shooter.ShooterTurnNew;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
@@ -67,8 +70,7 @@ public class RobotContainer {
             () -> stick.getRawAxis(1),
             () -> stick.getThrottle()));
 
-    m_shooter.setDefaultCommand(
-        new RunCommand(() -> m_shooter.runShooter(1)).withInterrupt(() -> stickButton1.get()));
+    m_shooter.setDefaultCommand(new ConditionalCommand(new ShooterTurnNew(m_shooter, m_vision), new ShooterTurnManual(m_shooter, () -> panel.getRawAxis(0), () -> panel.getRawButton(13)), () -> panel.getRawButton(12)));
 
     m_led.setDefaultCommand(new LEDCommand(m_vision, m_shooter, m_led));
     configureButtonBindings();
