@@ -26,15 +26,14 @@ public class LEDCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if(m_shooter.required_rpm - 10 < m_shooter.getShooterEncoderRPM() && m_shooter.required_rpm + 10 > m_shooter.getShooterEncoderRPM()){
-      if(m_vision.getHoopB() == 1){
+    if (m_shooter.required_rpm - 10 < m_shooter.getShooterEncoderRPM()
+        && m_shooter.required_rpm + 10 > m_shooter.getShooterEncoderRPM()) {
+      if (m_vision.getHoopB() == 1) {
         m_led.setAll(Color.kBlue);
-      }
-      else{
+      } else {
         m_led.setAll(Color.kYellow);
       }
-    }
-    else{
+    } else {
       m_led.setAll(Color.kRed);
     }
   }

@@ -2,14 +2,10 @@ package frc.robot.commands.Shooter;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
 
 public class ShooterTurnNew extends CommandBase {
   ShooterSubsystem m_shooter;
@@ -25,9 +21,7 @@ public class ShooterTurnNew extends CommandBase {
   SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(Constants.SHOOTER.kS, Constants.SHOOTER.kV, Constants.SHOOTER.kA);
 
-  public ShooterTurnNew(
-      ShooterSubsystem m_shooter,
-      VisionSubsystem m_vision) {
+  public ShooterTurnNew(ShooterSubsystem m_shooter, VisionSubsystem m_vision) {
     this.m_shooter = m_shooter;
     this.m_vision = m_vision;
     addRequirements(this.m_shooter);
@@ -38,37 +32,36 @@ public class ShooterTurnNew extends CommandBase {
 
   @Override
   public void execute() {
-      distance = m_vision.getHoopD();
-      if (m_shooter.pneumatic_mode) {
-        min_distance = 450;
-        max_distance = 850;
-        min_rpm = 1125;
-        max_rpm = 1575;
-      } else {
-        min_distance = 140;
-        max_distance = 450;
-        min_rpm = 800;
-        max_rpm = 1125;
-      }
-      if (m_vision.getHoopB() == 1) {
-        output =
-            controller.calculate(
-                m_shooter.getShooterEncoderRPM(),
-                m_shooter.calculateShooterSpeed(
-                    distance, min_distance, max_distance, min_rpm, max_rpm));
-        motorOutput =
-            output
-                + feedforward.calculate(
-                    m_shooter.calculateShooterSpeed(
-                        distance, min_distance, max_distance, min_rpm, max_rpm));
-        m_shooter.runShooterVoltage(motorOutput);
-        m_shooter.required_rpm = m_shooter.calculateShooterSpeed(
-          distance, min_distance, max_distance, min_rpm, max_rpm);
-      } else {
-        m_shooter.runShooter(1);
-        m_shooter.required_rpm = 1500;
-      }
-  
+    distance = m_vision.getHoopD();
+    if (m_shooter.pneumatic_mode) {
+      min_distance = 450;
+      max_distance = 850;
+      min_rpm = 1125;
+      max_rpm = 1575;
+    } else {
+      min_distance = 140;
+      max_distance = 450;
+      min_rpm = 800;
+      max_rpm = 1125;
+    }
+    if (m_vision.getHoopB() == 1) {
+      output =
+          controller.calculate(
+              m_shooter.getShooterEncoderRPM(),
+              m_shooter.calculateShooterSpeed(
+                  distance, min_distance, max_distance, min_rpm, max_rpm));
+      motorOutput =
+          output
+              + feedforward.calculate(
+                  m_shooter.calculateShooterSpeed(
+                      distance, min_distance, max_distance, min_rpm, max_rpm));
+      m_shooter.runShooterVoltage(motorOutput);
+      m_shooter.required_rpm =
+          m_shooter.calculateShooterSpeed(distance, min_distance, max_distance, min_rpm, max_rpm);
+    } else {
+      m_shooter.runShooter(1);
+      m_shooter.required_rpm = 1500;
+    }
   }
 
   @Override

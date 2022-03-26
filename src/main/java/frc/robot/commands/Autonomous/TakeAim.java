@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,14 +23,12 @@ public class TakeAim extends CommandBase {
     addRequirements(m_drive);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_drive.modeBrake();
     last_value = m_vision.getHoopR();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (m_vision.getHoopB() == 1) {
@@ -69,7 +63,6 @@ public class TakeAim extends CommandBase {
     }
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_drive.runLeftMotor(0);
@@ -77,14 +70,14 @@ public class TakeAim extends CommandBase {
     m_drive.modeCoast();
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     if (m_vision.getHoopB() == 0) {
       return true;
     }
     if (error >= -10 && error <= 10) {
-      new RunCommand(() -> m_led.setAll(Color.kGreen)).withTimeout(1).schedule();;
+      new RunCommand(() -> m_led.setAll(Color.kGreen), m_led).withTimeout(1).schedule();
+      ;
       return true;
     }
     return false;

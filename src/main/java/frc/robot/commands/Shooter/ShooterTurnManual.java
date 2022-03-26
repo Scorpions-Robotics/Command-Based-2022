@@ -2,7 +2,6 @@ package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
-
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
@@ -12,7 +11,8 @@ public class ShooterTurnManual extends CommandBase {
   BooleanSupplier pneumatic;
   double throttle;
 
-  public ShooterTurnManual(ShooterSubsystem m_shooter, DoubleSupplier throttleSupplier, BooleanSupplier pneumatic) {
+  public ShooterTurnManual(
+      ShooterSubsystem m_shooter, DoubleSupplier throttleSupplier, BooleanSupplier pneumatic) {
     this.m_shooter = m_shooter;
     this.throttleSupplier = throttleSupplier;
     this.pneumatic = pneumatic;
