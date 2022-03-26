@@ -29,7 +29,7 @@ public class LEDCommand extends CommandBase {
     if (m_shooter.required_rpm - 10 < m_shooter.getShooterEncoderRPM()
         && m_shooter.required_rpm + 10 > m_shooter.getShooterEncoderRPM()) {
       if (m_vision.getHoopB() == 1) {
-        m_led.setAll(Color.kBlue);
+        m_led.setAll(Color.kAlice+Blue);
       } else {
         m_led.setAll(Color.kYellow);
       }
