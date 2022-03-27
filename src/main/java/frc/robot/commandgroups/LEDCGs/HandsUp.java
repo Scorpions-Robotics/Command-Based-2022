@@ -8,10 +8,27 @@ import frc.robot.subsystems.LEDSubsystem.Side;
 
 public class HandsUp extends SequentialCommandGroup {
   LEDSubsystem m_led;
+  boolean should_start;
 
   public HandsUp(LEDSubsystem m_led) {
     this.m_led = m_led;
-    addCommands(
+  }
+
+  @Override
+  public void initialize() {
+    if(m_led.current_mode != "police"){
+      should_start = true;
+    }
+    else{
+      should_start = false;
+    }
+  }
+
+  @Override
+  public void execute() {
+    if(should_start){
+      m_led.current_mode = "police";
+      addCommands(
         new RunCommand(() -> m_led.setOneSide(Side.LEFT, Color.kBlue), m_led).withTimeout(0.03),
         new RunCommand(() -> m_led.turnOff(), m_led).withTimeout(0.03),
         new RunCommand(() -> m_led.setOneSide(Side.LEFT, Color.kBlue), m_led).withTimeout(0.03),
@@ -22,6 +39,18 @@ public class HandsUp extends SequentialCommandGroup {
         new RunCommand(() -> m_led.setOneSide(Side.RIGHT, Color.kRed), m_led).withTimeout(0.03),
         new RunCommand(() -> m_led.turnOff(), m_led).withTimeout(0.03),
         new RunCommand(() -> m_led.setOneSide(Side.RIGHT, Color.kRed), m_led).withTimeout(0.03));
+    }
+    else{
+      m_led.turnOff();
+    }
+  }
+
+  @Override
+  public boolean isFinished() {
+    if(!should_start){
+      return true;
+    }
+    return false;
   }
 
   @Override

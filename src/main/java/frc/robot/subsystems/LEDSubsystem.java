@@ -14,6 +14,8 @@ public class LEDSubsystem extends SubsystemBase {
   AddressableLED m_led = new AddressableLED(Constants.LED.kLEDPWM);
   AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(Constants.LED.kLEDCount);
 
+  public String current_mode;
+
   public enum Side {
     LEFT,
     RIGHT
