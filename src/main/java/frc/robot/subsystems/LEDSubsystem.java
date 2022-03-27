@@ -65,16 +65,15 @@ public class LEDSubsystem extends SubsystemBase {
 
   public void collision(Rotation rotation, int index, Color color1, Color color2, int tail) {
     for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-      for(var j = 0; j < tail; j++){
+      for (var j = 0; j < tail; j++) {
         if (i == index) {
-          if(rotation == Rotation.TOP_TO_BOTTOM){
+          if (rotation == Rotation.TOP_TO_BOTTOM) {
             m_ledBuffer.setLED(i, color1);
             m_ledBuffer.setLED(i - j, color1);
             m_ledBuffer.setLED(11 - index, color2);
             m_ledBuffer.setLED(11 - index + j, color2);
             continue;
-          }
-          else{
+          } else {
             m_ledBuffer.setLED(i, color1);
             m_ledBuffer.setLED(i + j, color1);
             m_ledBuffer.setLED(11 - index, color2);
