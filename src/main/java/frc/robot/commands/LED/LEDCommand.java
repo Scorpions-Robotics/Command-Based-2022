@@ -19,6 +19,7 @@ public class LEDCommand extends CommandBase {
     this.m_led = m_led;
     this.m_shooter = m_shooter;
     this.m_vision = m_vision;
+    addRequirements(m_led);
   }
 
   @Override

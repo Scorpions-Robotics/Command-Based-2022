@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -183,6 +184,7 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     odometry.update(getHeading(), getLeftEncoderDistance(), getRightEncoderDistance());
+    SmartDashboard.putNumber("gyro angle", getGyroAngle());
     // SmartDashboard.putNumber("Left Distance", getLeftEncoderDistance());
     // SmartDashboard.putNumber("Right Distance", getRightEncoderDistance());
     // SmartDashboard.putString("Rotation 2d", getHeading().toString());

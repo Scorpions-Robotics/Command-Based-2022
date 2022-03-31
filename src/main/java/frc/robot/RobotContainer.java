@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -10,8 +11,13 @@ import frc.robot.commandgroups.Autonomous.ThreeBalls.Blue31;
 import frc.robot.commandgroups.Autonomous.ThreeBalls.Red31;
 import frc.robot.commandgroups.Autonomous.TwoBalls.Blue21;
 import frc.robot.commandgroups.Autonomous.TwoBalls.Red21;
+import frc.robot.commandgroups.LEDCGs.Collision;
+import frc.robot.commandgroups.LEDCGs.HandsUp;
+import frc.robot.commandgroups.LEDCGs.Spiral;
 import frc.robot.commandgroups.ShootCG;
 import frc.robot.commands.Autonomous.AdjustShooterAngle;
+import frc.robot.commands.Autonomous.AutoAngleTurn;
+import frc.robot.commands.Autonomous.AutoAngleTurnVoltage;
 import frc.robot.commands.Autonomous.GoTillBlack;
 import frc.robot.commands.Autonomous.TakeAim;
 import frc.robot.commands.Climb.ClimbCommand;
@@ -69,14 +75,11 @@ public class RobotContainer {
             () -> stick.getRawAxis(1),
             () -> stick.getThrottle()));
 
-    m_shooter.setDefaultCommand(
-        new ConditionalCommand(
-            new ShooterTurnNew(m_shooter, m_vision),
-            new ShooterTurnManual(
-                m_shooter, () -> panel.getRawAxis(0), () -> panel.getRawButton(13)),
-            () -> panel.getRawButton(12)));
+    // m_shooter.setDefaultCommand(
+    //         new ShooterTurnManual(
+    //             m_shooter, () -> panel.getRawAxis(0), () -> panel.getRawButton(13)));
 
-    m_led.setDefaultCommand(new LEDCommand(m_vision, m_shooter, m_led));
+    // m_led.setDefaultCommand(new LEDCommand(m_vision, m_shooter, m_led));
     configureButtonBindings();
   }
 
@@ -114,7 +117,9 @@ public class RobotContainer {
     panelButton11.whenPressed(new IntakePneumaticPush(m_intake));
     panelButton11.whenReleased(new IntakePneumaticPull(m_intake));
 
-    // stickButton8.whenPressed(new AdjustShooterAngle(m_shooter, m_vision));
+    new JoystickButton(panel, 9).whileHeld(new HandsUp(m_led));
+
+    new JoystickButton(stick, 8).whenPressed(new AutoAngleTurnVoltage(m_drive, 90));
     panelButton7.whenPressed(new AdjustShooterAngle(m_shooter, m_vision));
   }
 

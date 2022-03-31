@@ -18,18 +18,18 @@ public class Spiral extends SequentialCommandGroup {
   public Spiral(LEDSubsystem m_led, Color color) {
     this.m_led = m_led;
     addCommands(
-        new RunCommand(() -> m_led.setOne(0, color), m_led).withTimeout(0.15),
-        new RunCommand(() -> m_led.setOne(1, color), m_led).withTimeout(0.15),
-        new RunCommand(() -> m_led.setOne(2, color), m_led).withTimeout(0.15),
-        new RunCommand(() -> m_led.setOne(3, color), m_led).withTimeout(0.15),
-        new RunCommand(() -> m_led.setOne(4, color), m_led).withTimeout(0.15),
-        new RunCommand(() -> m_led.setOne(5, color), m_led).withTimeout(0.15),
-        new RunCommand(() -> m_led.setOne(6, color), m_led).withTimeout(0.15),
-        new RunCommand(() -> m_led.setOne(7, color), m_led).withTimeout(0.15),
-        new RunCommand(() -> m_led.setOne(8, color), m_led).withTimeout(0.15),
-        new RunCommand(() -> m_led.setOne(9, color), m_led).withTimeout(0.15),
-        new RunCommand(() -> m_led.setOne(10, color), m_led).withTimeout(0.15),
-        new RunCommand(() -> m_led.setOne(11, color), m_led).withTimeout(0.15));
+        new RunCommand(() -> m_led.setOne(0, color), m_led).withTimeout(0.05),
+        new RunCommand(() -> m_led.setOne(1, color), m_led).withTimeout(0.05),
+        new RunCommand(() -> m_led.setOne(2, color), m_led).withTimeout(0.05),
+        new RunCommand(() -> m_led.setOne(3, color), m_led).withTimeout(0.05),
+        new RunCommand(() -> m_led.setOne(4, color), m_led).withTimeout(0.05),
+        new RunCommand(() -> m_led.setOne(5, color), m_led).withTimeout(0.05),
+        new RunCommand(() -> m_led.setOne(6, color), m_led).withTimeout(0.05),
+        new RunCommand(() -> m_led.setOne(7, color), m_led).withTimeout(0.05),
+        new RunCommand(() -> m_led.setOne(8, color), m_led).withTimeout(0.05),
+        new RunCommand(() -> m_led.setOne(9, color), m_led).withTimeout(0.05),
+        new RunCommand(() -> m_led.setOne(10, color), m_led).withTimeout(0.05),
+        new RunCommand(() -> m_led.setOne(11, color), m_led).withTimeout(0.05));
   }
 
   @Override
