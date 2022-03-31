@@ -11,42 +11,16 @@ public class Collision extends SequentialCommandGroup {
   public Collision(LEDSubsystem m_led, Color color1, Color color2) {
     this.m_led = m_led;
     addCommands(
-        new RunCommand(() -> m_led.collision(0, color1, color2), m_led)
-            .withTimeout(0.2),
-        new RunCommand(
-                () -> m_led.collision(1, color1, color2),
-                m_led)
-            .withTimeout(0.2),
-        new RunCommand(
-                () -> m_led.collision(2, color1, color2),
-                m_led)
-            .withTimeout(0.2),
-        new RunCommand(
-                () -> m_led.collision(3, color1, color2),
-                m_led)
-            .withTimeout(0.2),
-        new RunCommand(
-                () -> m_led.collision(4, color1, color2),
-                m_led)
-            .withTimeout(0.2),
-        new RunCommand(
-                () -> m_led.collision(5, color1, color2),
-                m_led)
-            .withTimeout(0.2),
-        new RunCommand(() -> m_led.collision(4, color1, color2), m_led)
-            .withTimeout(0.2),
-        new RunCommand(
-                () -> m_led.collision(3, color1, color2),
-                m_led)
-            .withTimeout(0.2),
-        new RunCommand(
-                () -> m_led.collision(2, color1, color2),
-                m_led)
-            .withTimeout(0.2),
-        new RunCommand(
-                () -> m_led.collision(1, color1, color2),
-                m_led)
-            .withTimeout(0.2));
+        new RunCommand(() -> m_led.collision(0, color1, color2), m_led).withTimeout(0.2),
+        new RunCommand(() -> m_led.collision(1, color1, color2), m_led).withTimeout(0.2),
+        new RunCommand(() -> m_led.collision(2, color1, color2), m_led).withTimeout(0.2),
+        new RunCommand(() -> m_led.collision(3, color1, color2), m_led).withTimeout(0.2),
+        new RunCommand(() -> m_led.collision(4, color1, color2), m_led).withTimeout(0.2),
+        new RunCommand(() -> m_led.collision(5, color1, color2), m_led).withTimeout(0.2),
+        new RunCommand(() -> m_led.collision(4, color1, color2), m_led).withTimeout(0.2),
+        new RunCommand(() -> m_led.collision(3, color1, color2), m_led).withTimeout(0.2),
+        new RunCommand(() -> m_led.collision(2, color1, color2), m_led).withTimeout(0.2),
+        new RunCommand(() -> m_led.collision(1, color1, color2), m_led).withTimeout(0.2));
   }
 
   @Override

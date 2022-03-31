@@ -13,16 +13,16 @@ public class HandsUp extends SequentialCommandGroup {
   public HandsUp(LEDSubsystem m_led) {
     this.m_led = m_led;
     addCommands(
-          new RunCommand(() -> m_led.setOneSide(Side.LEFT, Color.kBlue), m_led).withTimeout(0.03),
-          new RunCommand(() -> m_led.turnOff(), m_led).withTimeout(0.03),
-          new RunCommand(() -> m_led.setOneSide(Side.LEFT, Color.kBlue), m_led).withTimeout(0.03),
-          new RunCommand(() -> m_led.turnOff(), m_led).withTimeout(0.03),
-          new RunCommand(() -> m_led.setOneSide(Side.LEFT, Color.kBlue), m_led).withTimeout(0.03),
-          new RunCommand(() -> m_led.setOneSide(Side.RIGHT, Color.kRed), m_led).withTimeout(0.03),
-          new RunCommand(() -> m_led.turnOff(), m_led).withTimeout(0.03),
-          new RunCommand(() -> m_led.setOneSide(Side.RIGHT, Color.kRed), m_led).withTimeout(0.03),
-          new RunCommand(() -> m_led.turnOff(), m_led).withTimeout(0.03),
-          new RunCommand(() -> m_led.setOneSide(Side.RIGHT, Color.kRed), m_led).withTimeout(0.03));
+        new RunCommand(() -> m_led.setOneSide(Side.LEFT, Color.kBlue), m_led).withTimeout(0.03),
+        new RunCommand(() -> m_led.turnOff(), m_led).withTimeout(0.03),
+        new RunCommand(() -> m_led.setOneSide(Side.LEFT, Color.kBlue), m_led).withTimeout(0.03),
+        new RunCommand(() -> m_led.turnOff(), m_led).withTimeout(0.03),
+        new RunCommand(() -> m_led.setOneSide(Side.LEFT, Color.kBlue), m_led).withTimeout(0.03),
+        new RunCommand(() -> m_led.setOneSide(Side.RIGHT, Color.kRed), m_led).withTimeout(0.03),
+        new RunCommand(() -> m_led.turnOff(), m_led).withTimeout(0.03),
+        new RunCommand(() -> m_led.setOneSide(Side.RIGHT, Color.kRed), m_led).withTimeout(0.03),
+        new RunCommand(() -> m_led.turnOff(), m_led).withTimeout(0.03),
+        new RunCommand(() -> m_led.setOneSide(Side.RIGHT, Color.kRed), m_led).withTimeout(0.03));
   }
 
   @Override

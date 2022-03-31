@@ -1,7 +1,6 @@
 package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.DriveSubsystem;
 
