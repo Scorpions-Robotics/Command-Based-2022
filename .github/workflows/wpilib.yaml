@@ -30,16 +30,20 @@ jobs:
 
     # Grant execute permission for gradlew
     - name: Grant execute permission for gradlew
+      with: {"**"}
       run: chmod +x gradlew
 
     - name: Formatting the code
+      with: {"**"}
       run: ./gradlew spotlessApply
 
     # Runs a single command using the runners shell
     - name: Compile and run tests on robot code
+      with: {"**"}
       run: ./gradlew spotlessCheck
 
     - name: Commit back to GitHub
+      with: {"**"}
       if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'}}
       run: |   
         git config --global user.name "github-actiuons[bot]"
