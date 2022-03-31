@@ -29,18 +29,23 @@ jobs:
 
     # Grant execute permission for gradlew
     - name: Grant execute permission for gradlew
+      uses: actions/checkout@v3
+      with: {"**"}
       run: chmod +x gradlew
 
     - name: Formatting the code
+      uses: actions/checkout@v3
       with: {"**"}
       run: ./gradlew spotlessApply
 
     # Runs a single command using the runners shell
     - name: Compile and run tests on robot code
+      uses: actions/checkout@v3
       with: {"**"}
       run: ./gradlew spotlessCheck
 
     - name: Commit back to GitHub
+      uses: actions/checkout@v3
       with: {"**"}
       if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'}}
       run: |   
