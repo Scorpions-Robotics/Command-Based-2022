@@ -29,7 +29,6 @@ jobs:
 
     # Grant execute permission for gradlew
     - name: Grant execute permission for gradlew
-      with: {"**"}
       run: chmod +x gradlew
 
     - name: Formatting the code
