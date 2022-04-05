@@ -46,33 +46,15 @@ public class ClimbSubsystem extends SubsystemBase {
   public void periodic() {}
 
   public void runClimbUpwards(double speed) {
-    if (!reverse_mode) {
-      if (climbSwitch.get()) {
-        left.set(0);
-        right.set(0);
-      } else {
-        left.set(speed);
-        right.set(speed);
-      }
-    } else {
       left.set(speed);
       right.set(speed);
-    }
   }
 
   public void runClimbDownwards(double speed) {
-    if (reverse_mode) {
-      if (climbSwitch.get()) {
-        left.set(0);
-        right.set(0);
-      } else {
-        left.set(speed);
-        right.set(speed);
-      }
-    } else {
+
       left.set(speed);
       right.set(speed);
-    }
+    
   }
 
   public void changeMode() {

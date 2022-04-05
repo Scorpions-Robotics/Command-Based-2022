@@ -17,7 +17,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public boolean pneumaticMode;
 
   public IntakeSubsystem() {
-    pneumaticMode = true;
+    pneumaticMode = false;
   }
 
   @Override
@@ -33,11 +33,11 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void pushPneumatic() {
     intake_solenoid.set(DoubleSolenoid.Value.kForward);
-    pneumaticMode = true;
+    pneumaticMode = false;
   }
 
   public void pullPneumatic() {
     intake_solenoid.set(DoubleSolenoid.Value.kReverse);
-    pneumaticMode = false;
+    pneumaticMode = true;
   }
 }

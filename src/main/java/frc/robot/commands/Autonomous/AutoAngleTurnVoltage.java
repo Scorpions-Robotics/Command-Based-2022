@@ -16,12 +16,15 @@ public class AutoAngleTurnVoltage extends PIDCommand {
         () -> angle,
         output -> {
           if (m_drive.getGyroAngle() > angle) {
-            m_drive.runLeftMotorVoltage(Math.min(-output, -0.7));
-            m_drive.runRightMotorVoltage(Math.min(-output, -0.7));
+            m_drive.runLeftMotorVoltage(Math.min(output, -0.7));
+            m_drive.runRightMotorVoltage(Math.min(output, -0.7));
+            SmartDashboard.putNumber("state", 10);
           } else {
             m_drive.runLeftMotorVoltage(Math.max(output, 0.7));
             m_drive.runRightMotorVoltage(Math.max(output, 0.7));
+            SmartDashboard.putNumber("state", 0);
           }
+          SmartDashboard.putNumber("output", output);
         });
     // getController().setTolerance(0.0825);
     this.m_drive = m_drive;

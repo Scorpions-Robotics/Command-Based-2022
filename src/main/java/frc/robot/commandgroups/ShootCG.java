@@ -18,14 +18,13 @@ public class ShootCG extends SequentialCommandGroup {
       FeederSubsystem m_feeder,
       VisionSubsystem m_vision,
       BooleanSupplier state,
-      BooleanSupplier pneumatic,
       DoubleSupplier throttleSupplier) {
     addCommands(
         new AdjustShooterAngle(m_shooter, m_vision)
             .andThen(
                 new ConditionalCommand(
                         new ShooterTurnNew(m_shooter, m_vision),
-                        new ShooterTurnManual(m_shooter, throttleSupplier, pneumatic),
+                        new ShooterTurnManual(m_shooter, throttleSupplier),
                         state)
                     .alongWith(new FeederTurnAuto(m_feeder, m_shooter))));
   }

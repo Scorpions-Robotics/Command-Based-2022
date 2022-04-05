@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commandgroups.Autonomous.ThreeBalls.Blue31;
@@ -66,6 +67,7 @@ public class RobotContainer {
   private final JoystickButton panelButton5 = new JoystickButton(panel, Constants.OI.kButton5);
   private final JoystickButton panelButton6 = new JoystickButton(panel, Constants.OI.kButton6);
   private final JoystickButton panelButton7 = new JoystickButton(panel, Constants.OI.kButton7);
+  private final JoystickButton panelButton13 = new JoystickButton(panel, Constants.OI.kButton13);
 
   public RobotContainer() {
     m_drive.setDefaultCommand(
@@ -84,7 +86,7 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    new Trigger(() -> !m_feeder.isBallIn() && m_intake.pneumaticMode)
+    new Trigger(() -> !m_feeder.isBallIn() && !m_intake.pneumaticMode)
         .whenActive(
             new FeederTurn(m_feeder, 1)
                 .withInterrupt(() -> m_feeder.getSwitchValue() || panel.getRawButton(10)));
@@ -95,8 +97,10 @@ public class RobotContainer {
             m_feeder,
             m_vision,
             () -> panel.getRawButton(12),
-            () -> panel.getRawButton(13),
             () -> panel.getRawAxis(0)));
+
+    panelButton13.whenPressed(new InstantCommand(() -> m_shooter.pushPneumatic()));
+    panelButton13.whenReleased(new InstantCommand(() -> m_shooter.pullPneumatic()));
 
     stickButton2.whileHeld(new IntakeTurn(m_intake, -1));
 
@@ -114,12 +118,13 @@ public class RobotContainer {
 
     panelButton5.whenPressed(new ToggleClimbPneumatic(m_climb));
 
-    panelButton11.whenPressed(new IntakePneumaticPush(m_intake));
-    panelButton11.whenReleased(new IntakePneumaticPull(m_intake));
+    panelButton11.whenPressed(new InstantCommand(() -> m_intake.pushPneumatic()));
+    panelButton11.whenReleased(new InstantCommand(() -> m_intake.pullPneumatic()));
 
     new JoystickButton(panel, 9).whileHeld(new HandsUp(m_led));
 
-    new JoystickButton(stick, 8).whenPressed(new AutoAngleTurnVoltage(m_drive, 90));
+    new JoystickButton(stick, 10).whenPressed(new AutoAngleTurnVoltage(m_drive, 90));
+    new JoystickButton(stick, 8).whenPressed(new AutoAngleTurnVoltage(m_drive, -90));
     panelButton7.whenPressed(new AdjustShooterAngle(m_shooter, m_vision));
   }
 
