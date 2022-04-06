@@ -60,11 +60,11 @@ public class LEDSubsystem extends SubsystemBase {
 
   public void collision(int index, Color color1, Color color2) {
     for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-        if (i == index || i == 11 - index) {
-            m_ledBuffer.setLED(i, color1);
-            m_ledBuffer.setLED(11 - index, color2);
-            continue;
-        }
+      if (i == index || i == 11 - index) {
+        m_ledBuffer.setLED(i, color1);
+        m_ledBuffer.setLED(11 - index, color2);
+        continue;
+      }
       m_ledBuffer.setLED(i, Color.kBlack);
     }
     m_led.setData(m_ledBuffer);
