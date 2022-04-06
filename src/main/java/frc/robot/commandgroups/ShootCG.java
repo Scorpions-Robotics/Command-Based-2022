@@ -23,13 +23,8 @@ public class ShootCG extends SequentialCommandGroup {
         new AdjustShooterAngle(m_shooter, m_vision)
             .andThen(
                 new ConditionalCommand(
-<<<<<<< HEAD
-                        new ShooterTurnNew(m_shooter, m_vision),
-                        new ShooterTurnManual(m_shooter, throttleSupplier),
-=======
                         new ShooterTurnAuto(m_shooter, m_vision),
-                        new ShooterTurnManual(m_shooter, throttleSupplier, pneumatic),
->>>>>>> 3a50fc413d0641c60e1cb4e55702d20fa7c0f79e
+                        new ShooterTurnManual(m_shooter, throttleSupplier),
                         state)
                     .alongWith(new FeederTurnAuto(m_feeder, m_shooter))));
   }

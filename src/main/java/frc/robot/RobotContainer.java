@@ -79,7 +79,7 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    new Trigger(() -> !m_feeder.isBallIn() && !m_intake.pneumaticMode)
+    new Trigger(() -> !m_feeder.isBallIn() && m_intake.pneumaticMode)
         .whenActive(
             new FeederTurn(m_feeder, 1)
                 .withInterrupt(() -> m_feeder.getSwitchValue() || panel.getRawButton(10)));
