@@ -25,7 +25,7 @@ public class ShooterTurnManual extends CommandBase {
   public void execute() {
     throttle = throttleSupplier.getAsDouble();
     m_shooter.runShooter(m_shooter.calculateSpeed(throttle, 0.260, 0.575, 0, 1));
-    m_shooter.required_rpm = m_shooter.calculateSpeed(throttle, 0.165, 0.472, 0, 1500);
+    m_shooter.required_rpm = 99999;
   }
 
   @Override
