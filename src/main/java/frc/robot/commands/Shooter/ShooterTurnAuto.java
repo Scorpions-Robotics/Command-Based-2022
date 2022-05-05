@@ -56,7 +56,8 @@ public class ShooterTurnAuto extends CommandBase {
                   m_shooter.calculateShooterSpeed(
                       distance, min_distance, max_distance, min_rpm, max_rpm));
       m_shooter.runShooterVoltage(motorOutput);
-      m_shooter.required_rpm = m_shooter.calculateShooterSpeed(distance, min_distance, max_distance, min_rpm, max_rpm);
+      m_shooter.required_rpm =
+          m_shooter.calculateShooterSpeed(distance, min_distance, max_distance, min_rpm, max_rpm);
     } else {
       m_shooter.runShooter(1);
       m_shooter.required_rpm = 99999;
